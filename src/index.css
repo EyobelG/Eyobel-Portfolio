@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fira+Code:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Default: Dark mode values */
+  --bg-color: #050505;
+  --card-color: #141414;
+  --card-sub: #1e1e1e;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --text-color: #ffffff;
+  --text-light-color: rgba(255, 255, 255, 0.6);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+}
+
+.light-theme {
+  /* Light mode values: elegant soft cream-off-white, rich clean charcoal text */
+  --bg-color: #faf9f6;
+  --card-color: #ffffff;
+  --card-sub: #f2efe9;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.14);
+  --text-color: #111111;
+  --text-light-color: rgba(17, 17, 17, 0.65);
+  --glass-bg: rgba(0, 0, 0, 0.03);
+}
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Premium High-Contrast Bento Colors */
+  --color-williams-purple: #330066;
+  --color-williams-purple-light: #5200a4;
+  --color-williams-purple-dark: #1f003e;
+  
+  --color-williams-gold: #ffcc00;
+  --color-williams-gold-light: #ffe066;
+  --color-williams-gold-dark: #cc9900;
+
+  --color-tufts-blue: #3e8ede;
+  --color-tufts-blue-light: #6ba7e6;
+  --color-tufts-blue-dark: #1b5ca0;
+
+  /* Deep space-black / elegant-cream canvas backgrounds */
+  --color-cream-bg: var(--bg-color);
+  --color-cream-card: var(--card-color);
+  --color-cream-card-sub: var(--card-sub);
+  --color-cream-border: var(--border-color);
+  --color-cream-border-strong: var(--border-strong);
+  --color-charcoal: var(--text-color);
+  --color-charcoal-light: var(--text-light-color);
+  --color-glass-bg: var(--glass-bg);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-cream-bg);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Custom sleek scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-cream-border-strong);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-charcoal-light);
+  }
+}
