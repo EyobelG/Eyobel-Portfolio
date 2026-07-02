@@ -301,7 +301,7 @@ export default function MathLab() {
                   onClick={() => setTemplateIdx(idx)}
                   className={`px-3 py-2 text-left rounded-xl text-xs transition-all border-2 ${
                     templateIdx === idx
-                      ? "bg-williams-purple text-williams-gold border-williams-gold shadow-md"
+                      ? "bg-williams-purple text-white dark:text-williams-gold border-williams-gold shadow-md"
                       : "bg-cream-card text-charcoal border-cream-border hover:border-cream-border-strong hover:bg-cream-card-sub"
                   }`}
                 >

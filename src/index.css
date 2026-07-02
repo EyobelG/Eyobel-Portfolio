@@ -11,6 +11,15 @@
   --text-color: #ffffff;
   --text-light-color: rgba(255, 255, 255, 0.6);
   --glass-bg: rgba(255, 255, 255, 0.04);
+
+  /* Williams Purple & Gold optimized for dark mode (glowing, visible, vibrant) */
+  --williams-purple: #8b5cf6;
+  --williams-purple-light: #a78bfa;
+  --williams-purple-dark: #4c1d95;
+  
+  --williams-gold: #fbbf24;
+  --williams-gold-light: #fde047;
+  --williams-gold-dark: #d97706;
 }
 
 .light-theme {
@@ -23,6 +32,15 @@
   --text-color: #111111;
   --text-light-color: rgba(17, 17, 17, 0.65);
   --glass-bg: rgba(0, 0, 0, 0.03);
+
+  /* Williams Purple & Gold optimized for light mode (richer, dark and highly legible) */
+  --williams-purple: #3b0764;
+  --williams-purple-light: #581c87;
+  --williams-purple-dark: #1e1b4b;
+  
+  --williams-gold: #b45309;
+  --williams-gold-light: #d97706;
+  --williams-gold-dark: #78350f;
 }
 
 @theme {
@@ -30,14 +48,14 @@
   --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  /* Premium High-Contrast Bento Colors */
-  --color-williams-purple: #330066;
-  --color-williams-purple-light: #5200a4;
-  --color-williams-purple-dark: #1f003e;
+  /* Premium High-Contrast Bento Colors linked to context variables */
+  --color-williams-purple: var(--williams-purple);
+  --color-williams-purple-light: var(--williams-purple-light);
+  --color-williams-purple-dark: var(--williams-purple-dark);
   
-  --color-williams-gold: #ffcc00;
-  --color-williams-gold-light: #ffe066;
-  --color-williams-gold-dark: #cc9900;
+  --color-williams-gold: var(--williams-gold);
+  --color-williams-gold-light: var(--williams-gold-light);
+  --color-williams-gold-dark: var(--williams-gold-dark);
 
   --color-tufts-blue: #3e8ede;
   --color-tufts-blue-light: #6ba7e6;
@@ -78,3 +96,54 @@
     background: var(--color-charcoal-light);
   }
 }
+
+/* Custom styles for Leaflet elements to integrate into our theme */
+.leaflet-container {
+  font-family: var(--font-sans) !important;
+  background-color: var(--color-cream-card-sub) !important;
+}
+
+.leaflet-tooltip-custom {
+  background-color: rgba(17, 17, 17, 0.95) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 8px !important;
+  padding: 4px 8px !important;
+  font-size: 10px !important;
+  font-family: var(--font-mono) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.light-theme .leaflet-tooltip-custom {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #111111 !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Adjust zoom control styles to match bento design */
+.leaflet-bar {
+  border: 1px solid var(--color-cream-border) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.leaflet-bar a {
+  background-color: var(--color-cream-card) !important;
+  color: var(--color-charcoal) !important;
+  border-bottom: 1px solid var(--color-cream-border) !important;
+  transition: all 0.2s ease !important;
+}
+
+.leaflet-bar a:hover {
+  background-color: var(--color-cream-card-sub) !important;
+  color: var(--color-charcoal) !important;
+}
+
+.leaflet-bar a.leaflet-disabled {
+  background-color: var(--color-cream-card-sub) !important;
+  color: var(--color-charcoal-light) !important;
+  opacity: 0.5 !important;
+}
+

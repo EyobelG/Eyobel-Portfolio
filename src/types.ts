@@ -22,6 +22,13 @@ export interface Publication {
   description: string;
 }
 
+export interface Course {
+  name: string;
+  description: string;
+  syllabus: string[];
+  evaluations?: { metric: string; score: string }[];
+}
+
 export interface Experience {
   id: string;
   role: string;
@@ -31,6 +38,7 @@ export interface Experience {
   type: "Teaching" | "Research" | "Leadership";
   bullets: string[];
   skills: string[];
+  courses?: Course[];
 }
 
 export interface Education {
@@ -48,3 +56,21 @@ export interface Certification {
   date?: string;
   link?: string;
 }
+
+export interface Museum {
+  id: string;
+  name: string;
+  city: "Boston" | "New York" | "Los Angeles" | "San Francisco";
+  description: string;
+  x: number; // relative percentage 0-100 on city map
+  y: number; // relative percentage 0-100 on city map
+  lat: number;
+  lng: number;
+  visited: boolean;
+  rating: number; // 1-5 stars
+  personalNotes: string;
+  highlightExhibits: string[];
+  imageUrl: string;
+  yearVisited?: string;
+}
+

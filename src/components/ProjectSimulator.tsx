@@ -262,7 +262,21 @@ export default function ProjectSimulator({ projectId }: ProjectSimulatorProps) {
   };
 
   return (
-    <div className="space-y-4 border border-white/10 bg-[#121212] p-5 rounded-2xl shadow-xl">
+    <div 
+      className="space-y-4 border border-white/10 bg-[#121212] p-5 rounded-2xl shadow-xl text-white"
+      style={{
+        ['--williams-purple' as any]: '#8b5cf6',
+        ['--williams-purple-light' as any]: '#a78bfa',
+        ['--williams-purple-dark' as any]: '#4c1d95',
+        ['--williams-gold' as any]: '#fbbf24',
+        ['--williams-gold-light' as any]: '#fde047',
+        ['--williams-gold-dark' as any]: '#d97706',
+        ['--border-color' as any]: 'rgba(255, 255, 255, 0.08)',
+        ['--border-strong' as any]: 'rgba(255, 255, 255, 0.15)',
+        ['--text-color' as any]: '#ffffff',
+        ['--text-light-color' as any]: 'rgba(255, 255, 255, 0.6)',
+      }}
+    >
       <div className="flex items-center justify-between border-b border-white/5 pb-3">
         <div className="flex items-center space-x-2">
           <Terminal className="w-5 h-5 text-williams-gold animate-pulse" />

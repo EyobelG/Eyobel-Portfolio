@@ -8,6 +8,7 @@ import {
   Wrench,
   Mail,
   Linkedin,
+  Github,
   MapPin,
   ExternalLink,
   Copy,
@@ -30,17 +31,14 @@ import PublicationsSection from "./components/PublicationsSection";
 import ExperienceTimeline from "./components/ExperienceTimeline";
 import SkillsGrid from "./components/SkillsGrid";
 import InteractivePortrait from "./components/InteractivePortrait";
+import PersonalChatbot from "./components/PersonalChatbot";
 
 function BrandLogo({ size = "large" }: { size?: "small" | "large" }) {
-  if (size === "large") {
-    return (
-      <div className="w-14 h-14 rounded-2xl bg-williams-gold flex items-center justify-center text-williams-purple font-serif font-bold text-2xl shadow-md border-2 border-white/25 shrink-0">
-        EG
-      </div>
-    );
-  }
+  const containerClasses = size === "large" 
+    ? "w-14 h-14 rounded-2xl bg-zinc-200/40 dark:bg-white/10 border border-zinc-400/30 dark:border-white/20 shadow-[inset_0_1px_3px_rgba(255,255,255,0.4),0_8px_16px_rgba(0,0,0,0.06)] flex items-center justify-center text-zinc-800 dark:text-zinc-100 font-serif font-bold text-2xl backdrop-blur-md shrink-0"
+    : "w-9 h-9 rounded-xl bg-zinc-200/40 dark:bg-white/10 border border-zinc-400/30 dark:border-white/20 shadow-[inset_0_1px_3px_rgba(255,255,255,0.4),0_4px_8px_rgba(0,0,0,0.06)] flex items-center justify-center text-zinc-800 dark:text-zinc-100 font-serif font-bold text-base backdrop-blur-md shrink-0";
   return (
-    <div className="w-9 h-9 rounded-xl bg-williams-gold flex items-center justify-center text-williams-purple font-serif font-bold text-base shadow-md border border-white/20 shrink-0">
+    <div className={containerClasses}>
       EG
     </div>
   );
@@ -114,27 +112,38 @@ export default function App() {
   return (
     <div className="min-h-screen bg-cream-bg flex flex-col lg:flex-row relative">
       {/* MOBILE MENU HEADER */}
-      <header className="lg:hidden sticky top-0 z-40 bg-williams-purple text-white px-5 py-4 flex items-center justify-between border-b border-williams-purple-dark shadow-md">
+      <header className="lg:hidden sticky top-0 z-40 bg-zinc-100/70 dark:bg-zinc-950/75 backdrop-blur-xl text-charcoal px-5 py-4 flex items-center justify-between border-b border-cream-border shadow-md">
         <div className="flex items-center space-x-2.5">
           <BrandLogo size="small" />
           <div>
-            <h1 className="font-serif text-base font-bold tracking-tight">Eyobel Gebre</h1>
-            <p className="text-[10px] text-williams-gold font-mono uppercase tracking-wider">Tufts CS • Williams Math</p>
+            <div className="flex items-center gap-2">
+              <h1 className="font-serif text-base font-bold tracking-tight text-charcoal">Eyobel Gebre</h1>
+              <a
+                href="https://github.com/EyobelG"
+                target="_blank"
+                rel="noreferrer"
+                className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                title="GitHub Profile"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+            </div>
+            <p className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono uppercase tracking-wider font-semibold">Tufts CS • Williams Math</p>
           </div>
         </div>
         <div className="flex items-center space-x-2">
           <button
             id="btn-mobile-theme-toggle"
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="p-2 rounded-lg hover:bg-williams-purple-light transition-all text-white border border-white/10"
+            className="p-2 rounded-lg hover:bg-zinc-200/50 dark:hover:bg-white/10 transition-all text-charcoal border border-cream-border/60"
             title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
-            {isDarkMode ? <Sun className="w-5 h-5 text-williams-gold" /> : <Moon className="w-5 h-5 text-williams-gold" />}
+            {isDarkMode ? <Sun className="w-5 h-5 text-zinc-400" /> : <Moon className="w-5 h-5 text-zinc-600" />}
           </button>
           <button
             id="btn-mobile-menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 rounded-lg hover:bg-williams-purple-light transition-all text-white"
+            className="p-1.5 rounded-lg hover:bg-zinc-200/50 dark:hover:bg-white/10 transition-all text-charcoal"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -148,7 +157,7 @@ export default function App() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="lg:hidden fixed top-[69px] left-0 right-0 bg-williams-purple text-white z-35 border-b border-williams-purple-dark shadow-xl"
+            className="lg:hidden fixed top-[69px] left-0 right-0 bg-zinc-100/95 dark:bg-zinc-950/95 backdrop-blur-xl text-charcoal z-35 border-b border-cream-border shadow-xl"
           >
             <nav className="p-4 space-y-1">
               {sections.map((sect) => {
@@ -161,8 +170,8 @@ export default function App() {
                     onClick={() => scrollToSection(sect.id)}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-mono transition-all ${
                       isActive
-                        ? "bg-williams-gold text-williams-purple font-bold"
-                        : "text-zinc-300 hover:bg-williams-purple-light hover:text-white"
+                        ? "bg-zinc-200/80 dark:bg-white/10 text-zinc-900 dark:text-white font-bold border border-zinc-300/40 dark:border-white/10 shadow-sm"
+                        : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200/40 dark:hover:bg-white/5 hover:text-zinc-900 dark:hover:text-white"
                     }`}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
@@ -176,33 +185,56 @@ export default function App() {
       </AnimatePresence>
 
       {/* LEFT STATIC SIDEBAR (Desktop) */}
-      <aside className="hidden lg:flex w-80 xl:w-96 bg-williams-purple text-white flex-col justify-between p-8 xl:p-10 sticky top-0 h-screen border-r border-williams-purple-dark shadow-2xl shrink-0 z-10">
+      <aside className="hidden lg:flex w-80 xl:w-96 bg-zinc-100/50 dark:bg-zinc-950/65 backdrop-blur-2xl text-charcoal flex-col justify-between p-8 xl:p-10 sticky top-0 h-screen border-r border-cream-border shadow-2xl shrink-0 z-10 overflow-y-auto">
         <div className="space-y-8">
           {/* Brand/Identity */}
           <div className="flex items-center space-x-4">
             <BrandLogo size="large" />
             <div>
-              <h1 className="font-serif text-xl xl:text-2xl font-bold tracking-tight text-white leading-tight">
+              <h1 className="font-serif text-xl xl:text-2xl font-bold tracking-tight text-charcoal leading-tight">
                 Eyobel Gebre
               </h1>
-              <p className="text-[11px] text-williams-gold font-mono uppercase tracking-widest font-semibold mt-0.5">
+              <p className="text-[11px] text-zinc-500 dark:text-zinc-400 font-mono uppercase tracking-widest font-semibold mt-0.5">
                 Tufts CS • Williams Math
               </p>
+              <div className="flex items-center space-x-2 mt-1.5">
+                <a
+                  href="https://github.com/EyobelG"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center space-x-1 text-[11px] font-mono text-zinc-500 dark:text-zinc-400 hover:text-tufts-blue-light transition-colors"
+                  title="GitHub Profile"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                  <span className="underline decoration-dotted">EyobelG</span>
+                </a>
+                <span className="text-zinc-300 dark:text-zinc-700 text-xs">•</span>
+                <a
+                  href="https://www.linkedin.com/in/eyobelgebre"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center space-x-1 text-[11px] font-mono text-zinc-500 dark:text-zinc-400 hover:text-tufts-blue-light transition-colors"
+                  title="LinkedIn Profile"
+                >
+                  <Linkedin className="w-3.5 h-3.5" />
+                  <span className="underline decoration-dotted">eyobelgebre</span>
+                </a>
+              </div>
             </div>
           </div>
 
           {/* Quick Bios Card */}
-          <div className="bg-williams-purple-dark/45 rounded-2xl p-5 border border-white/5 space-y-3.5">
-            <p className="text-xs text-zinc-300 leading-relaxed font-sans">
+          <div className="bg-zinc-200/40 dark:bg-zinc-900/45 rounded-2xl p-5 border border-zinc-300/30 dark:border-white/5 space-y-3.5 shadow-sm">
+            <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
               Former boarding school math teacher, currently a <strong>Computer Science Post-Bac/MS</strong> candidate at <strong>Tufts University</strong>.
             </p>
-            <div className="space-y-1.5 text-xs text-zinc-300 font-mono">
+            <div className="space-y-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-mono">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-3.5 h-3.5 text-tufts-blue-light" />
                 <span>Medford, MA, USA</span>
               </div>
               <div className="flex items-center space-x-2">
-                <GraduationCap className="w-3.5 h-3.5 text-williams-gold" />
+                <GraduationCap className="w-3.5 h-3.5 text-zinc-400" />
                 <span>CS GPA: 4.0</span>
               </div>
             </div>
@@ -220,15 +252,15 @@ export default function App() {
                   onClick={() => scrollToSection(sect.id)}
                   className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-mono transition-all ${
                     isActive
-                      ? "bg-williams-gold text-williams-purple font-bold shadow-md transform translate-x-2"
-                      : "text-zinc-300 hover:bg-white/10 hover:text-white"
+                      ? "bg-zinc-200/80 dark:bg-white/10 text-zinc-900 dark:text-white font-bold border border-zinc-300/40 dark:border-white/15 shadow-sm transform translate-x-2"
+                      : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200/40 dark:hover:bg-white/5 hover:text-zinc-900 dark:hover:text-white"
                   }`}
                 >
                   <div className="flex items-center space-x-3">
                     <Icon className="w-4 h-4 flex-shrink-0" />
                     <span>{sect.label}</span>
                   </div>
-                  <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isActive ? "rotate-90 text-williams-purple" : "opacity-30"}`} />
+                  <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isActive ? "rotate-90 text-zinc-900 dark:text-white" : "opacity-30"}`} />
                 </button>
               );
             })}
@@ -236,21 +268,21 @@ export default function App() {
         </div>
 
         {/* Desktop Sidebar Footer with Social Links */}
-        <div className="space-y-4 pt-6 border-t border-white/10">
+        <div className="space-y-4 pt-6 border-t border-cream-border">
           <div className="flex items-center justify-center space-x-3">
             <button
               id="btn-desktop-theme-toggle"
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-2.5 rounded-full bg-white/5 hover:bg-williams-gold hover:text-williams-purple text-zinc-300 transition-all border border-white/5 cursor-pointer flex items-center justify-center"
+              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-all border border-cream-border cursor-pointer flex items-center justify-center"
               title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
-              {isDarkMode ? <Sun className="w-4 h-4 text-williams-gold" /> : <Moon className="w-4 h-4" />}
+              {isDarkMode ? <Sun className="w-4 h-4 text-zinc-400" /> : <Moon className="w-4 h-4" />}
             </button>
             <button
               onClick={() => {
                 window.location.href = "mailto:" + "eyobelassefa" + "@" + "gmail.com";
               }}
-              className="p-2.5 rounded-full bg-white/5 hover:bg-williams-gold hover:text-williams-purple text-zinc-300 transition-all border border-white/5 cursor-pointer"
+              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-all border border-cream-border cursor-pointer"
               title="Mail"
             >
               <Mail className="w-4 h-4" />
@@ -259,13 +291,22 @@ export default function App() {
               href="https://www.linkedin.com/in/eyobelgebre"
               target="_blank"
               rel="noreferrer"
-              className="p-2.5 rounded-full bg-white/5 hover:bg-williams-gold hover:text-williams-purple text-zinc-300 transition-all border border-white/5"
+              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-all border border-cream-border flex items-center justify-center"
               title="LinkedIn"
             >
               <Linkedin className="w-4 h-4" />
             </a>
+            <a
+              href="https://github.com/EyobelG"
+              target="_blank"
+              rel="noreferrer"
+              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-all border border-cream-border flex items-center justify-center"
+              title="GitHub"
+            >
+              <Github className="w-4 h-4" />
+            </a>
           </div>
-          <div className="text-center text-[10px] text-zinc-400 font-mono">
+          <div className="text-center text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">
             Eyobel Gebre • © 2026
           </div>
         </div>
@@ -274,17 +315,17 @@ export default function App() {
       {/* RIGHT EDITORIAL CANVAS */}
       <main className="flex-1 overflow-x-hidden">
         {/* Banner Highlight Container */}
-        <div className="relative bg-gradient-to-r from-williams-purple/30 to-tufts-blue/10 border-b border-cream-border py-12 px-6 lg:px-12 xl:px-16 overflow-hidden">
+        <div className="relative bg-gradient-to-r from-zinc-200/50 via-zinc-100/30 to-zinc-50/25 dark:from-zinc-900/30 dark:via-zinc-950/20 dark:to-zinc-950/10 border-b border-cream-border py-12 px-6 lg:px-12 xl:px-16 overflow-hidden">
           {/* Micro Geometric Accents */}
-          <div className="absolute top-10 right-20 w-32 h-32 rounded-full border border-williams-purple/10 pointer-events-none" />
-          <div className="absolute -bottom-10 left-10 w-48 h-48 rounded-full border border-tufts-blue/10 pointer-events-none" />
+          <div className="absolute top-10 right-20 w-32 h-32 rounded-full border border-zinc-300/15 dark:border-white/5 pointer-events-none" />
+          <div className="absolute -bottom-10 left-10 w-48 h-48 rounded-full border border-zinc-300/15 dark:border-white/5 pointer-events-none" />
 
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             {/* Left Narrative Column */}
             <div className="lg:col-span-7 space-y-4">
-              <span className="inline-flex items-center space-x-2 px-3 py-1 bg-williams-gold/15 text-williams-gold font-mono text-[10px] font-bold rounded-full uppercase tracking-wider border border-williams-gold/20">
-                <Sparkles className="w-3.5 h-3.5 text-williams-gold animate-spin-slow" />
-                <span>Seeking Summer 2026 Internships & full-time</span>
+              <span className="inline-flex items-center space-x-2 px-3.5 py-1 bg-williams-purple/10 dark:bg-williams-purple/25 text-williams-purple dark:text-williams-gold font-mono text-[10px] font-bold rounded-full uppercase tracking-widest border border-williams-purple/20 dark:border-williams-gold/30 shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 text-williams-purple dark:text-williams-gold animate-spin-slow" />
+                <span>Seeking Summer 2026 Internships & Full-Time Roles</span>
               </span>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-charcoal font-bold tracking-tight leading-tight">
@@ -299,9 +340,9 @@ export default function App() {
                 <button
                   id="btn-hero-connect"
                   onClick={() => scrollToSection("contact")}
-                  className="px-5 py-2.5 bg-williams-purple hover:bg-williams-purple-light text-white font-mono text-xs font-semibold rounded-lg shadow-sm border border-williams-gold/30 transition-all"
+                  className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white/10 dark:hover:bg-white/20 text-white font-mono text-xs font-semibold rounded-lg shadow-sm border border-zinc-700/50 dark:border-white/15 transition-all"
                 >
-                  Initiate Dialogue
+                  Contact Me
                 </button>
                 <button
                   id="btn-hero-mathlab"
@@ -309,7 +350,7 @@ export default function App() {
                   className="px-5 py-2.5 border border-cream-border bg-cream-card hover:bg-cream-card-sub text-charcoal font-mono text-xs transition-all rounded-lg flex items-center space-x-1"
                 >
                   <span>Play Chip-Firing Lab</span>
-                  <span className="text-williams-gold font-bold">★</span>
+                  <span className="text-zinc-400 font-bold">★</span>
                 </button>
               </div>
             </div>
@@ -327,7 +368,7 @@ export default function App() {
           {/* SECTION 1: PROLOGUE */}
           <section id="about" className="scroll-mt-24 space-y-8">
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 rounded-xl bg-williams-purple/5 border border-williams-purple/10 flex items-center justify-center text-williams-purple">
+              <div className="w-10 h-10 rounded-xl bg-zinc-500/5 border border-zinc-500/10 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
                 <User className="w-5 h-5" />
               </div>
               <div>
@@ -361,7 +402,7 @@ export default function App() {
                 <div className="space-y-4">
                   <div>
                     <span className="text-[10px] text-charcoal-light font-mono block">CUMULATIVE CS GPA</span>
-                    <span className="text-2xl font-serif font-bold text-williams-gold">4.0 / 4.0</span>
+                    <span className="text-2xl font-serif font-bold text-zinc-700 dark:text-zinc-200">4.0 / 4.0</span>
                   </div>
                   <div>
                     <span className="text-[10px] text-charcoal-light font-mono block">CO-AUTHORED PUBLICATIONS</span>
@@ -369,11 +410,11 @@ export default function App() {
                   </div>
                   <div>
                     <span className="text-[10px] text-charcoal-light font-mono block">ALMA MATER HERITAGE</span>
-                    <span className="text-sm font-sans font-semibold text-white">Williams College BA • Tufts MS</span>
+                    <span className="text-sm font-sans font-semibold text-charcoal">Williams College BA • Tufts MS</span>
                   </div>
                   <div>
                     <span className="text-[10px] text-charcoal-light font-mono block">COMPILER PROJECTS</span>
-                    <span className="text-xs font-mono font-semibold text-williams-gold bg-williams-purple/30 border border-williams-purple-light/20 px-2 py-0.5 rounded-lg">32-bit Virtual Machine</span>
+                    <span className="text-xs font-mono font-semibold text-zinc-700 dark:text-zinc-200 bg-zinc-200/50 dark:bg-zinc-800/60 border border-zinc-300 dark:border-zinc-700/50 px-2 py-0.5 rounded-lg">32-bit Virtual Machine</span>
                   </div>
                 </div>
               </div>
@@ -383,11 +424,11 @@ export default function App() {
           {/* SECTION 2: INTERACTIVE MATH LAB */}
           <section id="mathlab" className="scroll-mt-24 border-t border-cream-border/60 pt-16 space-y-6">
             <div className="flex items-center space-x-4 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-williams-gold/10 border border-williams-gold/25 flex items-center justify-center text-williams-purple">
-                <Sparkles className="w-5 h-5 text-williams-gold-dark" />
+              <div className="w-10 h-10 rounded-xl bg-zinc-500/5 border border-zinc-500/10 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
+                <Sparkles className="w-5 h-5 text-zinc-400" />
               </div>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-williams-gold-dark font-bold">Section 02</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold">Section 02</span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
                   Math Sandbox: Graph Chip-Firing Game
                 </h3>
@@ -405,7 +446,7 @@ export default function App() {
           {/* SECTION 4: PROJECTS */}
           <section id="projects" className="scroll-mt-24 border-t border-cream-border/60 pt-16 space-y-6">
             <div className="flex items-center space-x-4 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-williams-purple/5 border border-williams-purple/10 flex items-center justify-center text-williams-purple">
+              <div className="w-10 h-10 rounded-xl bg-zinc-500/5 border border-zinc-500/10 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
                 <Cpu className="w-5 h-5" />
               </div>
               <div>
@@ -426,7 +467,7 @@ export default function App() {
                 <GraduationCap className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-williams-gold-dark font-bold">Section 05</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold">Section 05</span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
                   Chronological Journey & Pedagogy
                 </h3>
@@ -439,7 +480,7 @@ export default function App() {
           {/* SECTION 6: SKILLS */}
           <section id="skills" className="scroll-mt-24 border-t border-cream-border/60 pt-16 space-y-6">
             <div className="flex items-center space-x-4 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-williams-purple/5 border border-williams-purple/10 flex items-center justify-center text-williams-purple">
+              <div className="w-10 h-10 rounded-xl bg-zinc-500/5 border border-zinc-500/10 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
                 <Wrench className="w-5 h-5" />
               </div>
               <div>
@@ -456,13 +497,13 @@ export default function App() {
           {/* SECTION 7: CONNECT */}
           <section id="contact" className="scroll-mt-24 border-t border-cream-border/60 pt-16 space-y-8">
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 rounded-xl bg-williams-purple/5 border border-williams-purple/10 flex items-center justify-center text-williams-purple">
+              <div className="w-10 h-10 rounded-xl bg-zinc-500/5 border border-zinc-500/10 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
                 <Mail className="w-5 h-5" />
               </div>
               <div>
                 <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold">Section 07</span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
-                  Initiate Connection
+                  Contact Me
                 </h3>
               </div>
             </div>
@@ -475,10 +516,10 @@ export default function App() {
                   Reach out using any of the direct coordinates on the right or click to copy.
                 </p>
 
-                <div className="p-4 bg-[#141414] rounded-2xl border-2 border-white/10 space-y-2 shadow-lg">
+                <div className="p-4 bg-cream-card rounded-2xl border-2 border-cream-border space-y-2 shadow-lg">
                   <span className="font-mono text-[10px] uppercase text-charcoal-light font-bold block">Current Location</span>
-                  <p className="text-sm text-white font-medium flex items-center gap-1.5">
-                    <MapPin className="w-4 h-4 text-tufts-blue-light" />
+                  <p className="text-sm text-charcoal font-medium flex items-center gap-1.5">
+                    <MapPin className="w-4 h-4 text-tufts-blue" />
                     Medford, Massachusetts • US (Relocation OK)
                   </p>
                 </div>
@@ -487,9 +528,9 @@ export default function App() {
               {/* Right coordinates grid */}
               <div className="md:col-span-7 space-y-3">
                 {/* Email item */}
-                <div className="flex items-center justify-between p-4 bg-[#141414] border-2 border-white/10 rounded-2xl shadow-lg hover:border-williams-gold/40 hover:bg-[#1a1a1a] transition-all">
+                <div className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-all">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2.5 bg-williams-purple/30 text-williams-gold border border-williams-purple-light/20 rounded-xl">
+                    <div className="p-2.5 bg-zinc-200/50 dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-300 dark:border-white/10 rounded-xl">
                       <Mail className="w-4 h-4" />
                     </div>
                     <div>
@@ -498,26 +539,26 @@ export default function App() {
                         onClick={() => {
                           window.location.href = "mailto:" + "eyobelassefa" + "@" + "gmail.com";
                         }}
-                        className="text-sm font-sans font-semibold text-white hover:text-williams-gold transition-all text-left flex items-center gap-1 cursor-pointer"
+                        className="text-sm font-sans font-semibold text-charcoal hover:text-zinc-500 dark:hover:text-zinc-400 transition-all text-left flex items-center gap-1 cursor-pointer"
                       >
-                        eyobelassefa <span className="text-williams-gold font-mono text-xs">[at]</span> gmail <span className="text-williams-gold font-mono text-xs">[dot]</span> com
+                        eyobelassefa <span className="text-zinc-500 dark:text-zinc-400 font-mono text-xs">[at]</span> gmail <span className="text-zinc-500 dark:text-zinc-400 font-mono text-xs">[dot]</span> com
                       </button>
                     </div>
                   </div>
                   <button
                     id="btn-copy-email"
                     onClick={() => copyToClipboard("eyobelassefa@gmail.com")}
-                    className="p-1.5 rounded-lg hover:bg-white/5 text-charcoal-light hover:text-white transition-all cursor-pointer"
+                    className="p-1.5 rounded-lg hover:bg-cream-card-sub text-charcoal-light hover:text-charcoal transition-all cursor-pointer"
                     title="Copy to clipboard"
                   >
-                    {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    {copiedEmail ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
 
                 {/* Tufts Email item */}
-                <div className="flex items-center justify-between p-4 bg-[#141414] border-2 border-white/10 rounded-2xl shadow-lg hover:border-williams-gold/40 hover:bg-[#1a1a1a] transition-all">
+                <div className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-all">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2.5 bg-tufts-blue/20 text-tufts-blue-light border border-tufts-blue-dark/20 rounded-xl">
+                    <div className="p-2.5 bg-tufts-blue/20 text-tufts-blue border border-tufts-blue/30 rounded-xl">
                       <Mail className="w-4 h-4" />
                     </div>
                     <div>
@@ -526,26 +567,26 @@ export default function App() {
                         onClick={() => {
                           window.location.href = "mailto:" + "egebre02" + "@" + "tufts.edu";
                         }}
-                        className="text-sm font-sans font-semibold text-white hover:text-tufts-blue-light transition-all text-left flex items-center gap-1 cursor-pointer"
+                        className="text-sm font-sans font-semibold text-charcoal hover:text-tufts-blue transition-all text-left flex items-center gap-1 cursor-pointer"
                       >
-                        egebre02 <span className="text-tufts-blue-light font-mono text-xs">[at]</span> tufts <span className="text-tufts-blue-light font-mono text-xs">[dot]</span> edu
+                        egebre02 <span className="text-tufts-blue font-mono text-xs">[at]</span> tufts <span className="text-tufts-blue font-mono text-xs">[dot]</span> edu
                       </button>
                     </div>
                   </div>
                   <button
                     id="btn-copy-tufts"
                     onClick={() => copyToClipboard("egebre02@tufts.edu")}
-                    className="p-1.5 rounded-lg hover:bg-white/5 text-charcoal-light hover:text-white transition-all cursor-pointer"
+                    className="p-1.5 rounded-lg hover:bg-cream-card-sub text-charcoal-light hover:text-charcoal transition-all cursor-pointer"
                     title="Copy to clipboard"
                   >
-                    {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    {copiedEmail ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
 
                 {/* LinkedIn item */}
-                <div className="flex items-center justify-between p-4 bg-[#141414] border-2 border-white/10 rounded-2xl shadow-lg hover:border-williams-gold/40 hover:bg-[#1a1a1a] transition-all">
+                <div className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-all">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2.5 bg-tufts-blue/20 text-tufts-blue-light border border-tufts-blue-dark/20 rounded-xl">
+                    <div className="p-2.5 bg-tufts-blue/20 text-tufts-blue border border-tufts-blue/30 rounded-xl">
                       <Linkedin className="w-4 h-4" />
                     </div>
                     <div>
@@ -554,9 +595,30 @@ export default function App() {
                         href="https://www.linkedin.com/in/eyobelgebre"
                         target="_blank"
                         rel="noreferrer"
-                        className="text-sm font-sans font-semibold text-white hover:text-tufts-blue-light transition-all flex items-center gap-1"
+                        className="text-sm font-sans font-semibold text-charcoal hover:text-tufts-blue transition-all flex items-center gap-1"
                       >
                         linkedin.com/in/eyobelgebre
+                        <ExternalLink className="w-3 h-3 opacity-60" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* GitHub item */}
+                <div className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-all">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2.5 bg-zinc-200/50 dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-300 dark:border-white/10 rounded-xl">
+                      <Github className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="font-mono text-[10px] text-charcoal-light block">GitHub Profile</span>
+                      <a
+                        href="https://github.com/EyobelG"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm font-sans font-semibold text-charcoal hover:text-zinc-500 dark:hover:text-zinc-400 transition-all flex items-center gap-1"
+                      >
+                        github.com/EyobelG
                         <ExternalLink className="w-3 h-3 opacity-60" />
                       </a>
                     </div>
@@ -568,6 +630,7 @@ export default function App() {
 
         </div>
       </main>
+      <PersonalChatbot />
     </div>
   );
 }

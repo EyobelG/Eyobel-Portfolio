@@ -268,7 +268,40 @@ export const EXPERIENCE_DATA: Experience[] = [
       "Applied Project-Based Learning (PBL) and Competency-Based Learning (CBL) to stimulate deep mathematical reasoning and application.",
       "Facilitated the Outdoor Sports Club twice a week, leading recreational hiking, climbing, and running excursions."
     ],
-    skills: ["AP Calculus BC", "Linear Algebra", "Project-Based Learning", "Pedagogy", "Coaching"]
+    skills: ["AP Calculus BC", "Linear Algebra", "Project-Based Learning", "Pedagogy", "Coaching"],
+    courses: [
+      {
+        name: "AP Calculus BC",
+        description: "Rigorous university-level single-variable calculus covering derivatives, integrals, and power series.",
+        syllabus: [
+          "Limits and Continuity",
+          "Advanced Differentiation Techniques",
+          "Applications of Derivatives & Extreme Values",
+          "Integration and Accumulation of Change",
+          "Differential Equations & Separation of Variables",
+          "Infinite Series, Taylor, and Maclaurin expansions"
+        ],
+        evaluations: [
+          { metric: "Student Mastery Score", score: "4.8 / 5.0" },
+          { metric: "AP Exam Pass Rate Estimate", score: "96%" }
+        ]
+      },
+      {
+        name: "Linear Algebra",
+        description: "High-level vector space mathematics, matrix linear transformations, determinants, and eigensystems.",
+        syllabus: [
+          "Systems of Linear Equations",
+          "Matrix Algebra & Inverse Matrices",
+          "Vector Spaces, Bases, and Subspaces",
+          "Eigenvalues, Eigenvectors, & Diagonalization",
+          "Orthogonality, Projections, and Least Squares"
+        ],
+        evaluations: [
+          { metric: "Course Recommendation Rate", score: "94%" },
+          { metric: "Clarity of Presentation", score: "4.9 / 5.0" }
+        ]
+      }
+    ]
   },
   {
     id: "exp-3",
@@ -296,7 +329,40 @@ export const EXPERIENCE_DATA: Experience[] = [
       "Led weekly mathematical help desk sessions in the NMH Math/Science Center.",
       "Did intensive pedagogy research, developing a portfolio focused on 'Grading for Equity' and student cognitive motivation."
     ],
-    skills: ["Curriculum Design", "Equitable Grading", "Advanced Calculus", "Dorm Supervision", "Advising"]
+    skills: ["Curriculum Design", "Equitable Grading", "Advanced Calculus", "Dorm Supervision", "Advising"],
+    courses: [
+      {
+        name: "Advanced Calculus I",
+        description: "An inquiry-based real analysis seminar covering supremum axioms, Cauchy sequences, and topology of the real line.",
+        syllabus: [
+          "Completeness Axiom & Infimum/Supremum",
+          "Limits & Convergence of Sequences",
+          "Open, Closed, and Compact sets in R",
+          "Limits of Functions & Continuous functions",
+          "Intermediate & Mean Value Theorems",
+          "Introductory Riemann Integration theory"
+        ],
+        evaluations: [
+          { metric: "Instruction Rigor Rating", score: "4.8 / 5.0" },
+          { metric: "Student Intellectual Engagement", score: "95%" }
+        ]
+      },
+      {
+        name: "Diversity & Social Justice",
+        description: "An interdisciplinary seminar exploring institutional power structures, identity dynamics, and statistical modeling of gerrymandering and voting equity.",
+        syllabus: [
+          "Frameworks of Oppression and Privilege",
+          "History of Civil Rights Movements",
+          "Mathematical Modeling of Gerrymandering (Graph Cuts & Polsby-Popper)",
+          "Socio-Economic Deserts & Algorithmic Biases",
+          "Student-Led Equity Action Projects"
+        ],
+        evaluations: [
+          { metric: "Pedagogy Effectiveness", score: "4.7 / 5.0" },
+          { metric: "Inclusivity Classroom Rating", score: "98%" }
+        ]
+      }
+    ]
   },
   {
     id: "exp-5",

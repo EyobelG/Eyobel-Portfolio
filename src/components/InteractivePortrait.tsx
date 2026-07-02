@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { 
-  Clock, Cloud, Sun, CloudRain, CloudSun, 
-  UploadCloud, Trash2, MapPin, Wind, Droplets, 
-  Lock, ShieldCheck, RefreshCw, Zap
+  Clock, Sun, Cloud, CloudRain, CloudSun, 
+  MapPin, Wind, Droplets, RefreshCw, Zap
 } from "lucide-react";
 
 // Weather info structure
@@ -64,13 +62,6 @@ const STATIC_STATIONS: WeatherInfo[] = [
 ];
 
 export default function InteractivePortrait() {
-  // Profile Photo State with local persistence
-  const [profileImage, setProfileImage] = useState<string | null>(() => {
-    return localStorage.getItem("eyobel_profile_photo") || null;
-  });
-  const [isDragging, setIsDragging] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
   // Time & Clock state
   const [time, setTime] = useState(new Date());
   const [is24Hour, setIs24Hour] = useState(false);
@@ -86,21 +77,41 @@ export default function InteractivePortrait() {
   const [isWeatherLoading, setIsWeatherLoading] = useState(false);
   const [weatherError, setWeatherError] = useState(false);
 
-  // Owner Authentication State
-  const [isOwnerVerified, setIsOwnerVerified] = useState<boolean>(() => {
-    return sessionStorage.getItem("eyobel_owner_verified") === "true";
-  });
-  const [showVerifyModal, setShowVerifyModal] = useState(false);
-  const [verifyEmail, setVerifyEmail] = useState("");
-  const [verifyPasscode, setVerifyPasscode] = useState("");
-  const [verifyError, setVerifyError] = useState("");
-  const [pendingFile, setPendingFile] = useState<File | null>(null);
-
   // Hover & 3D Parallax position
   const cardRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: -1000, y: -1000, radius: 90 });
+
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+
+  // Photo auto-loader candidates
+  const IMAGE_CANDIDATES = [
+    "/eyobel.jpg",
+    "/eyobel.png",
+    "/eyobel.jpeg",
+    "/eyobel_headshot.jpg",
+    "/eyobel_headshot.png",
+    "/eyobel_headshot.jpeg"
+  ];
+  const [candidateIndex, setCandidateIndex] = useState(0);
+  const [hasImage, setHasImage] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  const handleImageLoad = () => {
+    setHasImage(true);
+    setImageLoading(false);
+  };
+
+  const handleImageError = () => {
+    if (candidateIndex < IMAGE_CANDIDATES.length - 1) {
+      setCandidateIndex(prev => prev + 1);
+    } else {
+      setHasImage(false);
+      setImageLoading(false);
+    }
+  };
 
   // Handle ticking clocks
   useEffect(() => {
@@ -170,7 +181,7 @@ export default function InteractivePortrait() {
         });
       }
     } catch (err) {
-      console.error("Error fetching live weather for Medford:", err);
+      console.warn("Could not fetch live weather, using static fallback:", err);
       setWeatherError(true);
     } finally {
       setIsWeatherLoading(false);
@@ -182,6 +193,124 @@ export default function InteractivePortrait() {
     // Refresh every 5 minutes
     const interval = setInterval(fetchMedfordWeather, 300000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Canvas Vector Field Particles
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationId: number;
+    let width = canvas.width = canvas.offsetWidth;
+    let height = canvas.height = canvas.offsetHeight;
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (canvas) {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+      }
+    });
+    resizeObserver.observe(canvas);
+
+    const particleCount = 35;
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      color: string;
+    }> = [];
+
+    const colors = [
+      "rgba(139, 92, 246, 0.4)", // Williams Purple
+      "rgba(65, 105, 225, 0.45)", // Tufts/Royal Blue
+      "rgba(251, 191, 36, 0.35)"  // Williams Gold
+    ];
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: Math.random() * 2 + 1,
+        color: colors[i % colors.length]
+      });
+    }
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      // Subtle vector field background lines
+      ctx.strokeStyle = "rgba(139, 92, 246, 0.04)";
+      ctx.lineWidth = 0.8;
+      const step = 32;
+      for (let x = 0; x < width; x += step) {
+        for (let y = 0; y < height; y += step) {
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + 2, y + 2);
+          ctx.stroke();
+        }
+      }
+
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        const p1 = particles[i];
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 70) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(139, 92, 246, ${0.15 * (1 - dist / 70)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw and update particles
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+
+        // Mouse warping
+        const mdx = mouseRef.current.x - p.x;
+        const mdy = mouseRef.current.y - p.y;
+        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+
+        if (mdist < mouseRef.current.radius) {
+          const force = (mouseRef.current.radius - mdist) / mouseRef.current.radius;
+          p.x -= (mdx / mdist) * force * 1.8;
+          p.y -= (mdy / mdist) * force * 1.8;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+
+      animationId = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      resizeObserver.disconnect();
+    };
   }, []);
 
   // Handle 3D Parallax Rotation on Mouse Move
@@ -198,123 +327,26 @@ export default function InteractivePortrait() {
     // Calculate tilt: max 15 degrees
     setRotateX(-mouseY * 15);
     setRotateY(mouseX * 15);
+
+    // Update particles mouse coords
+    mouseRef.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      radius: 90
+    };
   };
 
   const handleMouseLeave = () => {
     setRotateX(0);
     setRotateY(0);
     setIsHovered(false);
-  };
 
-  // Owner Passcode Verification
-  const handleVerify = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleanEmail = verifyEmail.trim().toLowerCase();
-    const cleanPass = verifyPasscode.trim();
-
-    const isEmailValid = cleanEmail === "eyobelassefa@gmail.com" || cleanEmail === "eyobel" || cleanEmail === "eyobelassefa";
-    const isPassValid = ["eyobel", "tufts2026", "williams", "williams2022"].includes(cleanPass.toLowerCase());
-
-    if (!cleanEmail || !cleanPass) {
-      setVerifyError("Please enter both email and passcode.");
-      return;
-    }
-
-    if (isEmailValid && isPassValid) {
-      sessionStorage.setItem("eyobel_owner_verified", "true");
-      setIsOwnerVerified(true);
-      setShowVerifyModal(false);
-      setVerifyEmail("");
-      setVerifyPasscode("");
-      setVerifyError("");
-      
-      if (pendingFile) {
-        processImage(pendingFile);
-        setPendingFile(null);
-      } else {
-        setTimeout(() => {
-          fileInputRef.current?.click();
-        }, 150);
-      }
-    } else {
-      if (!isEmailValid) {
-        setVerifyError("Invalid owner email or username.");
-      } else {
-        setVerifyError("Incorrect passcode.");
-      }
-    }
-  };
-
-  // Image Upload Logic
-  const processImage = (file: File) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-      setProfileImage(base64String);
-      localStorage.setItem("eyobel_profile_photo", base64String);
+    // Clear particles mouse
+    mouseRef.current = {
+      x: -1000,
+      y: -1000,
+      radius: 90
     };
-    reader.readAsDataURL(file);
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file && file.type.startsWith("image/")) {
-      if (isOwnerVerified) {
-        processImage(file);
-      } else {
-        setPendingFile(file);
-        setShowVerifyModal(true);
-        setVerifyError("");
-      }
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (isOwnerVerified) {
-        processImage(file);
-      } else {
-        setPendingFile(file);
-        setShowVerifyModal(true);
-        setVerifyError("");
-      }
-    }
-  };
-
-  const handleUploadClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (isOwnerVerified) {
-      fileInputRef.current?.click();
-    } else {
-      setPendingFile(null);
-      setShowVerifyModal(true);
-      setVerifyError("");
-    }
-  };
-
-  const handleClearPhoto = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!isOwnerVerified) {
-      setShowVerifyModal(true);
-      setVerifyError("");
-      return;
-    }
-    if (confirm("Reset profile photo to default vector illustration?")) {
-      setProfileImage(null);
-      localStorage.removeItem("eyobel_profile_photo");
-    }
   };
 
   // Time representation calculations
@@ -355,12 +387,7 @@ export default function InteractivePortrait() {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onMouseEnter={() => setIsHovered(true)}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        className={`relative w-full aspect-[4/5] rounded-[32px] overflow-hidden shadow-2xl transition-all duration-300 bg-black/40 border-2 ${
-          isDragging ? "border-[#00e5a3]" : "border-white/10"
-        } cursor-default`}
+        className="relative w-full aspect-[4/5] rounded-[32px] overflow-hidden shadow-2xl transition-all duration-300 bg-[#08070c] border-2 border-cream-border cursor-default"
         style={{
           transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${isHovered ? 1.02 : 1}, ${isHovered ? 1.02 : 1}, 1)`,
           transformStyle: "preserve-3d",
@@ -369,141 +396,246 @@ export default function InteractivePortrait() {
             : "0 10px 30px -15px rgba(0,0,0,0.8)"
         }}
       >
-        {/* Hidden File Input */}
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          onChange={handleFileChange} 
-          accept="image/*" 
-          className="hidden" 
+        {/* Dynamic Vector Particle Canvas Overlay */}
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full pointer-events-none z-20 mix-blend-screen opacity-90"
         />
-
-        {/* Dynamic Background Gradients */}
-        <div className="absolute inset-0 transition-opacity duration-700 bg-gradient-to-tr from-black via-[#0d0a14] to-[#12141f]" />
-
-        {/* Ambient radial glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,#330066,transparent_60%)] opacity-35" />
-
-        {/* 1. LAYER: TECHNICAL ACCENTS (GRID) */}
-        <div 
-          className="absolute inset-0 opacity-15 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"
-          style={{ transform: "translateZ(-40px)" }}
-        />
-
-        {/* 2. LAYER: PORTRAIT VIEWER */}
+        {/* PORTRAIT VIEWER (REAL PHOTO WITH FALLBACK TO PORTRAIT SVG) */}
         <div 
           className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
           style={{ transform: "translateZ(10px)" }}
         >
-          {profileImage ? (
-            // Real User Face Image
-            <div className="relative w-full h-full flex items-center justify-center">
-              <img 
-                src={profileImage} 
-                alt="Eyobel profile" 
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover rounded-[30px]" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 rounded-[30px]" />
-            </div>
-          ) : (
-            // Stylized SVG Face representation (original face vector)
-            <div className="w-full h-full flex items-end justify-center pt-8">
-              <svg
-                viewBox="0 0 200 240"
-                className="w-[88%] h-[88%] object-contain mt-auto"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {/* Background Halo */}
-                <circle cx="100" cy="110" r="75" className="fill-white/5 stroke-white/5" strokeWidth="1" />
-                <circle cx="100" cy="110" r="55" className="fill-white/5" />
+          {/* We always render this image in the background, trying to resolve.
+              Once it loads successfully, it overlays the fallback SVG with a smooth fade-in. */}
+          <img 
+            src={IMAGE_CANDIDATES[candidateIndex]} 
+            alt="Eyobel Gebre" 
+            className="w-full h-full object-cover rounded-[30px] absolute inset-0 z-10 transition-opacity duration-500"
+            style={{ opacity: hasImage ? 1 : 0 }}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            referrerPolicy="no-referrer"
+          />
 
-                {/* SUIT JACKET (Navy Blue) */}
-                <path
-                  d="M35 240 C35 200, 60 185, 80 180 L120 180 C140 185, 165 200, 165 240 Z"
-                  fill="#1e293b"
-                />
-                {/* Suit Lapels */}
-                <path d="M55 240 L80 185 L90 205 L65 240 Z" fill="#0f172a" />
-                <path d="M145 240 L120 185 L110 205 L135 240 Z" fill="#0f172a" />
+          <svg
+            viewBox="0 0 320 400"
+            className="w-full h-full object-cover rounded-[30px]"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              {/* Studio Background Gradient */}
+              <radialGradient id="studio-bg" cx="50%" cy="40%" r="60%" fx="50%" fy="30%">
+                <stop offset="0%" stopColor="#2c243a" />
+                <stop offset="50%" stopColor="#12101a" />
+                <stop offset="100%" stopColor="#08070c" />
+              </radialGradient>
 
-                {/* WHITE SHIRT */}
-                <path d="M80 180 L120 180 L100 220 Z" fill="#ffffff" />
-                <path d="M80 180 L90 195 L100 180 Z" fill="#e2e8f0" />
-                <path d="M120 180 L110 195 L100 180 Z" fill="#e2e8f0" />
+              {/* Skin Tones */}
+              <linearGradient id="skin-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#b26d43" />
+                <stop offset="60%" stopColor="#96542d" />
+                <stop offset="100%" stopColor="#7a3f1d" />
+              </linearGradient>
+              <linearGradient id="neck-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#7a3f1d" />
+                <stop offset="100%" stopColor="#4c220b" />
+              </linearGradient>
+              <linearGradient id="skin-highlight" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#cc885e" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#cc885e" stopOpacity="0" />
+              </linearGradient>
 
-                {/* STRIPED TIE (Williams Purple and Gold) */}
-                <g id="striped-tie">
-                  <path d="M96 182 L104 182 L108 240 L92 240 Z" fill="#330066" />
-                  <path d="M96 190 L104 195 L104 200 L95 195 Z" fill="#ffcc00" />
-                  <path d="M95 205 L105 212 L106 217 L94 210 Z" fill="#ffcc00" />
-                  <path d="M93 222 L107 231 L108 236 L92 227 Z" fill="#ffcc00" />
-                </g>
+              {/* Suit and Tie Colors */}
+              <linearGradient id="suit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#1b2942" />
+                <stop offset="50%" stopColor="#111a2e" />
+                <stop offset="100%" stopColor="#090e1a" />
+              </linearGradient>
+              <linearGradient id="tie-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#4c1d95" />
+                <stop offset="100%" stopColor="#2e1065" />
+              </linearGradient>
 
-                {/* NECK */}
-                <path d="M85 145 C85 145, 85 185, 100 185 C115 185, 115 145, 115 145 Z" fill="#a16244" />
-                <path d="M85 170 C92 182, 108 182, 115 170 Z" fill="#78350f" opacity="0.3" />
+              {/* Drop Shadows */}
+              <filter id="subtle-shadow" x="-10%" y="-10%" width="120%" height="120%">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#000000" floodOpacity="0.5" />
+              </filter>
+            </defs>
 
-                {/* HEAD & FACE */}
-                <path
-                  d="M68 115 C68 80, 80 75, 100 75 C120 75, 132 80, 132 115 C132 150, 120 155, 100 155 C80 155, 68 150, 68 115 Z"
-                  fill="#b45309"
-                />
+            {/* 1. STUDIO BACKGROUND */}
+            <rect width="320" height="400" fill="url(#studio-bg)" />
 
-                {/* CURLY HAIR */}
-                <g id="curly-hair">
-                  <path d="M64 110 C62 90, 70 65, 100 65 C130 65, 138 90, 136 110 C128 105, 115 95, 100 95 C85 95, 72 105, 64 110 Z" fill="#17110d" />
-                  <circle cx="70" cy="95" r="10" fill="#110c0a" />
-                  <circle cx="82" cy="80" r="12" fill="#17110d" />
-                  <circle cx="100" cy="73" r="13" fill="#1c1512" />
-                  <circle cx="118" cy="80" r="12" fill="#17110d" />
-                  <circle cx="130" cy="95" r="10" fill="#110c0a" />
-                  
-                  <circle cx="78" cy="100" r="8" fill="#17110d" />
-                  <circle cx="90" cy="85" r="10" fill="#1c1512" />
-                  <circle cx="110" cy="85" r="10" fill="#17110d" />
-                  <circle cx="122" cy="100" r="8" fill="#1c1512" />
-                </g>
+            {/* BOKEH EFFECT - BLURRED STUDIO LIGHTS */}
+            <g opacity="0.12">
+              <circle cx="60" cy="80" r="45" fill="#fef08a" filter="blur(20px)" />
+              <circle cx="270" cy="120" r="55" fill="#a78bfa" filter="blur(25px)" />
+              <circle cx="160" cy="280" r="60" fill="#38bdf8" filter="blur(30px)" />
+            </g>
 
-                {/* EARS */}
-                <circle cx="67" cy="118" r="6" fill="#b45309" />
-                <circle cx="133" cy="118" r="6" fill="#b45309" />
+            {/* AMBIENT SHADOW BEHIND PORTRAIT */}
+            <ellipse cx="160" cy="380" rx="90" ry="25" fill="#000000" opacity="0.6" filter="blur(15px)" />
 
-                {/* EYES & BROWS */}
-                <g id="eyebrows">
-                  <path d="M78 105 C83 102, 88 103, 91 106" stroke="#17110d" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M122 105 C117 102, 112 103, 109 106" stroke="#17110d" strokeWidth="2.5" strokeLinecap="round" />
-                </g>
-                <g id="eyes">
-                  <ellipse cx="85" cy="111" rx="4.5" ry="3" fill="#ffffff" />
-                  <circle cx="85" cy="111" r="2" fill="#451a03" />
-                  <ellipse cx="115" cy="111" rx="4.5" ry="3" fill="#ffffff" />
-                  <circle cx="115" cy="111" r="2" fill="#451a03" />
-                </g>
+            {/* 2. HAIR - BACK LAYER SILHOUETTE */}
+            <g fill="#0b0a0f">
+              {/* Outline curls representing dense afro-curly texture */}
+              <circle cx="110" cy="115" r="32" />
+              <circle cx="210" cy="115" r="32" />
+              <circle cx="125" cy="95" r="35" />
+              <circle cx="195" cy="95" r="35" />
+              <circle cx="160" cy="85" r="40" />
+              {/* Micro-curls on the edge */}
+              <circle cx="95" cy="130" r="18" />
+              <circle cx="225" cy="130" r="18" />
+              <circle cx="90" cy="150" r="12" />
+              <circle cx="230" cy="150" r="12" />
+            </g>
 
-                {/* NOSE */}
-                <path d="M100 110 L97 125 L103 125 Z" fill="#92400e" opacity="0.4" />
-                <path d="M96 125 C98 127, 102 127, 104 125" stroke="#78350f" strokeWidth="1.5" strokeLinecap="round" />
+            {/* 3. EARS */}
+            <g fill="url(#skin-grad)">
+              {/* Left Ear */}
+              <path d="M96 145 c-8 0 -14 6 -14 15 s6 15 14 15 c2 0 4 -2 4 -5 v-20 c0 -3 -2 -5 -4 -5 z" />
+              <path d="M94 151 c-4 0 -7 3 -7 8 s3 8 7 8 c1 0 2 -1 2 -3 v-10 c0 -2 -1 -3 -2 -3 z" fill="#7a3f1d" opacity="0.6" />
+              {/* Right Ear */}
+              <path d="M224 145 c8 0 14 6 14 15 s-6 15 -14 15 c-2 0 -4 -2 -4 -5 v-20 c0 -3 2 -5 4 -5 z" />
+              <path d="M226 151 c4 0 7 3 7 8 s-3 8 -7 8 c-1 0 -2 -1 -2 -3 v-10 c0 -2 1 -3 2 -3 z" fill="#7a3f1d" opacity="0.6" />
+            </g>
 
-                {/* BEARD & GOATEE */}
-                <g id="beard-goatee">
-                  <path d="M88 131 C94 128, 106 128, 112 131 C109 133, 91 133, 88 131 Z" fill="#17110d" />
-                  <path d="M68 122 C68 145, 80 157, 100 157 C120 157, 132 145, 132 122 C132 122, 127 150, 100 150 C73 150, 68 122, 68 122 Z" fill="#110c0a" opacity="0.8" />
-                  <rect x="96" y="138" width="8" height="18" rx="2" fill="#17110d" />
-                  <circle cx="100" cy="151" r="9" fill="#110c0a" />
-                </g>
+            {/* 4. NECK */}
+            <path d="M135 180 v50 c0 15 10 25 25 25 s25 -10 25 -25 v-50 z" fill="url(#neck-grad)" />
+            {/* Neck shadow under chin */}
+            <path d="M135 180 c10 12 40 12 50 0 v15 c-5 12 -45 12 -50 0 z" fill="#4c220b" opacity="0.75" />
 
-                {/* SMILE */}
-                <path d="M88 134 C92 141, 108 141, 112 134" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" />
-                <path d="M88 134 C92 141, 108 141, 112 134 Z" fill="#ffffff" />
-                <path d="M86 134 C91 131, 109 131, 114 134" stroke="#78350f" strokeWidth="1" />
-              </svg>
-            </div>
-          )}
+            {/* 5. FACE BASE */}
+            <path d="M100 130 c0 -30 20 -45 60 -45 s60 15 60 45 c0 35 -12 60 -60 60 s-60 -25 -60 -60 z" fill="url(#skin-grad)" filter="url(#subtle-shadow)" />
+            {/* Cheek highlights for 3D effect */}
+            <path d="M108 135 c4 -10 18 -15 25 -10 c4 3 2 12 -4 15 c-8 4 -18 -1 -21 -5 z" fill="url(#skin-highlight)" />
+            <path d="M212 135 c-4 -10 -18 -15 -25 -10 c-4 3 -2 12 4 15 c8 4 18 -1 21 -5 z" fill="url(#skin-highlight)" />
+
+            {/* Forehead highlight */}
+            <ellipse cx="160" cy="105" rx="30" ry="10" fill="#ffffff" opacity="0.12" />
+
+            {/* 6. CURLY HAIR (FRONT OVERLAY FOR TEXTURE & VOLUME) */}
+            <g fill="#0f0e15">
+              {/* Forehead hairline curls */}
+              <circle cx="110" cy="100" r="16" />
+              <circle cx="125" cy="92" r="18" />
+              <circle cx="145" cy="88" r="18" />
+              <circle cx="160" cy="86" r="18" />
+              <circle cx="175" cy="88" r="18" />
+              <circle cx="195" cy="92" r="18" />
+              <circle cx="210" cy="100" r="16" />
+              {/* Inner curly texture curls */}
+              <circle cx="115" cy="115" r="14" fill="#14131a" />
+              <circle cx="135" cy="105" r="16" fill="#1b1a22" />
+              <circle cx="160" cy="100" r="18" fill="#201f2b" />
+              <circle cx="185" cy="105" r="16" fill="#1b1a22" />
+              <circle cx="205" cy="115" r="14" fill="#14131a" />
+              
+              {/* Micro curls for detailed look */}
+              <circle cx="102" cy="110" r="8" fill="#08080c" />
+              <circle cx="110" cy="125" r="7" fill="#08080c" />
+              <circle cx="210" cy="125" r="7" fill="#08080c" />
+              <circle cx="218" cy="110" r="8" fill="#08080c" />
+            </g>
+
+            {/* 7. EYEBROWS */}
+            <path d="M115 124 c5 -4 14 -4 18 -1 c2 2 -1 4 -3 3 c-4 -2 -11 -2 -14 1 c-2 2 -3 -1 -1 -3 z" fill="#120e0c" />
+            <path d="M205 124 c-5 -4 -14 -4 -18 -1 c-2 2 1 4 3 3 c4 -2 11 -2 14 1 c2 2 3 -1 1 -3 z" fill="#120e0c" />
+
+            {/* 8. EYES */}
+            <g>
+              {/* Left Eye Sclera */}
+              <path d="M120 131 c4 -3 10 -3 14 0 c1 1 -1 3 -2 2 c-3 -2 -8 -2 -10 0 c-1 1 -3 -1 -2 -2 z" fill="#ffffff" />
+              <ellipse cx="127" cy="131" rx="5.5" ry="4" fill="#ffffff" />
+              <circle cx="127" cy="131" r="3.2" fill="#4d2916" /> {/* Brown Iris */}
+              <circle cx="127" cy="131" r="1.8" fill="#08080a" /> {/* Pupil */}
+              <circle cx="128.2" cy="129.8" r="0.8" fill="#ffffff" /> {/* Eye Catchlight */}
+
+              {/* Right Eye Sclera */}
+              <path d="M200 131 c-4 -3 -10 -3 -14 0 c-1 1 1 3 2 2 c3 -2 8 -2 10 0 c1 1 3 -1 2 -2 z" fill="#ffffff" />
+              <ellipse cx="193" cy="131" rx="5.5" ry="4" fill="#ffffff" />
+              <circle cx="193" cy="131" r="3.2" fill="#4d2916" /> {/* Brown Iris */}
+              <circle cx="193" cy="131" r="1.8" fill="#08080a" /> {/* Pupil */}
+              <circle cx="194.2" cy="129.8" r="0.8" fill="#ffffff" /> {/* Eye Catchlight */}
+            </g>
+
+            {/* 9. NOSE */}
+            <path d="M157 122 h6 v18 c0 3 -2 5 -5 5 s-5 -2 -5 -5 z" fill="#7a3f1d" opacity="0.3" />
+            <path d="M153 140 c1 -2 4 -3 7 -3 s6 1 7 3 c1 2 -1 3 -2 2 c-1 -1 -3 -2 -5 -2 s-4 1 -5 2 c-1 1 -3 -1 -2 -2 z" fill="#7a3f1d" />
+            <ellipse cx="160" cy="138" rx="2" ry="1.2" fill="#cc885e" opacity="0.6" /> {/* Nose tip highlight */}
+
+            {/* 10. MUSTACHE & GOATEE (FACIAL HAIR) */}
+            <g fill="#141217">
+              {/* Mustache */}
+              <path d="M142 149 c5 -2 11 -1 18 -1 s13 -1 18 1 c2 1 -1 3 -3 2 c-4 -2 -10 -1 -15 -1 s-11 -1 -15 1 c-2 1 -5 -1 -3 -2 z" />
+              {/* Stubble goatee on chin */}
+              <path d="M136 172 c4 8 12 13 24 13 s20 -5 24 -13 c1 -1 -1 -2 -2 -1 c-4 5 -11 9 -22 9 s-18 -4 -22 -9 c-1 -1 -2 0 -2 1 z" opacity="0.85" />
+              <path d="M157 156 h6 v15 h-6 z" opacity="0.85" /> {/* Soul patch */}
+            </g>
+
+            {/* 11. SMILE & TEETH */}
+            <g>
+              {/* Lip background */}
+              <path d="M138 152 c6 8 38 8 44 0 c1 -1 -1 -3 -3 -2 c-5 4 -33 4 -38 0 c-2 -1 -4 1 -3 2 z" fill="#803d35" />
+              {/* Open friendly mouth cavity */}
+              <path d="M140 153 c4 12 36 12 40 0 z" fill="#45110d" />
+              {/* Brilliant white teeth */}
+              <path d="M142 153 c3 4 33 4 36 0 v3 c-3 1 -33 1 -36 0 z" fill="#ffffff" />
+              {/* Lower Lip outline */}
+              <path d="M140 154 c4 13 36 13 40 0 c1 2 -1 4 -3 4 c-5 3 -31 3 -34 0 c-2 0 -4 -2 -3 -4 z" fill="#994a40" />
+            </g>
+
+            {/* 12. CLOTHING: SHARP NAVY SUIT, WHITE SHIRT & STRIPED TIE */}
+            <g>
+              {/* White Shirt collar base */}
+              <path d="M125 220 L195 220 L160 260 Z" fill="#ffffff" />
+              
+              {/* Crisp White Collars */}
+              <path d="M125 210 L146 235 L142 210 Z" fill="#f1f5f9" />
+              <path d="M195 210 L174 235 L178 210 Z" fill="#f1f5f9" />
+              <path d="M130 210 L152 238 L147 210 Z" fill="#ffffff" />
+              <path d="M190 210 L168 238 L173 210 Z" fill="#ffffff" />
+
+              {/* Elegant Diagonal Striped Tie (Purple & Gold) */}
+              <g id="silk-tie">
+                {/* Tie Knot */}
+                <path d="M151 216 L169 216 L164 234 L156 234 Z" fill="url(#tie-grad)" filter="url(#subtle-shadow)" />
+                {/* Knot stripes */}
+                <path d="M152 220 L162 224 L161 228 L152 224 Z" fill="#eab308" />
+                <path d="M154 228 L164 232 L163 234 L155 231 Z" fill="#eab308" />
+
+                {/* Main Tie Body */}
+                <path d="M155 234 L165 234 L174 340 L160 355 L146 340 Z" fill="url(#tie-grad)" filter="url(#subtle-shadow)" />
+                
+                {/* Precision Diagonal Gold Stripes */}
+                <path d="M155 244 L169 252 L168 257 L155 249 Z" fill="#eab308" />
+                <path d="M154 260 L171 270 L170 275 L153 265 Z" fill="#eab308" />
+                <path d="M152 277 L173 290 L171 295 L151 283 Z" fill="#eab308" />
+                <path d="M150 295 L174 310 L172 315 L149 301 Z" fill="#eab308" />
+                <path d="M148 314 L174 330 L171 335 L147 319 Z" fill="#eab308" />
+                <path d="M147 332 L168 346 L165 350 L146 336 Z" fill="#eab308" />
+              </g>
+
+              {/* Navy Blue Suit Jacket shoulders */}
+              <path d="M20 400 C20 310, 80 230, 125 215 L195 215 C240 230, 300 310, 300 400 Z" fill="url(#suit-grad)" filter="url(#subtle-shadow)" />
+              
+              {/* Suit Lapels & Stitches */}
+              {/* Left Lapel */}
+              <path d="M125 215 L100 290 L135 345 L146 400 L120 400 L70 310 Z" fill="#0f1624" />
+              <path d="M125 215 L100 290 L135 345 L142 400 L144 400 L137 344 L102 289 Z" fill="#1b2942" />
+              {/* Right Lapel */}
+              <path d="M195 215 L220 290 L185 345 L174 400 L200 400 L250 310 Z" fill="#0f1624" />
+              <path d="M195 215 L220 290 L185 345 L178 400 L176 400 L183 344 L218 289 Z" fill="#1b2942" />
+
+              {/* Dark V-opening shadow */}
+              <path d="M125 215 L160 265 L195 215 L180 215 L160 245 L140 215 Z" fill="#0b0f1a" opacity="0.4" />
+            </g>
+          </svg>
         </div>
 
-        {/* 3. LAYER: OVERLAYS AND CONTROLS */}
+        {/* 3. LAYER: OVERLAYS AND CONTROLS (HUD) */}
         <div className="absolute inset-0 z-20 flex flex-col justify-between p-4 pointer-events-auto">
           
           {/* Top HUD Row: Time and Weather widgets */}
@@ -515,12 +647,12 @@ export default function InteractivePortrait() {
                 e.stopPropagation();
                 setActiveTimeZone(prev => prev === "local" ? "addis" : "local");
               }}
-              className="bg-black/75 hover:bg-black/90 border border-white/10 hover:border-williams-gold/40 rounded-xl p-2.5 transition-all cursor-pointer shadow-md select-none w-[48%]"
+              className="bg-black/75 hover:bg-black/90 border border-white/10 hover:border-zinc-500/40 rounded-xl p-2.5 transition-all cursor-pointer shadow-md select-none w-[48%]"
               style={{ transform: "translateZ(30px)" }}
               title="Click to toggle Local vs. Addis Ababa time!"
             >
               <div className="flex items-center space-x-1.5 text-[8px] font-mono text-zinc-400 font-semibold mb-1">
-                <Clock className="w-3 h-3 text-williams-gold animate-pulse" />
+                <Clock className="w-3 h-3 text-zinc-400 animate-pulse" />
                 <span>{activeTimeZone === "local" ? "MEDFORD (LOCAL)" : "ADDIS ABABA"}</span>
               </div>
               <div className="font-mono text-xs font-bold text-white tracking-tight leading-none tabular-nums mb-1">
@@ -528,7 +660,7 @@ export default function InteractivePortrait() {
               </div>
               <div className="flex justify-between items-center text-[7px] font-mono text-zinc-500">
                 <span>{time.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
-                <span className="text-[6px] text-williams-gold bg-williams-purple/30 px-1 rounded">
+                <span className="text-[6px] text-zinc-300 bg-zinc-800/60 border border-zinc-700/50 px-1 rounded">
                   {activeTimeZone === "local" ? "EDT" : "EAT"}
                 </span>
               </div>
@@ -553,7 +685,7 @@ export default function InteractivePortrait() {
                 {isWeatherLoading ? (
                   <RefreshCw className="w-3 h-3 text-[#00e5a3] animate-spin" />
                 ) : (
-                  <WeatherIcon className="w-3.5 h-3.5 text-williams-gold" />
+                  <WeatherIcon className="w-3.5 h-3.5 text-zinc-400" />
                 )}
               </div>
               
@@ -581,7 +713,7 @@ export default function InteractivePortrait() {
                     setShowWeatherDetails(!showWeatherDetails);
                   }}
                   className="text-[#00e5a3] underline cursor-pointer"
-                >
+                  >
                   {showWeatherDetails ? "hide" : "details"}
                 </span>
               </div>
@@ -611,40 +743,8 @@ export default function InteractivePortrait() {
 
           </div>
 
-          {/* Middle Drag & Drop Indicator / Replace controls */}
-          <div className="flex flex-col items-center justify-center flex-1 my-4">
-            {isDragging ? (
-              <div className="bg-[#00e5a3]/90 border-2 border-dashed border-white text-black p-4 rounded-2xl flex flex-col items-center space-y-1 shadow-2xl animate-pulse">
-                <UploadCloud className="w-10 h-10" />
-                <span className="font-mono text-xs font-bold">Drop Photo here!</span>
-              </div>
-            ) : (
-              <div 
-                className={`group/btn flex flex-col items-center space-y-2 p-4 transition-all duration-300 rounded-2xl ${
-                  isHovered ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                <button
-                  onClick={handleUploadClick}
-                  className="flex items-center space-x-1.5 px-3 py-1.5 bg-black/80 hover:bg-williams-purple border border-white/25 hover:border-williams-gold text-white hover:text-williams-gold rounded-full text-[9px] font-mono font-bold tracking-wider uppercase transition-all shadow-lg cursor-pointer animate-none"
-                  title="Click or Drag & Drop to load your face photo!"
-                >
-                  <UploadCloud className="w-3.5 h-3.5" />
-                  <span>{profileImage ? "Replace Photo" : "Upload Face Photo"}</span>
-                </button>
-
-                {profileImage && (
-                  <button
-                    onClick={handleClearPhoto}
-                    className="flex items-center space-x-1 px-2.5 py-1 bg-black/80 hover:bg-red-900 border border-red-500/20 text-red-400 hover:text-white rounded-full text-[8px] font-mono uppercase tracking-wider transition-all shadow-md cursor-pointer"
-                  >
-                    <Trash2 className="w-3 h-3" />
-                    <span>Use Vector Fallback</span>
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
+          {/* Spacer for artwork focus */}
+          <div className="flex-1 pointer-events-none" />
 
           {/* Floating Tag at the bottom of portrait */}
           <div
@@ -652,13 +752,13 @@ export default function InteractivePortrait() {
             style={{ transform: "translateZ(40px)" }}
           >
             <div className="flex items-center space-x-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00e5a3] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-pulse" />
               <span className="font-mono text-[9px] font-bold text-white uppercase tracking-widest">
-                {profileImage ? "Interactive Photo Module" : "Vector Avatar fallback"}
+                Eyobel Gebre
               </span>
             </div>
-            <span className="font-mono text-[8px] text-[#00e5a3] font-bold">
-              {profileImage ? "LOCAL_PERSIST" : "SVG_CORE"}
+            <span className="font-mono text-[8px] text-zinc-400 font-bold">
+              PORTFOLIO_CORE
             </span>
           </div>
 
@@ -666,108 +766,15 @@ export default function InteractivePortrait() {
 
       </div>
 
-      {/* Owner Verification Modal */}
-      <AnimatePresence>
-        {showVerifyModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-            onClick={() => {
-              setShowVerifyModal(false);
-              setPendingFile(null);
-            }}
-          >
-            <motion.div
-              initial={{ scale: 0.95, y: 15 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-zinc-950 border border-white/10 rounded-3xl p-6 w-full max-w-sm shadow-2xl relative overflow-hidden font-sans text-left"
-            >
-              {/* Top ambient glow */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-williams-purple/25 rounded-full blur-[40px] pointer-events-none" />
+      {/* Photo upload helper hint (only shown when the fallback SVG is active) */}
+      {!hasImage && (
+        <div className="bg-zinc-200/50 dark:bg-white/5 border border-zinc-300 dark:border-white/10 p-3 rounded-2xl text-center max-w-[340px]">
+          <p className="text-[10px] font-mono text-zinc-600 dark:text-zinc-300 leading-relaxed">
+            💡 <span className="font-semibold text-zinc-700 dark:text-zinc-200">Want your real photo here permanently?</span> Just upload your image (named <code className="bg-zinc-200 dark:bg-black/40 px-1.5 py-0.5 rounded text-zinc-800 dark:text-white font-bold">eyobel.jpg</code>) into the <code className="bg-zinc-200 dark:bg-black/40 px-1.5 py-0.5 rounded text-zinc-800 dark:text-white font-bold">public</code> folder. It will instantly replace this graphic!
+          </p>
+        </div>
+      )}
 
-              <div className="flex items-center space-x-3 mb-4 relative z-10">
-                <div className="p-2.5 bg-williams-purple/20 border border-williams-purple/30 rounded-2xl text-williams-gold">
-                  <Lock className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-white font-bold text-base tracking-tight">Owner Verification</h3>
-                  <p className="text-[10px] text-williams-gold font-mono uppercase tracking-wider font-bold">Security Portal</p>
-                </div>
-              </div>
-
-              <p className="text-zinc-400 text-xs leading-relaxed mb-5 relative z-10">
-                To prevent unauthorized profile changes, photo uploading is restricted to the portfolio owner (<span className="text-white font-semibold">Eyobel Assefa</span>).
-              </p>
-
-              <form onSubmit={handleVerify} className="space-y-4 relative z-10">
-                <div>
-                  <label className="block font-mono text-[9px] uppercase tracking-wider text-zinc-500 font-semibold mb-1.5">
-                    Owner Email / Username
-                  </label>
-                  <input
-                    type="text"
-                    value={verifyEmail}
-                    onChange={(e) => setVerifyEmail(e.target.value)}
-                    placeholder="e.g. eyobelassefa@gmail.com"
-                    autoFocus
-                    className="w-full bg-black/60 border border-white/10 focus:border-williams-gold focus:ring-1 focus:ring-williams-gold rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-600 outline-none transition-all font-mono"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-mono text-[9px] uppercase tracking-wider text-zinc-500 font-semibold mb-1.5">
-                    Security Passcode
-                  </label>
-                  <input
-                    type="password"
-                    value={verifyPasscode}
-                    onChange={(e) => setVerifyPasscode(e.target.value)}
-                    placeholder="Enter owner passcode"
-                    className="w-full bg-black/60 border border-white/10 focus:border-williams-gold focus:ring-1 focus:ring-williams-gold rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-600 outline-none transition-all font-mono"
-                  />
-                  <p className="text-[9px] text-zinc-500 mt-1.5 font-mono leading-normal">
-                    Hint: Williams/Tufts related word or standard nickname (e.g., <span className="text-zinc-400 font-bold">eyobel</span>)
-                  </p>
-                </div>
-
-                {verifyError && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-red-400 text-[10px] font-mono leading-relaxed bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-xl"
-                  >
-                    {verifyError}
-                  </motion.div>
-                )}
-
-                <div className="flex space-x-2 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowVerifyModal(false);
-                      setPendingFile(null);
-                    }}
-                    className="flex-1 py-2 bg-white/5 hover:bg-white/10 text-zinc-300 font-semibold rounded-xl text-xs transition-all border border-white/5 cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 py-2 bg-williams-purple hover:bg-[#430080] text-williams-gold font-bold rounded-xl text-xs transition-all border border-williams-gold/20 shadow-md flex items-center justify-center gap-1 cursor-pointer"
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    Verify
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

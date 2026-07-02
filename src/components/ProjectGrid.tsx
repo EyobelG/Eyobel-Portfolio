@@ -41,7 +41,7 @@ export default function ProjectGrid() {
             onClick={() => setSelectedCategory(cat)}
             className={`px-4 py-2 text-xs font-mono rounded-full tracking-wider uppercase transition-all duration-300 ${
               selectedCategory === cat
-                ? "bg-williams-purple text-williams-gold font-semibold border-2 border-williams-gold/40 shadow-md"
+                ? "bg-williams-purple text-white dark:text-williams-gold font-semibold border-2 border-williams-gold/40 shadow-md"
                 : "text-charcoal-light hover:text-charcoal hover:bg-cream-card-sub bg-transparent"
             }`}
           >
@@ -72,15 +72,15 @@ export default function ProjectGrid() {
             <div>
               <div className="flex items-center justify-between mb-4">
                 {project.category === "Systems" ? (
-                  <div className="p-2 bg-williams-purple/20 text-williams-gold rounded-lg border border-williams-purple-light/30">
+                  <div className="p-2 bg-williams-purple/20 text-williams-purple dark:text-williams-gold rounded-lg border border-williams-purple-light/30">
                     <Cpu className="w-5 h-5" />
                   </div>
                 ) : project.category === "Theory/Math" ? (
-                  <div className="p-2 bg-tufts-blue/20 text-tufts-blue-light rounded-lg border border-tufts-blue-dark/30">
+                  <div className="p-2 bg-tufts-blue/20 text-tufts-blue rounded-lg border border-tufts-blue-dark/30">
                     <Layers className="w-5 h-5" />
                   </div>
                 ) : (
-                  <div className="p-2 bg-amber-500/10 text-williams-gold rounded-lg border border-williams-gold-dark/30">
+                  <div className="p-2 bg-amber-500/10 text-amber-700 dark:text-williams-gold rounded-lg border border-williams-gold-dark/30">
                     <Database className="w-5 h-5" />
                   </div>
                 )}
@@ -89,7 +89,7 @@ export default function ProjectGrid() {
                 </span>
               </div>
 
-              <h4 className="font-serif text-xl text-charcoal font-semibold group-hover:text-williams-gold transition-colors mb-2">
+              <h4 className="font-serif text-xl text-charcoal font-semibold group-hover:text-williams-purple dark:group-hover:text-williams-gold transition-colors mb-2">
                 {project.title}
               </h4>
               <p className="text-sm text-charcoal-light leading-relaxed line-clamp-3">
@@ -114,7 +114,7 @@ export default function ProjectGrid() {
                 )}
               </div>
 
-              <div className="flex items-center text-xs font-mono font-semibold text-williams-gold group-hover:text-tufts-blue-light transition-colors">
+              <div className="flex items-center text-xs font-mono font-semibold text-williams-purple dark:text-williams-gold group-hover:text-tufts-blue dark:group-hover:text-tufts-blue-light transition-colors">
                 <span>Inspect Artifact</span>
                 <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1.5 transition-transform" />
               </div>

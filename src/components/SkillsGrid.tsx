@@ -12,9 +12,9 @@ const renderProviderLogo = (provider: string | undefined) => {
   
   if (p.includes("openai")) {
     return (
-      <div className="w-10 h-10 rounded-xl bg-black/80 border border-[#10a37f]/20 flex items-center justify-center shadow-[0_0_10px_rgba(16,163,127,0.03)] group-hover:border-[#10a37f]/50 group-hover:shadow-[0_0_15px_rgba(16,163,127,0.15)] transition-all duration-300 flex-shrink-0">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 text-[#10a37f] transition-transform duration-300 group-hover:rotate-45 group-hover:scale-110">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18M3 12h18M5.636 5.636l12.728 12.728M5.636 18.364L18.364 5.636" />
+      <div className="w-10 h-10 rounded-xl bg-white border border-zinc-200 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.06)] group-hover:border-zinc-400 group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] transition-all duration-300 flex-shrink-0">
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-black transition-transform duration-300 group-hover:rotate-45 group-hover:scale-110">
+          <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038-.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z" />
         </svg>
       </div>
     );
@@ -22,9 +22,22 @@ const renderProviderLogo = (provider: string | undefined) => {
   
   if (p.includes("anthropic")) {
     return (
-      <div className="w-10 h-10 rounded-xl bg-black/80 border border-[#cc9a06]/20 flex items-center justify-center shadow-[0_0_10px_rgba(204,154,6,0.03)] group-hover:border-[#cc9a06]/50 group-hover:shadow-[0_0_15px_rgba(204,154,6,0.15)] transition-all duration-300 flex-shrink-0">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5 text-[#cc9a06] transition-transform duration-300 group-hover:scale-110">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 20L12 4l8 16M7 14h10" />
+      <div className="w-10 h-10 rounded-xl bg-[#D09A75] border border-[#D09A75]/30 flex items-center justify-center shadow-[0_2px_8px_rgba(208,154,117,0.15)] group-hover:border-[#D09A75]/60 group-hover:shadow-[0_4px_12px_rgba(208,154,117,0.3)] transition-all duration-300 flex-shrink-0">
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-[#191919] transition-transform duration-300 group-hover:scale-110">
+          <path d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z" />
+        </svg>
+      </div>
+    );
+  }
+
+  if (p.includes("codecademy")) {
+    return (
+      <div className="w-10 h-10 rounded-xl bg-[#0a102f] border border-[#30c6b5]/20 flex items-center justify-center shadow-[0_0_10px_rgba(48,198,181,0.03)] group-hover:border-[#30c6b5]/50 group-hover:shadow-[0_0_15px_rgba(48,198,181,0.15)] transition-all duration-300 flex-shrink-0">
+        <svg viewBox="0 0 110 32" className="w-8 h-auto text-white transition-transform duration-300 group-hover:scale-110" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1.5" y="1.5" width="46" height="29" rx="3" stroke="currentColor" strokeWidth="3" fill="none" />
+          <text x="24.5" y="21" fill="currentColor" fontSize="16" fontFamily='"Inter", "Space Grotesk", sans-serif' fontWeight="800" textAnchor="middle" letterSpacing="-0.5">code</text>
+          <text x="51" y="21" fill="currentColor" fontSize="16" fontFamily='"Inter", "Space Grotesk", sans-serif' fontWeight="800" letterSpacing="-0.5">cademy</text>
+          <line x1="51" y1="26" x2="61" y2="26" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
         </svg>
       </div>
     );
@@ -388,23 +401,26 @@ const renderBrandLogo = (name: string, isHovered: boolean) => {
       );
     case "Node.js":
       return (
-        <svg viewBox="0 0 32 32" className={baseClass} xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 1.887L5.056 8.204v12.636L16 27.158l10.944-6.318V8.204L16 1.887zm1.094 2.871l8.368 4.832-3.155 1.821-5.213-3.009v-3.644zm-2.188 0v3.644l-5.213 3.009-3.155-1.821 8.368-4.832zM4.148 10.448l2.793 1.613v6.035l-2.793-1.613v-6.035zm11.852 14.823l-8.368-4.832 2.348-1.356 6.02 3.476v2.712zm0-3.939l-6.02-3.476V11.82l6.02 3.476v6.035zm1.094 3.939v-2.712l6.02-3.476 2.348 1.356-8.368 4.832zm0-3.939v-6.035l6.02-3.476v6.035l-6.02 3.476zm10.758-3.939l-2.793 1.613v-6.035l2.793-1.613v6.035z" fill="#339933" />
-        </svg>
+        <img 
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"
+          alt="Node.js Logo"
+          className={`${baseClass} object-contain`}
+          referrerPolicy="no-referrer"
+        />
       );
     case "Express.js":
       return (
         <img 
           src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg"
           alt="Express.js Logo"
-          className={`${baseClass} brightness-0 invert`}
+          className={`${baseClass} dark:brightness-0 dark:invert`}
           referrerPolicy="no-referrer"
         />
       );
     case "Assembly (UM)":
       return (
         <svg viewBox="0 0 100 100" className={baseClass}>
-          <rect x="20" y="20" width="60" height="60" rx="12" fill="#050505" stroke="#00E5A3" strokeWidth="4" />
+          <rect x="20" y="20" width="60" height="60" rx="12" fill="var(--color-cream-card)" stroke="#00E5A3" strokeWidth="4" />
           <rect x="35" y="35" width="30" height="30" rx="6" fill="#00E5A3" opacity="0.3" />
           <line x1="8" y1="35" x2="20" y2="35" stroke="#00E5A3" strokeWidth="3" strokeLinecap="round" />
           <line x1="8" y1="50" x2="20" y2="50" stroke="#00E5A3" strokeWidth="3" strokeLinecap="round" />
@@ -423,25 +439,45 @@ const renderBrandLogo = (name: string, isHovered: boolean) => {
       );
     case "SQL & Relational":
       return (
-        <svg viewBox="0 0 100 100" className={baseClass}>
-          <ellipse cx="50" cy="25" rx="35" ry="12" fill="#4479A1" stroke="#FFFFFF" strokeWidth="2" />
-          <path d="M15 45 C15 53, 85 53, 85 45 V25 C85 33, 15 33, 15 25 Z" fill="#2d5573" stroke="#FFFFFF" strokeWidth="2" />
-          <ellipse cx="50" cy="45" rx="35" ry="12" fill="#4479A1" stroke="#FFFFFF" strokeWidth="2" />
-          <path d="M15 65 C15 73, 85 73, 85 65 V45 C85 53, 15 53, 15 45 Z" fill="#1b354a" stroke="#FFFFFF" strokeWidth="2" />
-          <ellipse cx="50" cy="65" rx="35" ry="12" fill="#4479A1" stroke="#FFFFFF" strokeWidth="2" />
-          <text x="50" y="51" fill="#FFFFFF" fontSize="20" fontFamily="sans-serif" fontWeight="900" textAnchor="middle" opacity="0.95">SQL</text>
+        <svg viewBox="0 0 100 100" className={baseClass} xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sqlBlueGrad_cyl" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#1C74C9" />
+              <stop offset="50%" stopColor="#1C74C9" />
+              <stop offset="50%" stopColor="#145EA4" />
+              <stop offset="100%" stopColor="#145EA4" />
+            </linearGradient>
+            <linearGradient id="sqlGreenGrad_cyl" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#B3E635" />
+              <stop offset="100%" stopColor="#80B324" />
+            </linearGradient>
+          </defs>
+          {/* Cylinder Body */}
+          <path d="M 15,25 L 15,75 C 15,87 85,87 85,75 L 85,25 Z" fill="url(#sqlBlueGrad_cyl)" />
+          {/* Cylinder Top Ellipse */}
+          <ellipse cx="50" cy="25" rx="35" ry="12" fill="url(#sqlGreenGrad_cyl)" />
+          {/* Text SQL */}
+          <text 
+            x="50" 
+            y="58" 
+            fill="#FFFFFF" 
+            fontSize="19" 
+            fontFamily="system-ui, -apple-system, sans-serif" 
+            fontWeight="900" 
+            textAnchor="middle"
+          >
+            SQL
+          </text>
         </svg>
       );
     case "Git & Versioning":
       return (
-        <svg viewBox="0 0 100 100" className={baseClass}>
-          <rect x="15" y="15" width="70" height="70" rx="14" fill="#F05032" transform="rotate(45 50 50)" />
-          <circle cx="35" cy="50" r="7" fill="#FFFFFF" />
-          <circle cx="65" cy="50" r="7" fill="#FFFFFF" />
-          <circle cx="50" cy="65" r="7" fill="#FFFFFF" />
-          <line x1="35" y1="50" x2="65" y2="50" stroke="#FFFFFF" strokeWidth="5.5" />
-          <path d="M 50,65 Q 50,50 65,50" stroke="#FFFFFF" strokeWidth="5.5" fill="none" />
-        </svg>
+        <img 
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
+          alt="Git & Versioning Logo"
+          className={`${baseClass} object-contain`}
+          referrerPolicy="no-referrer"
+        />
       );
     case "Vite":
       return (
@@ -528,63 +564,63 @@ export default function SkillsGrid() {
     <div className="space-y-8" id="skills-grid-wrapper">
       
       {/* Interactive Tabs Menu */}
-      <div className="flex flex-wrap items-center gap-2 bg-black/40 border border-white/5 p-2 rounded-2xl max-w-3xl">
+      <div className="flex flex-wrap items-center gap-2 bg-cream-card border border-cream-border p-2 rounded-2xl max-w-3xl shadow-md">
         <button
           onClick={() => setActiveTab("all")}
-          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all ${
+          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all cursor-pointer ${
             activeTab === "all"
-              ? "bg-williams-purple text-williams-gold shadow-md"
-              : "text-zinc-400 hover:text-white hover:bg-white/5"
+              ? "bg-williams-purple text-white dark:text-williams-gold shadow-md border border-williams-gold/30"
+              : "text-charcoal-light hover:text-charcoal hover:bg-cream-card-sub"
           }`}
         >
           All Stack
         </button>
         <button
           onClick={() => setActiveTab("languages")}
-          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all ${
+          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all cursor-pointer ${
             activeTab === "languages"
-              ? "bg-williams-purple text-williams-gold shadow-md"
-              : "text-zinc-400 hover:text-white hover:bg-white/5"
+              ? "bg-williams-purple text-white dark:text-williams-gold shadow-md border border-williams-gold/30"
+              : "text-charcoal-light hover:text-charcoal hover:bg-cream-card-sub"
           }`}
         >
           Languages
         </button>
         <button
           onClick={() => setActiveTab("web")}
-          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all ${
+          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all cursor-pointer ${
             activeTab === "web"
-              ? "bg-williams-purple text-williams-gold shadow-md"
-              : "text-zinc-400 hover:text-white hover:bg-white/5"
+              ? "bg-williams-purple text-white dark:text-williams-gold shadow-md border border-williams-gold/30"
+              : "text-charcoal-light hover:text-charcoal hover:bg-cream-card-sub"
           }`}
         >
           Frontend & Web
         </button>
         <button
           onClick={() => setActiveTab("systems")}
-          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all ${
+          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all cursor-pointer ${
             activeTab === "systems"
-              ? "bg-williams-purple text-williams-gold shadow-md"
-              : "text-zinc-400 hover:text-white hover:bg-white/5"
+              ? "bg-williams-purple text-white dark:text-williams-gold shadow-md border border-williams-gold/30"
+              : "text-charcoal-light hover:text-charcoal hover:bg-cream-card-sub"
           }`}
         >
           Systems & Assembly
         </button>
         <button
           onClick={() => setActiveTab("tools")}
-          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all ${
+          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all cursor-pointer ${
             activeTab === "tools"
-              ? "bg-williams-purple text-williams-gold shadow-md"
-              : "text-zinc-400 hover:text-white hover:bg-white/5"
+              ? "bg-williams-purple text-white dark:text-williams-gold shadow-md border border-williams-gold/30"
+              : "text-charcoal-light hover:text-charcoal hover:bg-cream-card-sub"
           }`}
         >
           Dev Tools & Versioning
         </button>
         <button
           onClick={() => setActiveTab("math_certs")}
-          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all ${
+          className={`px-4 py-2 text-xs font-mono font-bold rounded-xl transition-all cursor-pointer ${
             activeTab === "math_certs"
-              ? "bg-williams-purple text-williams-gold shadow-md"
-              : "text-zinc-400 hover:text-white hover:bg-white/5"
+              ? "bg-williams-purple text-white dark:text-williams-gold shadow-md border border-williams-gold/30"
+              : "text-charcoal-light hover:text-charcoal hover:bg-cream-card-sub"
           }`}
         >
           Discrete Math & Certs
@@ -610,7 +646,7 @@ export default function SkillsGrid() {
                   key={skill.name}
                   onMouseEnter={() => setHoveredSkill(skill.name)}
                   onMouseLeave={() => setHoveredSkill(null)}
-                  className={`relative aspect-square bg-[#101010] border-2 border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center cursor-pointer overflow-hidden transition-all duration-300 shadow-lg ${skill.bgGlowClass}`}
+                  className={`relative aspect-square bg-cream-card border-2 border-cream-border rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center cursor-pointer overflow-hidden transition-all duration-300 shadow-lg ${skill.bgGlowClass}`}
                   style={{
                     boxShadow: isHovered 
                       ? `0 15px 30px -10px ${skill.color}50` 
@@ -631,11 +667,11 @@ export default function SkillsGrid() {
                     <div 
                       className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-300 border ${
                         isHovered 
-                          ? "bg-black/60 scale-110" 
-                          : "bg-white/[0.02]"
+                          ? "bg-cream-card-sub scale-110" 
+                          : "bg-cream-card-sub/20"
                       }`}
                       style={{
-                        borderColor: isHovered ? skill.color : "rgba(255,255,255,0.08)",
+                        borderColor: isHovered ? skill.color : "var(--color-cream-border)",
                         boxShadow: isHovered ? `inset 0 0 10px ${skill.color}30` : "none"
                       }}
                     >
@@ -651,10 +687,10 @@ export default function SkillsGrid() {
 
                     {/* Skill Label */}
                     <div className="space-y-0.5">
-                      <span className="font-mono text-xs sm:text-sm font-semibold text-white tracking-tight block">
+                      <span className="font-mono text-xs sm:text-sm font-semibold text-charcoal tracking-tight block">
                         {skill.name}
                       </span>
-                      <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-wider block">
+                      <span className="font-mono text-[9px] text-charcoal-light uppercase tracking-wider block">
                         {skill.category === "languages" ? "Language" : skill.category === "web" ? "Web Stack" : skill.category === "systems" ? "Assembly" : "Tooling"}
                       </span>
                     </div>
@@ -662,19 +698,19 @@ export default function SkillsGrid() {
 
                   {/* Expandable descriptive overlay */}
                   <div 
-                    className={`absolute inset-0 bg-black/95 p-4 flex flex-col justify-between text-left transition-all duration-300 select-none z-20 ${
+                    className={`absolute inset-0 bg-cream-card p-4 flex flex-col justify-between text-left transition-all duration-300 select-none z-20 ${
                       isHovered ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
                     }`}
                   >
                     <div className="space-y-1">
-                      <span className="font-mono text-xs font-bold text-white block truncate">{skill.name}</span>
-                      <p className="text-[10px] text-zinc-400 leading-normal line-clamp-4">
+                      <span className="font-mono text-xs font-bold text-charcoal block truncate">{skill.name}</span>
+                      <p className="text-[10px] text-charcoal-light leading-normal line-clamp-4">
                         {skill.description}
                       </p>
                     </div>
-                    <div className="flex items-center justify-between border-t border-white/10 pt-2 text-[9px] font-mono">
-                      <span className="text-zinc-500 uppercase">Class: <span className="text-williams-gold font-bold">{skill.level}</span></span>
-                      <span className="text-zinc-500">{skill.years}</span>
+                    <div className="flex items-center justify-between border-t border-cream-border pt-2 text-[9px] font-mono">
+                      <span className="text-charcoal-light uppercase">Class: <span className="text-williams-purple dark:text-williams-gold font-bold">{skill.level}</span></span>
+                      <span className="text-charcoal-light">{skill.years}</span>
                     </div>
                   </div>
                 </div>
@@ -691,11 +727,11 @@ export default function SkillsGrid() {
             className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
           >
             {/* Discrete Math & Science */}
-            <div className="lg:col-span-7 bg-[#141414] border-2 border-white/10 rounded-3xl p-6 shadow-lg flex flex-col justify-between">
+            <div className="lg:col-span-7 bg-cream-card border-2 border-cream-border rounded-3xl p-6 shadow-lg flex flex-col justify-between">
               <div>
-                <div className="flex items-center space-x-2 text-williams-gold mb-4">
-                  <Terminal className="w-5 h-5 text-williams-gold" />
-                  <h4 className="font-serif text-lg font-bold text-white">Advanced Mathematics & Algorithmic Foundations</h4>
+                <div className="flex items-center space-x-2 text-williams-purple dark:text-williams-gold mb-4">
+                  <Terminal className="w-5 h-5 text-williams-purple dark:text-williams-gold" />
+                  <h4 className="font-serif text-lg font-bold text-charcoal">Advanced Mathematics & Algorithmic Foundations</h4>
                 </div>
                 <p className="text-xs text-charcoal-light leading-relaxed mb-6">
                   Synthesizing deep theoretical mathematical modeling with runtime data science algorithms, optimized to execute complex graph networks.
@@ -705,9 +741,9 @@ export default function SkillsGrid() {
                   {SKILLS_DATA.mathScience.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1.5 bg-williams-purple/30 text-williams-gold border border-williams-gold/20 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 hover:border-williams-gold/50 transition-all cursor-default"
+                      className="px-3 py-1.5 bg-zinc-200/50 dark:bg-williams-purple/30 text-zinc-800 dark:text-williams-gold border border-zinc-300 dark:border-williams-gold/20 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 hover:border-zinc-400 dark:hover:border-williams-gold/50 transition-all cursor-default"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-williams-gold animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-williams-purple dark:bg-williams-gold animate-pulse" />
                       {tag}
                     </span>
                   ))}
@@ -715,12 +751,12 @@ export default function SkillsGrid() {
               </div>
 
               {/* Multilingual Info */}
-              <div className="mt-8 pt-6 border-t border-white/10">
+              <div className="mt-8 pt-6 border-t border-cream-border">
                 <span className="block font-mono text-[10px] uppercase text-charcoal-light font-bold tracking-wider mb-3">Multilingual Capabilities</span>
                 <div className="grid grid-cols-3 gap-3">
                   {SKILLS_DATA.languages.map((l) => (
-                    <div key={l.name} className="bg-black/40 border border-white/5 p-3 rounded-xl hover:border-williams-gold/20 transition-all">
-                      <span className="font-sans text-xs font-bold block text-white">{l.name}</span>
+                    <div key={l.name} className="bg-cream-card-sub border border-cream-border p-3 rounded-xl hover:border-williams-purple/30 dark:hover:border-williams-gold/20 transition-all">
+                      <span className="font-sans text-xs font-bold block text-charcoal">{l.name}</span>
                       <span className="text-[10px] text-zinc-500 block mt-0.5 font-mono">{l.proficiency}</span>
                     </div>
                   ))}
@@ -729,11 +765,11 @@ export default function SkillsGrid() {
             </div>
 
             {/* Certifications Block */}
-            <div className="lg:col-span-5 bg-[#141414] border-2 border-white/10 rounded-3xl p-6 shadow-lg flex flex-col justify-between">
+            <div className="lg:col-span-5 bg-cream-card border-2 border-cream-border rounded-3xl p-6 shadow-lg flex flex-col justify-between">
               <div>
-                <div className="flex items-center space-x-2 text-williams-gold mb-4">
-                  <Award className="w-5 h-5 text-williams-gold" />
-                  <h4 className="font-serif text-lg font-bold text-white">Certifications & Accreditations</h4>
+                <div className="flex items-center space-x-2 text-williams-purple dark:text-williams-gold mb-4">
+                  <Award className="w-5 h-5 text-williams-purple dark:text-williams-gold" />
+                  <h4 className="font-serif text-lg font-bold text-charcoal">Certifications & Accreditations</h4>
                 </div>
                 <p className="text-xs text-charcoal-light leading-relaxed mb-6">
                   Dedicated to keeping pace with leading-edge architectures and generative workflows.
@@ -746,13 +782,13 @@ export default function SkillsGrid() {
                       href={cert.link}
                       target="_blank"
                       rel="noreferrer"
-                      className={`group flex items-center justify-between p-3.5 bg-black/40 hover:bg-[#1a1a1a] rounded-2xl border border-white/5 transition-all duration-300 shadow-md cursor-pointer block ${getProviderCardHoverClass(cert.provider)}`}
+                      className={`group flex items-center justify-between p-3.5 bg-cream-card-sub hover:bg-zinc-200/50 dark:bg-black/40 dark:hover:bg-[#1a1a1a] rounded-2xl border border-cream-border transition-all duration-300 shadow-md cursor-pointer block ${getProviderCardHoverClass(cert.provider)}`}
                     >
                       <div className="flex items-center space-x-3.5">
                         {renderProviderLogo(cert.provider)}
                         
                         <div className="space-y-1">
-                          <span className="text-xs sm:text-[13px] font-sans text-white font-semibold leading-snug block group-hover:text-white transition-all">
+                          <span className="text-xs sm:text-[13px] font-sans text-charcoal font-semibold leading-snug block transition-all">
                             {cert.name}
                           </span>
                           <div className="flex items-center space-x-2 text-[10px] text-zinc-500 font-mono">
@@ -763,7 +799,7 @@ export default function SkillsGrid() {
                         </div>
                       </div>
                       
-                      <div className={`p-1.5 rounded-lg bg-white/[0.02] border border-white/5 text-zinc-500 transition-all duration-300 flex-shrink-0 ml-2 ${getProviderArrowHoverClass(cert.provider)}`}>
+                      <div className={`p-1.5 rounded-lg bg-cream-card border border-cream-border text-zinc-500 transition-all duration-300 flex-shrink-0 ml-2 ${getProviderArrowHoverClass(cert.provider)}`}>
                         <ExternalLink className="w-3.5 h-3.5" />
                       </div>
                     </a>
@@ -771,8 +807,59 @@ export default function SkillsGrid() {
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-white/10 text-center text-[10px] text-charcoal-light font-mono">
+              <div className="mt-6 pt-4 border-t border-cream-border text-center text-[10px] text-charcoal-light font-mono">
                 Academic Accreditations completed 2025–2026
+              </div>
+            </div>
+
+            {/* CodePath Advanced Technical Interview Prep Block */}
+            <div className="lg:col-span-12 bg-cream-card border-2 border-cream-border rounded-3xl p-6 shadow-lg hover:border-williams-purple/30 dark:hover:border-williams-gold/30 transition-all flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-500/5 to-transparent pointer-events-none" />
+              
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 z-10">
+                <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-md flex-shrink-0 flex items-center justify-center bg-[#1b2a32]">
+                  <svg viewBox="0 0 120 120" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="120" height="120" rx="20" fill="#1b2a32" />
+                    <g transform="translate(10, 5)">
+                      <text x="50" y="34" fill="#FFFFFF" fontSize="19" fontWeight="800" fontFamily='"Inter", "Space Grotesk", sans-serif' textAnchor="middle" letterSpacing="0.5">CODE</text>
+                      <text x="50" y="59" fill="#FFFFFF" fontSize="19" fontWeight="800" fontFamily='"Inter", "Space Grotesk", sans-serif' textAnchor="middle" letterSpacing="0.5">PATH</text>
+                      <g transform="translate(14, 68)">
+                        {/* Spark/Asterisk path */}
+                        <g transform="translate(6, 8)" stroke="#00e5a3" strokeWidth="3.5" strokeLinecap="round">
+                          <line x1="0" y1="-8" x2="0" y2="8" />
+                          <line x1="-7" y1="-4" x2="7" y2="4" />
+                          <line x1="-7" y1="4" x2="7" y2="-4" />
+                        </g>
+                        <text x="21" y="15" fill="#00e5a3" fontSize="19" fontWeight="800" fontFamily='"Inter", "Space Grotesk", sans-serif' letterSpacing="0.5">ORG</text>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className="font-mono text-[9px] uppercase font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded border border-emerald-500/20">
+                      Advanced Technical Interview Prep
+                    </span>
+                    <span className="font-mono text-[9px] uppercase font-bold text-williams-purple dark:text-williams-gold bg-williams-purple/10 px-2 py-0.5 rounded border border-williams-purple/20">
+                      Summer 2026 Course
+                    </span>
+                  </div>
+                  <h4 className="font-serif text-xl font-bold text-charcoal">Advanced Technical Interview Prep (CodePath)</h4>
+                  <p className="text-xs text-charcoal-light leading-relaxed mt-2 max-w-2xl">
+                    Selected for CodePath's rigorous technical interview preparation curriculum, masterfully focusing on advanced algorithms, complex data structures, optimized time/space complexity analysis, and coding assessment design patterns.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center gap-3 z-10 self-stretch md:self-auto justify-end">
+                <a 
+                  href="https://www.codepath.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full sm:w-auto px-4 py-2 bg-[#141414] hover:bg-zinc-800 dark:bg-zinc-850 dark:hover:bg-zinc-850 text-white font-mono text-xs font-semibold rounded-xl border border-cream-border transition-all flex items-center justify-center gap-2 shadow-sm"
+                >
+                  <span>Explore Community</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </div>
             </div>
           </motion.div>
