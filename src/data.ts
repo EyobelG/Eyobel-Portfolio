@@ -240,20 +240,19 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: "proj-11",
-    title: "PlayDates",
+    title: "PlayDate",
     category: "Web Apps",
-    tags: ["Product Design", "Frontend", "AI-Assisted Dev"],
-    description: "A gamified dating web app built with Claude — matches must complete a quick two-player mini-game together before they can unlock chat, replacing endless swiping with a shared, low-stakes first interaction.",
+    tags: ["iOS", "SwiftUI", "Firebase", "AI-Assisted Dev"],
+    description: "A native iOS dating app built with Claude — two matched users must play a real-time mini-game together in a shared 'Game Arena' before chat unlocks, replacing swiping with cooperative play.",
     details: [
-      "Designed a full product flow (landing, onboarding, discovery, game arena, chat, profile) around a core mechanic: no messaging is unlocked until both users complete a 'Pre-Date' mini-game invite.",
-      "Built five distinct mini-games (Sync or Sink, Co-op Canvas, The Vibe Check, Plot Twist, Baggage Claim) as an alternative to traditional swipe-based matching.",
-      "Iteratively designed and implemented the UI, animations, and interaction states in close collaboration with Claude, translating product ideas directly into working frontend code.",
-      "Added an XP and compatibility-score system to reward responsiveness and game completion instead of profile optimization."
+      "Architected persistence behind a single PlayDatesBackend protocol with swappable in-memory mock and Firebase (Firestore/Auth/Storage) implementations, so the app builds and runs fully featured with zero Firebase SDK installed.",
+      "Built a real-time 1v1 Game Arena spanning a dozen+ mini-games (Chess Duel, Vibe Mapping, Harmonic Match, Tarot Connection, Neon Stack 3D, trivia, and more), each gating chat unlock behind a server-enforced compatibility-score threshold.",
+      "Implemented full messaging with photo, GIF, audio, video, and location attachments, plus live voice/video calling.",
+      "Maintained a disciplined AI-assisted engineering workflow: syntax-check/build/test shell scripts, XCTest unit and UI smoke suites, and a pack of role-specific agent prompts (build, test, regression-triage, quality-gate) for working with Claude Code."
     ],
-    tech: ["HTML/CSS/JavaScript", "Product Design", "UI/UX", "AI-Assisted Development"],
-    impact: "Reframes online dating around shared play instead of profile-scrolling, aiming to reduce ghosting and surface compatibility through behavior rather than photos.",
-    github: "https://github.com/EyobelG/PlayDates",
-    image: "/projects/playdates-discovery.jpg"
+    tech: ["Swift", "SwiftUI", "Firebase (Firestore/Auth/Storage)", "XCTest", "MVVM"],
+    impact: "A fully-featured, testable iOS dating app where compatibility is measured through shared play instead of profile scrolling — architected for AI-assisted development from day one.",
+    image: "/projects/playdate-matches.png"
   }
 ];
 
