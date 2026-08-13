@@ -237,6 +237,23 @@ export const PROJECTS_DATA: Project[] = [
     ],
     tech: ["C++", "Memory Management", "Doubly Linked List", "API Design"],
     impact: "Provides clean, lightning-fast keystroke responsiveness even when manipulating extremely large documents."
+  },
+  {
+    id: "proj-11",
+    title: "PlayDates",
+    category: "Web Apps",
+    tags: ["Product Design", "Frontend", "AI-Assisted Dev"],
+    description: "A gamified dating web app built with Claude — matches must complete a quick two-player mini-game together before they can unlock chat, replacing endless swiping with a shared, low-stakes first interaction.",
+    details: [
+      "Designed a full product flow (landing, onboarding, discovery, game arena, chat, profile) around a core mechanic: no messaging is unlocked until both users complete a 'Pre-Date' mini-game invite.",
+      "Built five distinct mini-games (Sync or Sink, Co-op Canvas, The Vibe Check, Plot Twist, Baggage Claim) as an alternative to traditional swipe-based matching.",
+      "Iteratively designed and implemented the UI, animations, and interaction states in close collaboration with Claude, translating product ideas directly into working frontend code.",
+      "Added an XP and compatibility-score system to reward responsiveness and game completion instead of profile optimization."
+    ],
+    tech: ["HTML/CSS/JavaScript", "Product Design", "UI/UX", "AI-Assisted Development"],
+    impact: "Reframes online dating around shared play instead of profile-scrolling, aiming to reduce ghosting and surface compatibility through behavior rather than photos.",
+    github: "https://github.com/EyobelG/PlayDates",
+    image: "/projects/playdates-discovery.jpg"
   }
 ];
 
@@ -450,6 +467,12 @@ export const SKILLS_DATA = {
 };
 
 export const CERTIFICATIONS: Certification[] = [
+  {
+    name: "AI Fluency for Builders",
+    provider: "Anthropic",
+    date: "Aug 2026",
+    link: "https://verify.skilljar.com/c/jhzjgunj5bdz"
+  },
   {
     name: "Applied AI Foundations",
     provider: "OpenAI Academy",

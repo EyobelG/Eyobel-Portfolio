@@ -8,6 +8,7 @@ export interface Project {
   tech: string[];
   github?: string;
   impact?: string;
+  image?: string;
 }
 
 export interface Publication {

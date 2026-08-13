@@ -69,6 +69,16 @@ export default function ProjectGrid() {
             {/* Corner Decorative Accent */}
             <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-cream-card-sub to-transparent opacity-40 group-hover:from-williams-gold/10 transition-all pointer-events-none" />
 
+            {project.image && (
+              <div className="-mx-6 -mt-6 mb-4 h-36 overflow-hidden rounded-t-2xl border-b-2 border-cream-border">
+                <img
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            )}
+
             <div>
               <div className="flex items-center justify-between mb-4">
                 {project.category === "Systems" ? (
@@ -165,6 +175,16 @@ export default function ProjectGrid() {
 
               {/* Body */}
               <div className="p-6 lg:p-8 flex-1 space-y-8 overflow-y-auto">
+                {activeProject.image && (
+                  <div className="rounded-xl overflow-hidden border-2 border-cream-border shadow-md">
+                    <img
+                      src={activeProject.image}
+                      alt={`${activeProject.title} screenshot`}
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                )}
+
                 {/* Description */}
                 <div className="space-y-2">
                   <h5 className="font-mono text-xs uppercase tracking-wider text-charcoal-light font-bold">Scope Summary</h5>
@@ -212,8 +232,20 @@ export default function ProjectGrid() {
               </div>
 
               {/* Footer */}
-              <div className="p-6 border-t border-cream-border bg-cream-card flex items-center justify-between">
-                <span className="text-xs text-charcoal-light font-mono">Medford, MA • Tufts University</span>
+              <div className="p-6 border-t border-cream-border bg-cream-card flex items-center justify-between gap-3">
+                {activeProject.github ? (
+                  <a
+                    href={activeProject.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-tufts-blue-light hover:text-williams-gold font-mono flex items-center gap-1.5 transition-colors"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    View Source
+                  </a>
+                ) : (
+                  <span className="text-xs text-charcoal-light font-mono">Medford, MA • Tufts University</span>
+                )}
                 <button
                   id="btn-back-grid"
                   onClick={() => setActiveProject(null)}
