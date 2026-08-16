@@ -253,6 +253,24 @@ export const PROJECTS_DATA: Project[] = [
     tech: ["Swift", "SwiftUI", "Firebase (Firestore/Auth/Storage)", "XCTest", "MVVM"],
     impact: "A fully-featured, testable iOS dating app where compatibility is measured through shared play instead of profile scrolling — architected for AI-assisted development from day one.",
     image: "/projects/playdate-matches.png"
+  },
+  {
+    id: "proj-12",
+    title: "ContextLens: Python Tests",
+    category: "Systems",
+    tags: ["VS Code Extension", "LLM", "RAG", "TypeScript", "Published"],
+    description: "A published VS Code extension that generates Python unit tests with an LLM and verifies them by actually executing them in a sandbox, auto-repairing failures instead of trusting generated code blindly.",
+    details: [
+      "Built a closed-loop generate-and-verify pipeline: an LLM writes unittest tests, a sandboxed subprocess runs python3 -m unittest against them, and failures are fed back into the next model attempt (up to a configurable retry count) rather than surfacing broken tests.",
+      "Designed a lightweight, embeddings-free RAG retrieval engine from scratch — per-function/class chunking with stopword-filtered term-frequency scoring — that supplies relevant codebase context for both test generation and a second AI review pass flagging bugs, duplicate logic, and convention drift.",
+      "Implemented multi-provider LLM routing (OpenAI-compatible, Anthropic, Google Gemini) with automatic provider detection, environment-variable credential fallback, and an explicit override setting for non-standard API key formats.",
+      "Extended static analysis to detect Python class methods and nested functions (not just free functions) by walking the document for enclosing class/function context, with bracket-aware parameter parsing.",
+      "Shipped it for real: unit test suite (Node's built-in test runner), MIT license, custom icon, and a published listing on the VS Code Marketplace."
+    ],
+    tech: ["TypeScript", "VS Code Extension API", "esbuild", "Node.js", "OpenAI/Anthropic/Gemini APIs"],
+    impact: "Live on the VS Code Marketplace — install it, generate tests on a real Python function, and watch it verify them in a sandbox before you see them.",
+    github: "https://github.com/EyobelG/ContextLens",
+    marketplace: "https://marketplace.visualstudio.com/items?itemName=eyobelg.context-lens-python"
   }
 ];
 

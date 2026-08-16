@@ -7,6 +7,7 @@ export interface Project {
   details: string[];
   tech: string[];
   github?: string;
+  marketplace?: string;
   impact?: string;
   image?: string;
 }

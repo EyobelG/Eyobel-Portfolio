@@ -233,16 +233,31 @@ export default function ProjectGrid() {
 
               {/* Footer */}
               <div className="p-6 border-t border-cream-border bg-cream-card flex items-center justify-between gap-3">
-                {activeProject.github ? (
-                  <a
-                    href={activeProject.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-tufts-blue-light hover:text-williams-gold font-mono flex items-center gap-1.5 transition-colors"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                    View Source
-                  </a>
+                {activeProject.github || activeProject.marketplace ? (
+                  <div className="flex items-center gap-4">
+                    {activeProject.marketplace && (
+                      <a
+                        href={activeProject.marketplace}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-tufts-blue-light hover:text-williams-gold font-mono flex items-center gap-1.5 transition-colors"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        View on Marketplace
+                      </a>
+                    )}
+                    {activeProject.github && (
+                      <a
+                        href={activeProject.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-tufts-blue-light hover:text-williams-gold font-mono flex items-center gap-1.5 transition-colors"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        View Source
+                      </a>
+                    )}
+                  </div>
                 ) : (
                   <span className="text-xs text-charcoal-light font-mono">Medford, MA • Tufts University</span>
                 )}
