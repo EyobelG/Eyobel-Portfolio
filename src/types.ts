@@ -48,7 +48,6 @@ export interface Education {
   location: string;
   degree: string;
   period: string;
-  gpa?: string;
   details?: string[];
 }
 

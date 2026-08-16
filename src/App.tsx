@@ -233,10 +233,6 @@ export default function App() {
                 <MapPin className="w-3.5 h-3.5 text-tufts-blue-light" />
                 <span>Medford, MA, USA</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <GraduationCap className="w-3.5 h-3.5 text-zinc-400" />
-                <span>CS GPA: 4.0</span>
-              </div>
             </div>
           </div>
 
@@ -386,7 +382,7 @@ export default function App() {
                   As a former boarding school math teacher at elite institutions such as EF Academy Pasadena and Northfield Mount Hermon, I spent years transforming abstract, challenging theories like <strong>Linear Algebra</strong> and <strong>Multivariable Calculus</strong> into engaging, intuitive systems for students.
                 </p>
                 <p>
-                  Today, I am applying that same systems-level clarity and mathematical precision to low-level computer science. As a <strong>CS Master's candidate at Tufts University</strong> (maintaining a perfect <strong>4.0 GPA</strong>), I specialize in systems programming, virtual architectures, and compiler-level optimization.
+                  Today, I am applying that same systems-level clarity and mathematical precision to low-level computer science. As a <strong>CS Master's candidate at Tufts University</strong>, I specialize in systems programming, virtual architectures, and compiler-level optimization.
                 </p>
                 <p>
                   In the summer of 2021, I was selected to join the prestigious <strong>SMALL REU</strong> at Williams College, where I worked with Prof. Ralph Morrison to co-author <strong>four research papers</strong> on divisor theory, circulant graphs, and higher graph gonality, published in journals such as the <i>Australasian Journal of Combinatorics</i>.
@@ -400,10 +396,6 @@ export default function App() {
               <div className="md:col-span-4 bg-cream-card rounded-3xl p-6 border-2 border-white/10 space-y-4 shadow-xl">
                 <h5 className="font-mono text-[10px] font-bold uppercase text-charcoal-light tracking-wider">Fast Profiling Details</h5>
                 <div className="space-y-4">
-                  <div>
-                    <span className="text-[10px] text-charcoal-light font-mono block">CUMULATIVE CS GPA</span>
-                    <span className="text-2xl font-serif font-bold text-zinc-700 dark:text-zinc-200">4.0 / 4.0</span>
-                  </div>
                   <div>
                     <span className="text-[10px] text-charcoal-light font-mono block">CO-AUTHORED PUBLICATIONS</span>
                     <span className="text-2xl font-serif font-bold text-tufts-blue-light">4 Peer Papers</span>

@@ -316,11 +316,6 @@ export default function ExperienceTimeline() {
                           {getInstitutionLogo(edu.institution)}
                         </div>
                         <div>
-                          {edu.gpa && (
-                            <span className="font-mono text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-                              GPA: {edu.gpa}
-                            </span>
-                          )}
                           <h4 className="font-serif text-lg sm:text-xl text-charcoal font-semibold mt-1">
                             {edu.institution}
                           </h4>

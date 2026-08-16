@@ -40,7 +40,7 @@ export default function PersonalChatbot() {
     {
       id: "msg-initial",
       role: "assistant",
-      content: "Hi there! I'm Eyobel's AI Portfolio Assistant. Feel free to ask me anything about his systems programming projects, math research, GPA, or work experience!",
+      content: "Hi there! I'm Eyobel's AI Portfolio Assistant. Feel free to ask me anything about his systems programming projects, math research, or work experience!",
       timestamp: new Date()
     }
   ]);
@@ -153,7 +153,7 @@ export default function PersonalChatbot() {
       const confirmationMsg: Message = {
         id: `msg-confirm-${Date.now()}`,
         role: "assistant",
-        content: `Thank you so much! I have securely received your contact details. Eyobel will be notified immediately at **eyobelassefa@gmail.com**. \n\nIn the meantime, feel free to ask me more questions about his Systems Projects (like his 32-bit Virtual Machine), publications, teaching experience, or GPA!`,
+        content: `Thank you so much! I have securely received your contact details. Eyobel will be notified immediately at **eyobelassefa@gmail.com**. \n\nIn the meantime, feel free to ask me more questions about his Systems Projects (like his 32-bit Virtual Machine), publications, or teaching experience!`,
         timestamp: new Date()
       };
       setMessages((prev) => [...prev, confirmationMsg]);

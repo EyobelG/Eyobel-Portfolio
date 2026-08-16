@@ -6,7 +6,6 @@ export const EDUCATION_DATA: Education[] = [
     location: "Medford, MA",
     degree: "Post-Baccalaureate / MS Candidate in Computer Science",
     period: "July 2025 – June 2027",
-    gpa: "4.0",
     details: [
       "Rigorous coursework in Systems Programming, Advanced Algorithms, Web Development, and Machine Learning.",
       "Developing strong full-stack and low-level software expertise."
