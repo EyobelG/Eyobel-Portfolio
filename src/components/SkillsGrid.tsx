@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Cpu, Globe, Award, Terminal, Code, Braces, Coffee, Database, 
+import {
+  Cpu, Globe, Award, Terminal, Code, Braces, Coffee, Database,
   GitBranch, Zap, Server, Shield, Layers, HelpCircle, FileCode, CheckCircle, Flame,
-  ExternalLink
+  ExternalLink, FileText
 } from "lucide-react";
 import { SKILLS_DATA, CERTIFICATIONS } from "../data";
+import CertificateViewer from "./CertificateViewer";
 
 const renderProviderLogo = (provider: string | undefined) => {
   const p = (provider || "").toLowerCase();
@@ -554,6 +555,7 @@ const renderBrandLogo = (name: string, isHovered: boolean) => {
 export default function SkillsGrid() {
   const [activeTab, setActiveTab] = useState<"all" | "languages" | "web" | "systems" | "tools" | "math_certs">("all");
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [certViewerOpen, setCertViewerOpen] = useState(false);
 
   // Filter skills based on tab
   const filteredSkills = TECH_STACK.filter(
@@ -843,6 +845,10 @@ export default function SkillsGrid() {
                     <span className="font-mono text-[9px] uppercase font-bold text-williams-purple dark:text-williams-gold bg-williams-purple/10 px-2 py-0.5 rounded border border-williams-purple/20">
                       Summer 2026 Course
                     </span>
+                    <span className="font-mono text-[9px] uppercase font-bold text-charcoal-light bg-cream-card-sub px-2 py-0.5 rounded border border-cream-border flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3 text-emerald-500" />
+                      Certificate of Achievement
+                    </span>
                   </div>
                   <h4 className="font-serif text-xl font-bold text-charcoal">Advanced Technical Interview Prep (CodePath)</h4>
                   <p className="text-xs text-charcoal-light leading-relaxed mt-2 max-w-2xl">
@@ -851,7 +857,14 @@ export default function SkillsGrid() {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row items-center gap-3 z-10 self-stretch md:self-auto justify-end">
-                <a 
+                <button
+                  onClick={() => setCertViewerOpen(true)}
+                  className="w-full sm:w-auto px-4 py-2 bg-williams-purple hover:bg-williams-purple/90 text-white dark:text-williams-gold font-mono text-xs font-semibold rounded-xl border border-williams-gold/30 transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>View Certificate</span>
+                </button>
+                <a
                   href="https://www.codepath.org/"
                   target="_blank"
                   rel="noreferrer"
@@ -865,6 +878,14 @@ export default function SkillsGrid() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <CertificateViewer
+        isOpen={certViewerOpen}
+        onClose={() => setCertViewerOpen(false)}
+        pdfUrl="/certificates/codepath-certificate.pdf"
+        title="Certificate of Achievement — Advanced Technical Interview Prep"
+        issuer="CodePath.org"
+      />
     </div>
   );
 }
