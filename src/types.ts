@@ -8,6 +8,7 @@ export interface Project {
   tech: string[];
   github?: string;
   marketplace?: string;
+  liveUrl?: string;
   impact?: string;
   image?: string;
 }

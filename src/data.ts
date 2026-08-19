@@ -98,6 +98,23 @@ export const PUBLICATIONS_DATA: Publication[] = [
 
 export const PROJECTS_DATA: Project[] = [
   {
+    id: "proj-quantfolio",
+    title: "QuantFolio: Portfolio Analytics Platform",
+    category: "Web Apps",
+    tags: ["Quantitative Finance", "Full-Stack", "Data Visualization"],
+    description: "Built and deployed a full-stack quantitative finance platform that analyzes portfolio risk, optimizes allocations, and backtests them against the market on live data.",
+    details: [
+      "Computes risk-adjusted performance metrics from live market data — Sharpe and Sortino ratios, maximum drawdown, 95% Value at Risk and Conditional VaR, plus beta and Jensen's alpha measured against the S&P 500.",
+      "Solves mean-variance optimization to trace the efficient frontier, identifying the max-Sharpe and minimum-volatility allocations and plotting the user's own portfolio against the curve.",
+      "Backtests the optimized allocation against both the original weights and the benchmark on a growth-of-$1 basis, alongside an underwater drawdown plot and a return distribution histogram with the VaR threshold marked.",
+      "Designed the API so slower upstream metadata calls degrade gracefully rather than failing the analysis, and cached price downloads to stay within provider rate limits."
+    ],
+    tech: ["Python", "FastAPI", "React", "TypeScript", "PyPortfolioOpt", "pandas", "NumPy", "Recharts", "Docker", "Render"],
+    github: "https://github.com/EyobelG/quant-portfolio-analytics",
+    liveUrl: "https://quant-portfolio-web.onrender.com",
+    impact: "Makes the gap between a real portfolio and the efficient frontier visible at a glance — showing when the same return was available at lower risk."
+  },
+  {
     id: "proj-1",
     title: "Universal Machine (UM)",
     category: "Systems",
