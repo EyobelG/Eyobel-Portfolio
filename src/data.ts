@@ -465,6 +465,7 @@ export const SKILLS_DATA = {
     { name: "Assembly", level: 85 },
     { name: "SQL", level: 80 },
     { name: "MySQL", level: 85 },
+    { name: "PostgreSQL", level: 80 },
     { name: "R", level: 75 },
     { name: "MATLAB", level: 80 }
   ],
@@ -479,7 +480,8 @@ export const SKILLS_DATA = {
     "Tailwind CSS",
     "HTML5 / CSS3",
     "JSON / AJAX",
-    "Heroku & Render"
+    "Heroku & Render",
+    "CI/CD (GitHub Actions)"
   ],
   mathScience: [
     "Graph Theory",

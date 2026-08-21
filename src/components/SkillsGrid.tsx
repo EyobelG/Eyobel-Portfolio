@@ -244,6 +244,17 @@ const TECH_STACK: TechSkill[] = [
     description: "Version controls, branch rebasing, and professional team repository structures.",
   },
   {
+    name: "CI/CD",
+    category: "tools",
+    icon: CheckCircle,
+    color: "#2088FF",
+    accentClass: "text-[#2088ff]",
+    bgGlowClass: "hover:border-[#2088ff]/50 hover:shadow-[#2088ff]/20",
+    level: "Intermediate",
+    years: "2026",
+    description: "GitHub Actions pipeline running pytest and typecheck builds on every push and pull request, with auto-deploy to Render and Vercel.",
+  },
+  {
     name: "Vite",
     category: "tools",
     icon: Zap,
@@ -297,6 +308,17 @@ const TECH_STACK: TechSkill[] = [
     level: "Advanced",
     years: "2+ Years",
     description: "Relational queries, index optimization, transactional safety, and schema designs.",
+  },
+  {
+    name: "PostgreSQL",
+    category: "systems",
+    icon: Database,
+    color: "#4169E1",
+    accentClass: "text-[#4169e1]",
+    bgGlowClass: "hover:border-[#4169e1]/50 hover:shadow-[#4169e1]/20",
+    level: "Advanced",
+    years: "2026",
+    description: "Cloud SQL schema of 11 tables behind 22 row-level-security policies, PostGIS spatial queries over GiST indexes, and SQL migrations run with pg.",
   },
   {
     name: "FastAPI",
@@ -480,6 +502,15 @@ const renderBrandLogo = (name: string, isHovered: boolean) => {
           referrerPolicy="no-referrer"
         />
       );
+    case "CI/CD":
+      return (
+        <img 
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg"
+          alt="CI/CD (GitHub Actions) Logo"
+          className={`${baseClass} object-contain`}
+          referrerPolicy="no-referrer"
+        />
+      );
     case "Vite":
       return (
         <svg viewBox="0 0 100 100" className={baseClass}>
@@ -516,6 +547,15 @@ const renderBrandLogo = (name: string, isHovered: boolean) => {
         <img 
           src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" 
           alt="MySQL Logo" 
+          className={baseClass}
+          referrerPolicy="no-referrer"
+        />
+      );
+    case "PostgreSQL":
+      return (
+        <img 
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" 
+          alt="PostgreSQL Logo" 
           className={baseClass}
           referrerPolicy="no-referrer"
         />
