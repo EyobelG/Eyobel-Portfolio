@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Play, RotateCcw, HelpCircle, ChevronRight, Hash, Sparkles, Plus, Minus, Info } from "lucide-react";
+import { Play, RotateCcw, HelpCircle, ChevronRight, Hash, Network, Shuffle, Plus, Minus, Info } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface Node {
@@ -279,7 +279,7 @@ export default function MathLab() {
       <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
         <div>
           <div className="flex items-center space-x-2 text-williams-gold mb-2">
-            <Sparkles className="w-5 h-5 text-williams-gold" />
+            <Network className="w-5 h-5 text-williams-gold" />
             <span className="font-mono text-xs font-semibold tracking-wider uppercase">Eyobel's Research Playground</span>
           </div>
           <h3 className="font-serif text-2xl lg:text-3xl text-charcoal font-semibold tracking-tight leading-tight">
@@ -394,7 +394,7 @@ export default function MathLab() {
               onClick={addRandomChips}
               className="flex items-center justify-center space-x-1 py-2.5 px-3 rounded-xl bg-tufts-blue hover:bg-tufts-blue-light text-white font-mono text-xs font-semibold border border-cream-border shadow-md transition-all"
             >
-              <Sparkles className="w-3.5 h-3.5 text-williams-gold" />
+              <Shuffle className="w-3.5 h-3.5 text-williams-gold" />
               <span>Scatter +6 Chips</span>
             </button>
 

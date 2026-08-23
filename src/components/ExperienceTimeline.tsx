@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { EXPERIENCE_DATA, EDUCATION_DATA } from "../data";
-import { Briefcase, GraduationCap, MapPin, Calendar, BookOpen, Star, ChevronDown, ChevronUp } from "lucide-react";
+import { Briefcase, GraduationCap, MapPin, Calendar, BookOpen, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 
 const getInstitutionLogo = (institution: string) => {
@@ -341,7 +341,7 @@ export default function ExperienceTimeline() {
                       <ul className="mt-4 space-y-2">
                         {edu.details.map((d, dIdx) => (
                           <li key={dIdx} className="text-sm text-charcoal-light leading-relaxed flex items-start">
-                            <span className="text-tufts-blue mr-3 flex-shrink-0 mt-1">✦</span>
+                            <ChevronRight className="w-4 h-4 text-tufts-blue mr-2 flex-shrink-0 mt-0.5" />
                             <span>{d}</span>
                           </li>
                         ))}

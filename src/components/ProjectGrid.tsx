@@ -211,10 +211,16 @@ export default function ProjectGrid() {
                   <h5 className="font-mono text-xs uppercase tracking-wider text-charcoal-light font-bold">Engineering Highlights</h5>
                   <ul className="space-y-3">
                     {activeProject.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start text-sm leading-relaxed text-charcoal-light">
-                        <span className="text-williams-gold mr-3 flex-shrink-0 mt-1">✦</span>
+                      <motion.li
+                        key={idx}
+                        initial={{ opacity: 0, x: -8 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                        className="flex items-start text-sm leading-relaxed text-charcoal-light"
+                      >
+                        <ChevronRight className="w-4 h-4 text-williams-gold mr-2 flex-shrink-0 mt-0.5" />
                         <span>{detail}</span>
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
                 </div>

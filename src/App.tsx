@@ -17,7 +17,8 @@ import {
   Menu,
   X,
   FileText,
-  Sparkles,
+  Network,
+  ArrowUpRight,
   Award,
   BookMarked,
   Sun,
@@ -64,7 +65,7 @@ export default function App() {
 
   const sections = [
     { id: "about", label: "Prologue", icon: User },
-    { id: "mathlab", label: "Math Lab (Chip-Firing)", icon: Sparkles },
+    { id: "mathlab", label: "Math Lab (Chip-Firing)", icon: Network },
     { id: "publications", label: "Publications", icon: BookOpen },
     { id: "projects", label: "CS Artifacts", icon: Cpu },
     { id: "timeline", label: "Teaching & Experience", icon: GraduationCap },
@@ -242,13 +243,16 @@ export default function App() {
               const Icon = sect.icon;
               const isActive = activeSection === sect.id;
               return (
-                <button
+                <motion.button
                   key={sect.id}
                   id={`side-nav-${sect.id}`}
                   onClick={() => scrollToSection(sect.id)}
-                  className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-mono transition-all ${
+                  whileHover={{ x: isActive ? 8 : 4 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-mono transition-colors ${
                     isActive
-                      ? "bg-zinc-200/80 dark:bg-white/10 text-zinc-900 dark:text-white font-bold border border-zinc-300/40 dark:border-white/15 shadow-sm transform translate-x-2"
+                      ? "bg-zinc-200/80 dark:bg-white/10 text-zinc-900 dark:text-white font-bold border border-zinc-300/40 dark:border-white/15 shadow-sm translate-x-2"
                       : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-200/40 dark:hover:bg-white/5 hover:text-zinc-900 dark:hover:text-white"
                   }`}
                 >
@@ -257,7 +261,7 @@ export default function App() {
                     <span>{sect.label}</span>
                   </div>
                   <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isActive ? "rotate-90 text-zinc-900 dark:text-white" : "opacity-30"}`} />
-                </button>
+                </motion.button>
               );
             })}
           </nav>
@@ -266,41 +270,49 @@ export default function App() {
         {/* Desktop Sidebar Footer with Social Links */}
         <div className="space-y-4 pt-6 border-t border-cream-border">
           <div className="flex items-center justify-center space-x-3">
-            <button
+            <motion.button
               id="btn-desktop-theme-toggle"
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-all border border-cream-border cursor-pointer flex items-center justify-center"
+              whileHover={{ scale: 1.12, rotate: 15 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-colors border border-cream-border cursor-pointer flex items-center justify-center"
               title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
               {isDarkMode ? <Sun className="w-4 h-4 text-zinc-400" /> : <Moon className="w-4 h-4" />}
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => {
                 window.location.href = "mailto:" + "eyobelassefa" + "@" + "gmail.com";
               }}
-              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-all border border-cream-border cursor-pointer"
+              whileHover={{ scale: 1.12, y: -2 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-colors border border-cream-border cursor-pointer"
               title="Mail"
             >
               <Mail className="w-4 h-4" />
-            </button>
-            <a
+            </motion.button>
+            <motion.a
               href="https://www.linkedin.com/in/eyobelgebre"
               target="_blank"
               rel="noreferrer"
-              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-all border border-cream-border flex items-center justify-center"
+              whileHover={{ scale: 1.12, y: -2 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-colors border border-cream-border flex items-center justify-center"
               title="LinkedIn"
             >
               <Linkedin className="w-4 h-4" />
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="https://github.com/EyobelG"
               target="_blank"
               rel="noreferrer"
-              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-all border border-cream-border flex items-center justify-center"
+              whileHover={{ scale: 1.12, y: -2 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2.5 rounded-full bg-zinc-200/40 dark:bg-white/5 hover:bg-zinc-200/80 dark:hover:bg-white/15 text-charcoal transition-colors border border-cream-border flex items-center justify-center"
               title="GitHub"
             >
               <Github className="w-4 h-4" />
-            </a>
+            </motion.a>
           </div>
           <div className="text-center text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">
             Eyobel Gebre • © 2026
@@ -319,10 +331,18 @@ export default function App() {
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             {/* Left Narrative Column */}
             <div className="lg:col-span-7 space-y-4">
-              <span className="inline-flex items-center space-x-2 px-3.5 py-1 bg-williams-purple/10 dark:bg-williams-purple/25 text-williams-purple dark:text-williams-gold font-mono text-[10px] font-bold rounded-full uppercase tracking-widest border border-williams-purple/20 dark:border-williams-gold/30 shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-williams-purple dark:text-williams-gold animate-spin-slow" />
+              <motion.span
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="inline-flex items-center space-x-2 px-3.5 py-1 bg-williams-purple/10 dark:bg-williams-purple/25 text-williams-purple dark:text-williams-gold font-mono text-[10px] font-bold rounded-full uppercase tracking-widest border border-williams-purple/20 dark:border-williams-gold/30 shadow-sm"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
                 <span>Seeking Summer 2026 Internships & Full-Time Roles</span>
-              </span>
+              </motion.span>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-charcoal font-bold tracking-tight leading-tight">
                 Bridging Rigorous Mathematics <br className="hidden sm:inline" />
@@ -333,21 +353,27 @@ export default function App() {
               </p>
 
               <div className="flex flex-wrap gap-3 pt-2">
-                <button
+                <motion.button
                   id="btn-hero-connect"
                   onClick={() => scrollToSection("contact")}
-                  className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white/10 dark:hover:bg-white/20 text-white font-mono text-xs font-semibold rounded-lg shadow-sm border border-zinc-700/50 dark:border-white/15 transition-all"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white/10 dark:hover:bg-white/20 text-white font-mono text-xs font-semibold rounded-lg shadow-sm border border-zinc-700/50 dark:border-white/15 transition-colors"
                 >
                   Contact Me
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   id="btn-hero-mathlab"
                   onClick={() => scrollToSection("mathlab")}
-                  className="px-5 py-2.5 border border-cream-border bg-cream-card hover:bg-cream-card-sub text-charcoal font-mono text-xs transition-all rounded-lg flex items-center space-x-1"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="group px-5 py-2.5 border border-cream-border bg-cream-card hover:bg-cream-card-sub text-charcoal font-mono text-xs transition-colors rounded-lg flex items-center space-x-1.5"
                 >
                   <span>Play Chip-Firing Lab</span>
-                  <span className="text-zinc-400 font-bold">★</span>
-                </button>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </motion.button>
               </div>
             </div>
 
@@ -417,7 +443,7 @@ export default function App() {
           <section id="mathlab" className="scroll-mt-24 border-t border-cream-border/60 pt-16 space-y-6">
             <div className="flex items-center space-x-4 mb-2">
               <div className="w-10 h-10 rounded-xl bg-zinc-500/5 border border-zinc-500/10 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
-                <Sparkles className="w-5 h-5 text-zinc-400" />
+                <Network className="w-5 h-5 text-zinc-400" />
               </div>
               <div>
                 <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold">Section 02</span>
@@ -520,7 +546,7 @@ export default function App() {
               {/* Right coordinates grid */}
               <div className="md:col-span-7 space-y-3">
                 {/* Email item */}
-                <div className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-all">
+                <motion.div whileHover={{ y: -3 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-colors">
                   <div className="flex items-center space-x-3">
                     <div className="p-2.5 bg-zinc-200/50 dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-300 dark:border-white/10 rounded-xl">
                       <Mail className="w-4 h-4" />
@@ -545,10 +571,10 @@ export default function App() {
                   >
                     {copiedEmail ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                   </button>
-                </div>
+                </motion.div>
 
                 {/* Tufts Email item */}
-                <div className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-all">
+                <motion.div whileHover={{ y: -3 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-colors">
                   <div className="flex items-center space-x-3">
                     <div className="p-2.5 bg-tufts-blue/20 text-tufts-blue border border-tufts-blue/30 rounded-xl">
                       <Mail className="w-4 h-4" />
@@ -573,10 +599,10 @@ export default function App() {
                   >
                     {copiedEmail ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                   </button>
-                </div>
+                </motion.div>
 
                 {/* LinkedIn item */}
-                <div className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-all">
+                <motion.div whileHover={{ y: -3 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-colors">
                   <div className="flex items-center space-x-3">
                     <div className="p-2.5 bg-tufts-blue/20 text-tufts-blue border border-tufts-blue/30 rounded-xl">
                       <Linkedin className="w-4 h-4" />
@@ -594,10 +620,10 @@ export default function App() {
                       </a>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* GitHub item */}
-                <div className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-all">
+                <motion.div whileHover={{ y: -3 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="flex items-center justify-between p-4 bg-cream-card border-2 border-cream-border rounded-2xl shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-colors">
                   <div className="flex items-center space-x-3">
                     <div className="p-2.5 bg-zinc-200/50 dark:bg-white/5 text-zinc-600 dark:text-zinc-300 border border-zinc-300 dark:border-white/10 rounded-xl">
                       <Github className="w-4 h-4" />
@@ -615,7 +641,7 @@ export default function App() {
                       </a>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </section>
