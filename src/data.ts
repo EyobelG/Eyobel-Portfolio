@@ -102,17 +102,19 @@ export const PROJECTS_DATA: Project[] = [
     title: "QuantFolio: Portfolio Analytics Platform",
     category: "Web Apps",
     tags: ["Quantitative Finance", "Full-Stack", "Data Visualization"],
-    description: "Built and deployed a full-stack quantitative finance platform that analyzes portfolio risk, optimizes allocations, and backtests them against the market on live data.",
+    description: "Built and deployed a full-stack quantitative finance platform that analyzes portfolio risk, optimizes allocations, validates them out-of-sample, and paper-trades the winning strategy live through Alpaca.",
     details: [
       "Computes risk-adjusted performance metrics from live market data — Sharpe and Sortino ratios, maximum drawdown, 95% Value at Risk and Conditional VaR, plus beta and Jensen's alpha measured against the S&P 500.",
-      "Solves mean-variance optimization to trace the efficient frontier, identifying the max-Sharpe and minimum-volatility allocations and plotting the user's own portfolio against the curve.",
-      "Backtests the optimized allocation against both the original weights and the benchmark on a growth-of-$1 basis, alongside an underwater drawdown plot and a return distribution histogram with the VaR threshold marked.",
+      "Solves mean-variance and Black-Litterman equilibrium optimization to trace the efficient frontier, identifying the max-Sharpe and minimum-volatility allocations and plotting the user's own portfolio against the curve.",
+      "Walk-forward backtests six allocation rules — max-Sharpe, risk parity, hierarchical risk parity, and equal-weight among them — with transaction costs, refitting at each rebalance on only the data available at the time to measure genuine out-of-sample performance instead of an in-sample curve fit.",
+      "Adds statistical rigor with deflated and probabilistic Sharpe ratios, stationary-bootstrap confidence intervals, and a GARCH(1,1) volatility model fit by maximum likelihood, implemented from the underlying math rather than pulled from a library.",
+      "Closes the loop from analysis to execution: a live Alpaca paper-trading integration auto-selects whichever strategy currently backtests best out-of-sample, diffs it against real account positions, and places the rebalancing orders on user confirmation.",
       "Designed the API so slower upstream metadata calls degrade gracefully rather than failing the analysis, and cached price downloads to stay within provider rate limits."
     ],
-    tech: ["Python", "FastAPI", "React", "TypeScript", "PyPortfolioOpt", "pandas", "NumPy", "Recharts", "Docker", "Render"],
+    tech: ["Python", "FastAPI", "React", "TypeScript", "PyPortfolioOpt", "pandas", "NumPy", "Recharts", "Alpaca API", "Docker", "Render"],
     github: "https://github.com/EyobelG/quant-portfolio-analytics",
     liveUrl: "https://quant-portfolio-web.onrender.com",
-    impact: "Makes the gap between a real portfolio and the efficient frontier visible at a glance — showing when the same return was available at lower risk."
+    impact: "Turns portfolio analysis into a tradeable decision — showing not just where a real portfolio sits versus the efficient frontier, but which allocation actually holds up out-of-sample, then executing it live in a paper account."
   },
   {
     id: "proj-1",
