@@ -505,6 +505,24 @@ export const SKILLS_DATA = {
 
 export const CERTIFICATIONS: Certification[] = [
   {
+    name: "Model Context Protocol: Advanced Topics",
+    provider: "Anthropic",
+    date: "Aug 2026",
+    link: "https://verify.skilljar.com/c/vwjx3zrdzq5i"
+  },
+  {
+    name: "SQL (Intermediate) Certificate",
+    provider: "HackerRank",
+    date: "Aug 2026",
+    link: "https://www.hackerrank.com/certificates/iframe/c3652d065c0c"
+  },
+  {
+    name: "Software Engineer Certificate",
+    provider: "HackerRank",
+    date: "Aug 2026",
+    link: "https://www.hackerrank.com/certificates/iframe/6ddceb72acc4"
+  },
+  {
     name: "AI Fluency for Builders",
     provider: "Anthropic",
     date: "Aug 2026",
