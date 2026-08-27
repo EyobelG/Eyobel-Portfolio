@@ -511,10 +511,10 @@ export const CERTIFICATIONS: Certification[] = [
     link: "https://verify.skilljar.com/c/vwjx3zrdzq5i"
   },
   {
-    name: "SQL (Intermediate) Certificate",
+    name: "SQL (Advanced) Certificate",
     provider: "HackerRank",
     date: "Aug 2026",
-    link: "https://www.hackerrank.com/certificates/iframe/c3652d065c0c"
+    link: "https://www.hackerrank.com/certificates/iframe/ca1c64090e5b"
   },
   {
     name: "Software Engineer Certificate",
