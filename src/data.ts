@@ -529,6 +529,12 @@ export const CERTIFICATIONS: Certification[] = [
     link: "https://www.hackerrank.com/certificates/iframe/058d3276c362"
   },
   {
+    name: "C# (Basic) Certificate",
+    provider: "HackerRank",
+    date: "Aug 2026",
+    link: "https://www.hackerrank.com/certificates/iframe/2388335d79e3"
+  },
+  {
     name: "AI Fluency for Builders",
     provider: "Anthropic",
     date: "Aug 2026",
