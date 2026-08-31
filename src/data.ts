@@ -289,6 +289,22 @@ export const PROJECTS_DATA: Project[] = [
     impact: "Live on the VS Code Marketplace — install it, generate tests on a real Python function, and watch it verify them in a sandbox before you see them.",
     github: "https://github.com/EyobelG/ContextLens",
     marketplace: "https://marketplace.visualstudio.com/items?itemName=eyobelg.context-lens-python"
+  },
+  {
+    id: "proj-13",
+    title: "Receipt Scanner: OCR Data Extractor",
+    category: "Systems",
+    tags: ["Computer Vision", "OCR", "Python"],
+    description: "Built a receipt-scanning pipeline that corrects skewed photos with computer-vision perspective transforms, then OCRs and parses out vendor, date, total, and tax.",
+    details: [
+      "Detected receipt edges and contours and applied a four-point perspective transform (OpenCV, imutils) to de-skew photographed receipts.",
+      "Converted receipts to high-contrast binary images with local adaptive thresholding (scikit-image) to sharpen text for OCR.",
+      "Ran images through Tesseract OCR (pytesseract), experimenting with page-segmentation modes to fit the noisy receipt-photo domain.",
+      "Parsed vendor, date, total, and tax from raw OCR output with regex, handling inconsistent date/currency formats and common OCR errors."
+    ],
+    tech: ["Python", "OpenCV", "imutils", "scikit-image", "Tesseract OCR", "pytesseract", "Regex"],
+    github: "https://github.com/EyobelG/receipt_scanner_project",
+    impact: "Turns a photo of a paper receipt into structured, queryable data without manual entry."
   }
 ];
 
