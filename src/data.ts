@@ -521,6 +521,12 @@ export const SKILLS_DATA = {
 
 export const CERTIFICATIONS: Certification[] = [
   {
+    name: "Frontend Developer (React) Certificate",
+    provider: "HackerRank",
+    date: "Sep 2026",
+    link: "https://www.hackerrank.com/certificates/iframe/dc5ee18b3ff2"
+  },
+  {
     name: "Model Context Protocol: Advanced Topics",
     provider: "Anthropic",
     date: "Aug 2026",
