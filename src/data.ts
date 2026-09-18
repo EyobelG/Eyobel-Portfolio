@@ -8,6 +8,7 @@ export const EDUCATION_DATA: Education[] = [
     period: "July 2025 – June 2027",
     details: [
       "Rigorous coursework in Systems Programming, Advanced Algorithms, Web Development, and Machine Learning.",
+      "Current coursework (Fall 2026): Machine Learning, Cloud Computing, Programming Languages.",
       "Developing strong full-stack and low-level software expertise."
     ]
   },
@@ -266,9 +267,10 @@ export const PROJECTS_DATA: Project[] = [
       "Architected persistence behind a single PlayDatesBackend protocol with swappable in-memory mock and Firebase (Firestore/Auth/Storage) implementations, so the app builds and runs fully featured with zero Firebase SDK installed.",
       "Built a real-time 1v1 Game Arena spanning a dozen+ mini-games (Chess Duel, Vibe Mapping, Harmonic Match, Tarot Connection, Neon Stack 3D, trivia, and more), each gating chat unlock behind a server-enforced compatibility-score threshold.",
       "Implemented full messaging with photo, GIF, audio, video, and location attachments, plus live voice/video calling.",
-      "Maintained a disciplined AI-assisted engineering workflow: syntax-check/build/test shell scripts, XCTest unit and UI smoke suites, and a pack of role-specific agent prompts (build, test, regression-triage, quality-gate) for working with Claude Code."
+      "Maintained a disciplined AI-assisted engineering workflow: syntax-check/build/test shell scripts, XCTest unit and UI smoke suites, and a pack of role-specific agent prompts (build, test, regression-triage, quality-gate) for working with Claude Code.",
+      "327 Swift files across 30+ XCTest suites, with dedicated coverage on safety-critical paths: age verification/age gating, content moderation, photo/face verification, secure reporting, and location-sharing privacy. GitHub Actions CI/CD on every push."
     ],
-    tech: ["Swift", "SwiftUI", "Firebase (Firestore/Auth/Storage)", "XCTest", "MVVM"],
+    tech: ["Swift", "SwiftUI", "Firebase (Firestore/Auth/Storage)", "XCTest", "MVVM", "CI/CD"],
     impact: "A fully-featured, testable iOS dating app where compatibility is measured through shared play instead of profile scrolling — architected for AI-assisted development from day one.",
     image: "/projects/playdate-matches.png"
   },
@@ -499,7 +501,8 @@ export const SKILLS_DATA = {
     "HTML5 / CSS3",
     "JSON / AJAX",
     "Heroku & Render",
-    "CI/CD (GitHub Actions)"
+    "CI/CD (GitHub Actions)",
+    "Cloud Computing (in progress, Tufts, Fall 2026)"
   ],
   mathScience: [
     "Graph Theory",
