@@ -26,6 +26,8 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
+import { Typewriter, ScrambleText, BlurWords, ShinyText } from "./components/TextEffects";
+
 import MathLab from "./components/MathLab";
 import ProjectGrid from "./components/ProjectGrid";
 import PublicationsSection from "./components/PublicationsSection";
@@ -52,6 +54,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState<string>("about");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [heroTyped, setHeroTyped] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -176,7 +179,7 @@ export default function App() {
                     }`}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span>{sect.label}</span>
+                    <ScrambleText text={sect.label} trigger="hover" speed={22} revealEvery={1} />
                   </button>
                 );
               })}
@@ -193,7 +196,7 @@ export default function App() {
             <BrandLogo size="large" />
             <div>
               <h1 className="font-serif text-xl xl:text-2xl font-bold tracking-tight text-charcoal leading-tight">
-                Eyobel Gebre
+                <ShinyText duration={5}>Eyobel Gebre</ShinyText>
               </h1>
               <p className="text-[11px] text-zinc-500 dark:text-zinc-400 font-mono uppercase tracking-widest font-semibold mt-0.5">
                 Tufts CS • Williams Math
@@ -258,7 +261,7 @@ export default function App() {
                 >
                   <div className="flex items-center space-x-3">
                     <Icon className="w-4 h-4 flex-shrink-0" />
-                    <span>{sect.label}</span>
+                    <ScrambleText text={sect.label} trigger="hover" speed={22} revealEvery={1} />
                   </div>
                   <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isActive ? "rotate-90 text-zinc-900 dark:text-white" : "opacity-30"}`} />
                 </motion.button>
@@ -341,16 +344,31 @@ export default function App() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <span>Seeking Summer 2026 Internships & Full-Time Roles</span>
+                <ScrambleText text="Seeking Summer 2026 Internships & Full-Time Roles" trigger="mount" delay={450} speed={24} revealEvery={1} />
               </motion.span>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-charcoal font-bold tracking-tight leading-tight">
-                Bridging Rigorous Mathematics <br className="hidden sm:inline" />
-                with High-Performance Systems
+                <Typewriter
+                  lines={["Bridging Rigorous Mathematics ", "with High-Performance Systems"]}
+                  speed={38}
+                  startDelay={450}
+                  caretClassName="bg-williams-gold"
+                  onDone={() => setHeroTyped(true)}
+                />
               </h2>
-              <p className="text-sm sm:text-base text-charcoal-light max-w-xl leading-relaxed">
-                Hi, I'm Eyobel. I design virtual machines, optimize low-level systems, and build full-stack solutions driven by advanced combinatorial graphs. Let's explore my artifacts below.
-              </p>
+              {heroTyped ? (
+                <BlurWords
+                  as="p"
+                  trigger="mount"
+                  stagger={0.022}
+                  text="Hi, I'm Eyobel. I design virtual machines, optimize low-level systems, and build full-stack solutions driven by advanced combinatorial graphs. Let's explore my artifacts below."
+                  className="text-sm sm:text-base text-charcoal-light max-w-xl leading-relaxed"
+                />
+              ) : (
+                <p aria-hidden className="text-sm sm:text-base text-charcoal-light max-w-xl leading-relaxed opacity-0 select-none">
+                  Hi, I'm Eyobel. I design virtual machines, optimize low-level systems, and build full-stack solutions driven by advanced combinatorial graphs. Let's explore my artifacts below.
+                </p>
+              )}
 
               <div className="flex flex-wrap gap-3 pt-2">
                 <motion.button
@@ -394,9 +412,9 @@ export default function App() {
                 <User className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold">Section 01</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold"><ScrambleText text="Section 01" revealEvery={1} /></span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
-                  Academic & Professional Prologue
+                  <BlurWords text="Academic &amp; Professional Prologue" />
                 </h3>
               </div>
             </div>
@@ -446,9 +464,9 @@ export default function App() {
                 <Network className="w-5 h-5 text-zinc-400" />
               </div>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold">Section 02</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold"><ScrambleText text="Section 02" revealEvery={1} /></span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
-                  Math Sandbox: Graph Chip-Firing Game
+                  <BlurWords text="Math Sandbox: Graph Chip-Firing Game" />
                 </h3>
               </div>
             </div>
@@ -468,9 +486,9 @@ export default function App() {
                 <Cpu className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold">Section 04</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold"><ScrambleText text="Section 04" revealEvery={1} /></span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
-                  Computer Science & Systems Artifacts
+                  <BlurWords text="Computer Science &amp; Systems Artifacts" />
                 </h3>
               </div>
             </div>
@@ -485,9 +503,9 @@ export default function App() {
                 <GraduationCap className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold">Section 05</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold"><ScrambleText text="Section 05" revealEvery={1} /></span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
-                  Chronological Journey & Pedagogy
+                  <BlurWords text="Chronological Journey &amp; Pedagogy" />
                 </h3>
               </div>
             </div>
@@ -502,9 +520,9 @@ export default function App() {
                 <Wrench className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold">Section 06</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold"><ScrambleText text="Section 06" revealEvery={1} /></span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
-                  Skill Set & Professional Accreditations
+                  <BlurWords text="Skill Set &amp; Professional Accreditations" />
                 </h3>
               </div>
             </div>
@@ -519,9 +537,9 @@ export default function App() {
                 <Mail className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold">Section 07</span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold"><ScrambleText text="Section 07" revealEvery={1} /></span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
-                  Contact Me
+                  <BlurWords text="Contact Me" />
                 </h3>
               </div>
             </div>

@@ -147,3 +147,49 @@
   opacity: 0.5 !important;
 }
 
+
+/* ---------------- Text effects ---------------- */
+
+/* Typewriter caret */
+.eg-caret {
+  animation: eg-blink 1.05s steps(1, end) infinite;
+  border-radius: 1px;
+}
+
+@keyframes eg-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Specular sweep for headline accents */
+.eg-shine {
+  background-image: linear-gradient(
+    110deg,
+    var(--color-charcoal) 38%,
+    color-mix(in srgb, var(--color-charcoal) 35%, var(--williams-gold)) 50%,
+    var(--color-charcoal) 62%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation-name: eg-shine-sweep;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes eg-shine-sweep {
+  from { background-position: 180% 0; }
+  to { background-position: -80% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eg-caret { animation: none; opacity: 1; }
+  .eg-shine {
+    animation: none;
+    background-image: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    color: var(--color-charcoal);
+  }
+}
