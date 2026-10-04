@@ -16,6 +16,26 @@ const getInstitutionLogo = (institution: string) => {
           <circle cx="50" cy="35" r="5" fill="#ffcc00" />
         </svg>
       );
+    case "SCOOP":
+      return (
+        <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* SCOOP: carbon leaf over a chained ledger, in Tufts blue */}
+          <rect width="100" height="100" rx="20" fill="#0f3f6e" />
+          <path
+            d="M50 16 C 30 28, 24 48, 34 62 C 44 76, 64 70, 70 52 C 75 37, 66 24, 50 16 Z"
+            fill="#2fbf71"
+            stroke="#eaf7f0"
+            strokeWidth="3"
+          />
+          <path d="M50 20 C 46 40, 44 54, 38 66" stroke="#0f3f6e" strokeWidth="3" strokeLinecap="round" />
+          <g stroke="#ffcc00" strokeWidth="3" fill="none">
+            <rect x="22" y="74" width="14" height="12" rx="3" />
+            <rect x="43" y="74" width="14" height="12" rx="3" />
+            <rect x="64" y="74" width="14" height="12" rx="3" />
+            <path d="M36 80 H 43 M57 80 H 64" strokeLinecap="round" />
+          </g>
+        </svg>
+      );
     case "CodePath":
       return (
         <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -142,16 +162,23 @@ export default function ExperienceTimeline() {
                   {/* Experience Card */}
                   <div className="bg-cream-card border-2 border-cream-border rounded-2xl p-5 sm:p-6 shadow-lg hover:border-zinc-400/30 dark:hover:border-white/20 hover:bg-cream-card-sub transition-all">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-                      <div>
-                        <span className="font-mono text-[10px] uppercase font-bold text-tufts-blue-light bg-tufts-blue/15 px-2 py-0.5 rounded border border-tufts-blue/30">
-                          {exp.type}
-                        </span>
-                        <h4 className="font-serif text-lg sm:text-xl text-charcoal font-semibold mt-1">
-                          {exp.role}
-                        </h4>
-                        <p className="text-sm font-semibold text-williams-purple dark:text-williams-gold mt-0.5">
-                          {exp.organization}
-                        </p>
+                      <div className="flex items-start gap-3">
+                        {exp.logoKey && (
+                          <div className="w-10 h-10 sm:w-11 sm:h-11 flex-shrink-0 rounded-xl overflow-hidden shadow-md ring-1 ring-black/10 dark:ring-white/15 mt-0.5">
+                            {getInstitutionLogo(exp.logoKey)}
+                          </div>
+                        )}
+                        <div>
+                          <span className="font-mono text-[10px] uppercase font-bold text-tufts-blue-light bg-tufts-blue/15 px-2 py-0.5 rounded border border-tufts-blue/30">
+                            {exp.type}
+                          </span>
+                          <h4 className="font-serif text-lg sm:text-xl text-charcoal font-semibold mt-1">
+                            {exp.role}
+                          </h4>
+                          <p className="text-sm font-semibold text-williams-purple dark:text-williams-gold mt-0.5">
+                            {exp.organization}
+                          </p>
+                        </div>
                       </div>
                       <div className="flex flex-col sm:items-end text-xs font-mono text-charcoal-light space-y-1">
                         <span className="flex items-center gap-1">
