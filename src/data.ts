@@ -8,6 +8,7 @@ export const EDUCATION_DATA: Education[] = [
     period: "July 2025 – June 2027",
     details: [
       "Rigorous coursework in Systems Programming, Advanced Algorithms, Web Development, and Machine Learning.",
+      "Current coursework (Fall 2026): Machine Learning, Cloud Computing, Programming Languages.",
       "Developing strong full-stack and low-level software expertise."
     ]
   },
@@ -266,9 +267,10 @@ export const PROJECTS_DATA: Project[] = [
       "Architected persistence behind a single PlayDatesBackend protocol with swappable in-memory mock and Firebase (Firestore/Auth/Storage) implementations, so the app builds and runs fully featured with zero Firebase SDK installed.",
       "Built a real-time 1v1 Game Arena spanning a dozen+ mini-games (Chess Duel, Vibe Mapping, Harmonic Match, Tarot Connection, Neon Stack 3D, trivia, and more), each gating chat unlock behind a server-enforced compatibility-score threshold.",
       "Implemented full messaging with photo, GIF, audio, video, and location attachments, plus live voice/video calling.",
-      "Maintained a disciplined AI-assisted engineering workflow: syntax-check/build/test shell scripts, XCTest unit and UI smoke suites, and a pack of role-specific agent prompts (build, test, regression-triage, quality-gate) for working with Claude Code."
+      "Maintained a disciplined AI-assisted engineering workflow: syntax-check/build/test shell scripts, XCTest unit and UI smoke suites, and a pack of role-specific agent prompts (build, test, regression-triage, quality-gate) for working with Claude Code.",
+      "327 Swift files across 30+ XCTest suites, with dedicated coverage on safety-critical paths: age verification/age gating, content moderation, photo/face verification, secure reporting, and location-sharing privacy. GitHub Actions CI/CD on every push."
     ],
-    tech: ["Swift", "SwiftUI", "Firebase (Firestore/Auth/Storage)", "XCTest", "MVVM"],
+    tech: ["Swift", "SwiftUI", "Firebase (Firestore/Auth/Storage)", "XCTest", "MVVM", "CI/CD"],
     impact: "A fully-featured, testable iOS dating app where compatibility is measured through shared play instead of profile scrolling — architected for AI-assisted development from day one.",
     image: "/projects/playdate-matches.png"
   },
@@ -305,6 +307,22 @@ export const PROJECTS_DATA: Project[] = [
     tech: ["Python", "OpenCV", "imutils", "scikit-image", "Tesseract OCR", "pytesseract", "Regex"],
     github: "https://github.com/EyobelG/receipt_scanner_project",
     impact: "Turns a photo of a paper receipt into structured, queryable data without manual entry."
+  },
+  {
+    id: "proj-14",
+    title: "WhatsUp: gRPC Chat Service",
+    category: "Systems",
+    tags: ["Go", "gRPC", "Protocol Buffers", "Distributed Systems"],
+    description: "A client/server chat application built on gRPC and Protocol Buffers in Go, with token-based auth enforced by a server-side interceptor and a central mail-exchange model for message delivery.",
+    details: [
+      "Authored the .proto service definition \u2014 ChatMessage/ChatMessages/UserList/AuthToken message types and the Connect, Send, Fetch, List, and Disconnect RPCs \u2014 and generated the Go stubs via protoc with protoc-gen-go and protoc-gen-go-grpc.",
+      "Implemented token-based authentication: the client registers once, receives a connection token, and attaches it as outgoing gRPC metadata on every subsequent call, which a unary server interceptor validates and maps back to a username before dispatching to a handler.",
+      "Built the server-side exchange handlers around per-user inbox queues, with batch size controlled by the server rather than the client, and purge-on-disconnect semantics that also invalidate the caller\u2019s auth token.",
+      "Implemented the client-side RPC calls behind an interactive CLI (send to user, fetch new messages, list active users, quit) and verified delivery end to end by running concurrent clients against a local server.",
+      "Modernized the toolchain, resolving a generated-stub/runtime version mismatch by upgrading the grpc-go and protobuf dependencies to match the code emitted by the current plugins."
+    ],
+    tech: ["Go", "gRPC", "Protocol Buffers", "protoc", "Unary Interceptors", "gRPC Metadata"],
+    impact: "An end-to-end look at how RPC services actually authenticate and route traffic \u2014 schema-first APIs, generated stubs, and interceptor-enforced auth rather than hand-rolled HTTP handlers."
   }
 ];
 
@@ -499,7 +517,8 @@ export const SKILLS_DATA = {
     "HTML5 / CSS3",
     "JSON / AJAX",
     "Heroku & Render",
-    "CI/CD (GitHub Actions)"
+    "CI/CD (GitHub Actions)",
+    "Cloud Computing (in progress, Tufts, Fall 2026)"
   ],
   mathScience: [
     "Graph Theory",
