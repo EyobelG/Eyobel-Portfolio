@@ -38,10 +38,11 @@ export interface Experience {
   organization: string;
   location: string;
   period: string;
-  type: "Teaching" | "Research" | "Leadership";
+  type: "Teaching" | "Research" | "Leadership" | "Engineering";
   bullets: string[];
   skills: string[];
   courses?: Course[];
+  logoKey?: string;
 }
 
 export interface Education {

@@ -312,6 +312,23 @@ export const PROJECTS_DATA: Project[] = [
 
 export const EXPERIENCE_DATA: Experience[] = [
   {
+    id: "exp-scoop",
+    role: "Core Model Engineer — SCOOP Carbon Accounting",
+    organization: "Tufts Auster Center for Applied Innovation and Research",
+    location: "Medford, MA (Hybrid)",
+    period: "September 2026 – Present",
+    type: "Engineering",
+    logoKey: "SCOOP",
+    bullets: [
+      "Core Model Engineer on SCOOP (Sustainable Carbon Options with Open Protocols), the Auster Center's Environmental Innovation initiative building the missing accounting infrastructure for carbon markets — a general liability-and-asset MMRV (Measurement, Monitoring, Reporting, and Validation) framework.",
+      "Designing the SCOOP core model stack with the Data Engineering and Impact Network teams: cloud-based transformation and normalization of carbon claims and emissions across the carbon data supply chain, so credits can be compared, restated, and traced back to their dynamic physical origin.",
+      "Mapping requirements against the SCOOP principles — interoperability, measurable externalities, verifiability, decentralization, privacy, scalability, and traceability — and instantiating the IEEE P7802 standard incrementally through prototypes with carbon project owners, raters, registries, and market makers.",
+      "Building and testing core model instances for reuse at scale (high processing volumes) and scope (multiple industries measuring claims, offsets, verifications, registries, and settlements), including API and self-service architecture for corporate and academic developers, policy makers, and auditors.",
+      "Evaluating and selecting tooling with the data engineering team — ETL and data movement, privacy and blockchain primitives, AI-assisted development — plus secure code versioning, DevOps, and threat modeling for the platform."
+    ],
+    skills: ["Software Architecture", "API Development", "Python", "Cloud (AWS/GCP/Azure)", "Data Modeling", "ETL", "Secure Coding", "DevOps", "Carbon Accounting", "IEEE P7802"]
+  },
+  {
     id: "exp-1",
     role: "Resident Counselor (Wharton Summer Discovery)",
     organization: "The Wharton School - San Francisco",
