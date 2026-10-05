@@ -557,6 +557,12 @@ export const SKILLS_DATA = {
 
 export const CERTIFICATIONS: Certification[] = [
   {
+    name: "Go (Intermediate) Certificate",
+    provider: "HackerRank",
+    date: "Oct 2026",
+    link: "https://www.hackerrank.com/certificates/5148296a4728"
+  },
+  {
     name: "Frontend Developer (React) Certificate",
     provider: "HackerRank",
     date: "Sep 2026",
