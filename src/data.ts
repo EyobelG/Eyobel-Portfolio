@@ -514,6 +514,7 @@ export const SKILLS_DATA = {
     { name: "C/C++", level: 95 },
     { name: "Python", level: 90 },
     { name: "Java", level: 85 },
+    { name: "Go", level: 80 },
     { name: "JavaScript / TS", level: 88 },
     { name: "Assembly", level: 85 },
     { name: "SQL", level: 80 },
