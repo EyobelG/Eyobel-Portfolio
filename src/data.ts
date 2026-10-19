@@ -119,6 +119,23 @@ export const PROJECTS_DATA: Project[] = [
     impact: "Turns portfolio analysis into a tradeable decision — showing not just where a real portfolio sits versus the efficient frontier, but which allocation actually holds up out-of-sample, then executing it live in a paper account."
   },
   {
+    id: "proj-scoop-site",
+    title: "SCOOP: Open Carbon Accounting (in progress)",
+    category: "Web Apps",
+    tags: ["Data Visualization", "Front-End", "Standards"],
+    description: "Designed and built the public site for SCOOP (Sustainable Carbon Options with Open Protocols), the Tufts Auster Center's open carbon-accounting platform and reference implementation for the IEEE P7802 MMRV standard.",
+    details: [
+      "Translates the project's core data model — carbon as time-stamped, source-attributed `carbon_event` records carrying an explicit measurement maturity level — into an interactive explanation aimed at engineers and standards reviewers.",
+      "Built an annotated walkthrough of a single carbon event, tracing it from a ~6-second power read through integration to kWh, grid-factor attribution, and the ledger entry that records method and coverage.",
+      "Built a scenario timeline contrasting estimated versus measured-and-settled carbon, labeled so projected years read as scenarios rather than measurements.",
+      "Visualized the measured record from metered lab-server data, with each point representing one settled accounting period.",
+      "Honors `prefers-reduced-motion`, disabling the ambient animation throughout for motion-sensitive visitors."
+    ],
+    tech: ["TypeScript", "React", "Data Visualization", "CSS Animation", "Vercel"],
+    liveUrl: "https://website-jade-eta-97.vercel.app/",
+    impact: "Front-end work on an active research project: gives the IEEE P7802 working group a public explanation of the SCOOP core model. The standard and platform are the working group's."
+  },
+  {
     id: "proj-1",
     title: "Universal Machine (UM)",
     category: "Systems",
