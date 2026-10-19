@@ -13,7 +13,7 @@ export default function PublicationsSection() {
   // Search and Filter States
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<"All" | "Journal" | "Preprint">("All");
-  const [filterYear, setFilterYear] = useState<"All" | "2025" | "2023" | "2022">("All");
+  const [filterYear, setFilterYear] = useState<"All" | "2026" | "2025" | "2023">("All");
 
   // Citation Copy States
   const [citationTab, setCitationTab] = useState<"bibtex" | "mla" | "apa">("bibtex");
@@ -152,7 +152,7 @@ export default function PublicationsSection() {
           {/* Filter Row 2: Year Chips */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
             <span className="text-[9px] font-mono font-bold uppercase text-zinc-400 mr-1 shrink-0">Year:</span>
-            {(["All", "2025", "2023", "2022"] as const).map((year) => (
+            {(["All", "2026", "2025", "2023"] as const).map((year) => (
               <button
                 key={year}
                 id={`btn-filter-year-${year}`}

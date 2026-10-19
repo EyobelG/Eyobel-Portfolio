@@ -78,12 +78,13 @@ export const PUBLICATIONS_DATA: Publication[] = [
   {
     id: "pub-3",
     title: "Bounds on higher graph gonality",
-    authors: "Cenek, L., Ferguson, L., Gebre, E., Marcussen, C., Meintjes, J., Morrison, R., ... & Ramakrishna, S.",
-    venue: "arXiv Preprint",
-    year: 2022,
+    authors: "Cenek, L., Ferguson, L., Gebre, E., Marcussen, C., Meintjes, J., Morrison, R., Ostermeyer, L., & Ramakrishna, S.",
+    venue: "Australasian Journal of Combinatorics, 96(3)",
+    year: 2026,
+    doi: "ajc_v96_p395-411",
     arxiv: "2206.06907",
-    link: "https://arxiv.org/abs/2206.06907",
-    description: "Derives mathematical bounds for higher divisonal gonality of graphs, drawing direct applications to the Riemann-Roch theory for graphs and network flow optimization."
+    link: "https://ajc.maths.uq.edu.au/pdf/96/ajc_v96_p395-411.pdf",
+    description: "Proves new lower and upper bounds on the higher gonalities of finite graphs, generalizing first-gonality bounds involving independence number and scramble number, and shows that computing second gonality is NP-hard when restricted to multiplicity-free divisors."
   },
   {
     id: "pub-4",
@@ -520,6 +521,7 @@ export const SKILLS_DATA = {
     { name: "SQL", level: 80 },
     { name: "MySQL", level: 85 },
     { name: "PostgreSQL", level: 80 },
+    { name: "Scheme", level: 75 },
     { name: "R", level: 75 },
     { name: "MATLAB", level: 80 }
   ],
@@ -545,6 +547,7 @@ export const SKILLS_DATA = {
     "Probability & Statistics",
     "Differential Equations",
     "Data Visualization (D3.js)",
+    "Machine Learning",
     "Scikit-Learn",
     "LaTeX",
     "Algorithm Design"

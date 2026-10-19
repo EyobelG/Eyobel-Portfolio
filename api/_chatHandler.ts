@@ -138,19 +138,19 @@ Your role is to represent Eyobel's professional and academic achievements, answe
 
   - Cenek, L., Ferguson, L., Gebre, E., Marcussen, C., Meintjes, J., Morrison, R., and Ramakrishna, S. (2023). "Uniform Scrambles on Graphs". Published in Australasian Journal of Combinatorics, 87(1), 129-147. (ajc_v87_p129)
   - Cenek, L., Ferguson, L., Gebre, E., et al. (2025). "Scramble number and tree-cut decompositions". Published in The Art of Discrete and Applied Mathematics, 8(2), #P2.04. (doi.org/10.26493/2590-9770.1792.fb4)
-  - Cenek, L., Ferguson, L., Gebre, E., Marcussen, C., Meintjes, J., Morrison, R., and Ramakrishna, S. (2022). "Bounds on higher graph gonality". arXiv preprint. (arXiv:2206.06907)
+  - Cenek, L., Ferguson, L., Gebre, E., Marcussen, C., Meintjes, J., Morrison, R., Ostermeyer, L., and Ramakrishna, S. (2026). "Bounds on higher graph gonality". Published in Australasian Journal of Combinatorics, 96(3), 395-411. (ajc_v96_p395-411)
   - Cenek, L., Ferguson, L., Gebre, E., Marcussen, C., Meintjes, J., Morrison, R., Ostermeyer, L., and Ramakrishna, S. (2025). "The gonality of circulant graphs". arXiv preprint. (arXiv:2508.05761)
 
 5. SKILLS:
 
   Programming Languages:
-    C/C++, Java, Python, JavaScript, PHP, R, SQL, HTML/CSS, MATLAB, Assembly Language, Systems Programming.
+    C/C++, Java, Python, JavaScript, PHP, R, Scheme, SQL, HTML/CSS, MATLAB, Assembly Language, Systems Programming.
 
   Web Development:
     React, Node.js, jQuery, Vite, AJAX, JSON, REST APIs, MongoDB, NoSQL, Heroku, Render.
 
   Data Science and Math:
-    Scikit-Learn, Mathematica, SageMath, Computational Linear Algebra, Regression Theory, Data Visualization, Excel/Sheets, Algorithm Design, Algorithm Development.
+    Machine Learning, Scikit-Learn, Mathematica, SageMath, Computational Linear Algebra, Regression Theory, Data Visualization, Excel/Sheets, Algorithm Design, Algorithm Development.
 
   Tools and Methodologies:
     Git, Unit Testing (QA), Differential Testing, Predictive Models, Object-Oriented Programming (OOP), Adobe Premiere Pro, MS Office.

@@ -361,6 +361,28 @@ const TECH_STACK: TechSkill[] = [
     description: "Numerical analysis, spatial modeling of biological ecosystems, and differential equation simulations.",
   },
   {
+    name: "Scheme",
+    category: "languages",
+    icon: Braces,
+    color: "#9F1D20",
+    accentClass: "text-[#9f1d20]",
+    bgGlowClass: "hover:border-[#9f1d20]/50 hover:shadow-[#9f1d20]/20",
+    level: "Intermediate",
+    years: "Current coursework",
+    description: "Functional programming, recursion, and interpreter design in Tufts Programming Languages.",
+  },
+  {
+    name: "Machine Learning",
+    category: "tools",
+    icon: Zap,
+    color: "#F7931E",
+    accentClass: "text-[#f7931e]",
+    bgGlowClass: "hover:border-[#f7931e]/50 hover:shadow-[#f7931e]/20",
+    level: "Proficient",
+    years: "2+ Years",
+    description: "Supervised learning, model evaluation, and Scikit-Learn pipelines for numerical and classification tasks.",
+  },
+  {
     name: "R",
     category: "languages",
     icon: Code,
@@ -457,6 +479,24 @@ const renderBrandLogo = (name: string, isHovered: boolean) => {
           className={`${baseClass} dark:brightness-0 dark:invert`}
           referrerPolicy="no-referrer"
         />
+      );
+    case "Scheme":
+      return (
+        <svg viewBox="0 0 100 100" className={baseClass}>
+          <circle cx="50" cy="50" r="42" fill="var(--color-cream-card)" stroke="#9F1D20" strokeWidth="5" />
+          <text
+            x="50"
+            y="50"
+            fill="#9F1D20"
+            fontSize="52"
+            fontFamily="Georgia, 'Times New Roman', serif"
+            fontWeight="bold"
+            textAnchor="middle"
+            dominantBaseline="central"
+          >
+            &#955;
+          </text>
+        </svg>
       );
     case "Assembly (UM)":
       return (
