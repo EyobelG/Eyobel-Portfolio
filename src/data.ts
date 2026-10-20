@@ -341,6 +341,23 @@ export const PROJECTS_DATA: Project[] = [
     ],
     tech: ["Go", "gRPC", "Protocol Buffers", "protoc", "Unary Interceptors", "gRPC Metadata"],
     impact: "An end-to-end look at how RPC services actually authenticate and route traffic \u2014 schema-first APIs, generated stubs, and interceptor-enforced auth rather than hand-rolled HTTP handlers."
+  },
+  {
+    id: "proj-15",
+    title: "CoRead: Shared Reading Rooms",
+    category: "Web Apps",
+    tags: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Row-Level Security"],
+    description: "A browser-based reading platform where small groups read the same book together, with shared progress and notes that unlock only as each reader reaches them.",
+    details: [
+      "Parses DRM-free EPUBs entirely in the browser, with ZIP-bomb and path-traversal limits, sanitized XHTML, and character-offset annotation anchors that survive window resizing.",
+      "Reading rooms add invite links, shared progress, and spoiler-gated notes, with privacy enforced by Postgres row-level security rather than only in the UI.",
+      "Plan limits (rooms per user, participants per room) are enforced in database triggers with race-safe locking, returning a specific error code the app turns into an upgrade prompt.",
+      "Email magic-link sign-in via Brevo SMTP; statically exported and deployed on Vercel."
+    ],
+    tech: ["Next.js 15", "React", "TypeScript", "Supabase", "PostgreSQL", "Row-Level Security", "Tailwind CSS", "Vitest"],
+    impact: "Shows how to keep multi-user privacy in the database itself: the server never sends a note a reader hasn't reached, so nothing can leak through the browser.",
+    liveUrl: "https://coread-beta.vercel.app",
+    github: "https://github.com/EyobelG/coread"
   }
 ];
 
