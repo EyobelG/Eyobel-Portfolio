@@ -572,7 +572,13 @@ export const SKILLS_DATA = {
     "JSON / AJAX",
     "Heroku & Render",
     "CI/CD (GitHub Actions)",
-    "Cloud Computing (in progress, Tufts, Fall 2026)"
+    "Cloud Computing (in progress, Tufts, Fall 2026)",
+    "Next.js",
+    "Supabase & Row-Level Security",
+    "Vercel",
+    "Vitest",
+    "Transactional Email (Brevo / SMTP)",
+    "Client-side EPUB Parsing"
   ],
   mathScience: [
     "Graph Theory",
