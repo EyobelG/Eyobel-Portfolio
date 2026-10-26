@@ -4,7 +4,7 @@ export const EDUCATION_DATA: Education[] = [
   {
     institution: "Tufts University",
     location: "Medford, MA",
-    degree: "Post-Baccalaureate / MS Candidate in Computer Science",
+    degree: "Master's in Computer Science Candidate",
     period: "July 2025 – June 2027",
     details: [
       "Rigorous coursework in Systems Programming, Advanced Algorithms, Web Development, and Machine Learning.",

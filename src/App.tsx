@@ -231,7 +231,7 @@ export default function App() {
           {/* Quick Bios Card */}
           <div className="bg-zinc-200/40 dark:bg-zinc-900/45 rounded-2xl p-5 border border-zinc-300/30 dark:border-white/5 space-y-3.5 shadow-sm">
             <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
-              Former boarding school math teacher, currently a <strong>Computer Science Post-Bac/MS</strong> candidate at <strong>Tufts University</strong>.
+              Former boarding school math teacher, currently a <strong>Master's in Computer Science</strong> candidate at <strong>Tufts University</strong>.
             </p>
             <div className="space-y-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-mono">
               <div className="flex items-center space-x-2">
