@@ -136,6 +136,21 @@ export const PROJECTS_DATA: Project[] = [
     impact: "Front-end work on an active research project: gives the IEEE P7802 working group a public explanation of the SCOOP core model. The standard and platform are the working group's."
   },
   {
+    id: "proj-ml-reading-level",
+    title: "Reading-Level Difficulty Classification",
+    category: "Machine Learning",
+    tags: ["NLP", "Transformers", "Model Evaluation"],
+    description: "Built a text-classification ML pipeline to predict reading difficulty (lower-level vs. upper-level) across thousands of Project Gutenberg passages, for Tufts CS 135.",
+    details: [
+      "Baseline (Problem 1): Bag-of-Words (CountVectorizer) features into L2-regularized Logistic Regression (C=0.01).",
+      "Caught and fixed a cross-validation data leak caused by author repetition across folds by switching to author-grouped 5-fold CV, so held-out scores reflect genuine generalization rather than memorized author style.",
+      "Deep model (Problem 2): fine-tuned `deberta-v3-large` end-to-end on Tufts HPC GPU nodes with 10-fold author-grouped CV (learning rate 4e-6).",
+      "Achieved 0.792 CV AUROC and 0.7726 test AUROC — ranked top 3 of the entire class on the Gradescope leaderboard."
+    ],
+    tech: ["Python", "scikit-learn", "PyTorch", "HuggingFace Transformers", "deberta-v3-large", "Tufts HPC"],
+    impact: "Top-3 class result built on a methodology fix most submissions missed: grouping cross-validation splits by author to stop leakage from inflating the score."
+  },
+  {
     id: "proj-1",
     title: "Universal Machine (UM)",
     category: "Systems",

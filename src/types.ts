@@ -1,7 +1,7 @@
 export interface Project {
   id: string;
   title: string;
-  category: "Systems" | "Theory/Math" | "Web Apps";
+  category: "Systems" | "Theory/Math" | "Web Apps" | "Machine Learning";
   tags: string[];
   description: string;
   details: string[];

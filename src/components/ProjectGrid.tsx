@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Project } from "../types";
 import { PROJECTS_DATA } from "../data";
-import { ExternalLink, Terminal, Cpu, Database, ChevronRight, X, ArrowRight, Layers } from "lucide-react";
+import { ExternalLink, Terminal, Cpu, Database, ChevronRight, X, ArrowRight, Layers, BrainCircuit } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ProjectSimulator from "./ProjectSimulator";
 
@@ -9,7 +9,7 @@ export default function ProjectGrid() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
-  const categories = ["All", "Systems", "Theory/Math", "Web Apps"];
+  const categories = ["All", "Systems", "Theory/Math", "Web Apps", "Machine Learning"];
 
   const filteredProjects = selectedCategory === "All"
     ? PROJECTS_DATA
@@ -88,6 +88,10 @@ export default function ProjectGrid() {
                 ) : project.category === "Theory/Math" ? (
                   <div className="p-2 bg-tufts-blue/20 text-tufts-blue rounded-lg border border-tufts-blue-dark/30">
                     <Layers className="w-5 h-5" />
+                  </div>
+                ) : project.category === "Machine Learning" ? (
+                  <div className="p-2 bg-emerald-600/15 text-emerald-700 dark:text-emerald-400 rounded-lg border border-emerald-600/30">
+                    <BrainCircuit className="w-5 h-5" />
                   </div>
                 ) : (
                   <div className="p-2 bg-amber-500/10 text-amber-700 dark:text-williams-gold rounded-lg border border-williams-gold-dark/30">
