@@ -372,6 +372,17 @@ const TECH_STACK: TechSkill[] = [
     description: "Functional programming, recursion, and interpreter design in Tufts Programming Languages.",
   },
   {
+    name: "Standard ML (SML)",
+    category: "languages",
+    icon: Braces,
+    color: "#DA291C",
+    accentClass: "text-[#da291c]",
+    bgGlowClass: "hover:border-[#da291c]/50 hover:shadow-[#da291c]/20",
+    level: "Intermediate",
+    years: "Current coursework",
+    description: "Meta Language: static typing, pattern matching, and algebraic datatypes in Tufts CS 105 (Programming Languages).",
+  },
+  {
     name: "Machine Learning",
     category: "tools",
     icon: Zap,
@@ -495,6 +506,24 @@ const renderBrandLogo = (name: string, isHovered: boolean) => {
             dominantBaseline="central"
           >
             &#955;
+          </text>
+        </svg>
+      );
+    case "Standard ML (SML)":
+      return (
+        <svg viewBox="0 0 100 100" className={baseClass}>
+          <circle cx="50" cy="50" r="42" fill="var(--color-cream-card)" stroke="#DA291C" strokeWidth="5" />
+          <text
+            x="50"
+            y="50"
+            fill="#DA291C"
+            fontSize="30"
+            fontFamily="'Fira Code', ui-monospace, monospace"
+            fontWeight="bold"
+            textAnchor="middle"
+            dominantBaseline="central"
+          >
+            ML
           </text>
         </svg>
       );
