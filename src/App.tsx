@@ -34,6 +34,7 @@ import PublicationsSection from "./components/PublicationsSection";
 import ExperienceTimeline from "./components/ExperienceTimeline";
 import SkillsGrid from "./components/SkillsGrid";
 import InteractivePortrait from "./components/InteractivePortrait";
+import HeroWireframe from "./components/HeroWireframe";
 import PersonalChatbot from "./components/PersonalChatbot";
 
 function BrandLogo({ size = "large" }: { size?: "small" | "large" }) {
@@ -328,8 +329,10 @@ export default function App() {
         {/* Banner Highlight Container */}
         <div className="relative bg-gradient-to-r from-zinc-200/50 via-zinc-100/30 to-zinc-50/25 dark:from-zinc-900/30 dark:via-zinc-950/20 dark:to-zinc-950/10 border-b border-cream-border py-12 px-6 lg:px-12 xl:px-16 overflow-hidden">
           {/* Micro Geometric Accents */}
-          <div className="absolute top-10 right-20 w-32 h-32 rounded-full border border-zinc-300/15 dark:border-white/5 pointer-events-none" />
           <div className="absolute -bottom-10 left-10 w-48 h-48 rounded-full border border-zinc-300/15 dark:border-white/5 pointer-events-none" />
+          <div className="hidden lg:block absolute top-1/2 left-[56%] xl:left-[58%] -translate-y-1/2 opacity-60">
+            <HeroWireframe size={72} />
+          </div>
 
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             {/* Left Narrative Column */}

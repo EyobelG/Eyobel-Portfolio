@@ -193,3 +193,43 @@
     color: var(--color-charcoal);
   }
 }
+
+/* ---------------- Hero wireframe polyhedron (CSS 3D) ---------------- */
+
+.eg-cube-scene {
+  perspective: 900px;
+  pointer-events: none;
+}
+
+.eg-cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: eg-cube-spin 22s linear infinite;
+}
+
+.eg-cube-face {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid color-mix(in srgb, var(--williams-gold) 55%, var(--williams-purple-light) 45%);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--williams-purple) 6%, transparent);
+}
+
+.eg-cube-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--williams-gold) 18%, transparent), transparent 70%);
+}
+
+@keyframes eg-cube-spin {
+  from { transform: rotateX(0deg) rotateY(0deg); }
+  to { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eg-cube { animation: none; transform: rotateX(-18deg) rotateY(28deg); }
+}

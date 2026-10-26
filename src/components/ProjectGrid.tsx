@@ -1,9 +1,127 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Project } from "../types";
 import { PROJECTS_DATA } from "../data";
 import { ExternalLink, Terminal, Cpu, Database, ChevronRight, X, ArrowRight, Layers, BrainCircuit } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, type Variants } from "motion/react";
 import ProjectSimulator from "./ProjectSimulator";
+
+/** Pointer-tracked 3D tilt, reset on leave. Inert for touch/reduced-motion. */
+function useCardTilt() {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+  const rotateX = useSpring(useTransform(y, [0, 1], [8, -8]), { stiffness: 300, damping: 30 });
+  const rotateY = useSpring(useTransform(x, [0, 1], [-8, 8]), { stiffness: 300, damping: 30 });
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    x.set((e.clientX - rect.left) / rect.width);
+    y.set((e.clientY - rect.top) / rect.height);
+  };
+  const onMouseLeave = () => {
+    x.set(0.5);
+    y.set(0.5);
+  };
+
+  return { ref, rotateX, rotateY, onMouseMove, onMouseLeave };
+}
+
+function ProjectCard({
+  project,
+  variants,
+  onOpen
+}: {
+  key?: string;
+  project: Project;
+  variants: Variants;
+  onOpen: () => void;
+}) {
+  const { ref, rotateX, rotateY, onMouseMove, onMouseLeave } = useCardTilt();
+
+  return (
+    <motion.div
+      ref={ref}
+      id={`card-${project.id}`}
+      variants={variants}
+      style={{ rotateX, rotateY, transformPerspective: 700 }}
+      whileHover={{ y: -6, scale: 1.015, boxShadow: "0 18px 40px -18px rgba(251,191,36,0.25)" }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      onClick={onOpen}
+      className="group cursor-pointer bg-cream-card border-2 border-cream-border rounded-2xl p-6 transition-colors flex flex-col justify-between hover:border-williams-gold/40 hover:bg-cream-card-sub relative overflow-hidden shadow-lg"
+    >
+      {/* Corner Decorative Accent */}
+      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-cream-card-sub to-transparent opacity-40 group-hover:from-williams-gold/10 transition-all pointer-events-none" />
+
+      {project.image && (
+        <div className="-mx-6 -mt-6 mb-4 h-36 overflow-hidden rounded-t-2xl border-b-2 border-cream-border">
+          <img
+            src={project.image}
+            alt={`${project.title} screenshot`}
+            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+          />
+        </div>
+      )}
+
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          {project.category === "Systems" ? (
+            <div className="p-2 bg-williams-purple/20 text-williams-purple dark:text-williams-gold rounded-lg border border-williams-purple-light/30">
+              <Cpu className="w-5 h-5" />
+            </div>
+          ) : project.category === "Theory/Math" ? (
+            <div className="p-2 bg-tufts-blue/20 text-tufts-blue rounded-lg border border-tufts-blue-dark/30">
+              <Layers className="w-5 h-5" />
+            </div>
+          ) : project.category === "Machine Learning" ? (
+            <div className="p-2 bg-emerald-600/15 text-emerald-700 dark:text-emerald-400 rounded-lg border border-emerald-600/30">
+              <BrainCircuit className="w-5 h-5" />
+            </div>
+          ) : (
+            <div className="p-2 bg-amber-500/10 text-amber-700 dark:text-williams-gold rounded-lg border border-williams-gold-dark/30">
+              <Database className="w-5 h-5" />
+            </div>
+          )}
+          <span className="font-mono text-[10px] tracking-widest text-charcoal-light uppercase font-semibold">
+            {project.category}
+          </span>
+        </div>
+
+        <h4 className="font-serif text-xl text-charcoal font-semibold group-hover:text-williams-purple dark:group-hover:text-williams-gold transition-colors mb-2">
+          {project.title}
+        </h4>
+        <p className="text-sm text-charcoal-light leading-relaxed line-clamp-3">
+          {project.description}
+        </p>
+      </div>
+
+      <div className="mt-6 pt-4 border-t border-cream-border">
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {project.tech.slice(0, 3).map((t) => (
+            <span
+              key={t}
+              className="px-2 py-0.5 bg-cream-card-sub border border-cream-border text-[10px] font-mono text-charcoal-light rounded"
+            >
+              {t}
+            </span>
+          ))}
+          {project.tech.length > 3 && (
+            <span className="px-2 py-0.5 bg-cream-card-sub border border-cream-border text-[10px] font-mono text-charcoal-light rounded">
+              +{project.tech.length - 3}
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center text-xs font-mono font-semibold text-williams-purple dark:text-williams-gold group-hover:text-tufts-blue dark:group-hover:text-tufts-blue-light transition-colors">
+          <span>Inspect Artifact</span>
+          <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1.5 transition-transform" />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function ProjectGrid() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -25,7 +143,7 @@ export default function ProjectGrid() {
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 15 },
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } },
   };
@@ -58,82 +176,12 @@ export default function ProjectGrid() {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         {filteredProjects.map((project) => (
-          <motion.div
+          <ProjectCard
             key={project.id}
-            id={`card-${project.id}`}
+            project={project}
             variants={cardVariants}
-            whileHover={{ y: -6, boxShadow: "0 10px 30px -15px rgba(255,204,0,0.15)" }}
-            onClick={() => setActiveProject(project)}
-            className="group cursor-pointer bg-cream-card border-2 border-cream-border rounded-2xl p-6 transition-all flex flex-col justify-between hover:border-williams-gold/40 hover:bg-cream-card-sub relative overflow-hidden shadow-lg"
-          >
-            {/* Corner Decorative Accent */}
-            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-cream-card-sub to-transparent opacity-40 group-hover:from-williams-gold/10 transition-all pointer-events-none" />
-
-            {project.image && (
-              <div className="-mx-6 -mt-6 mb-4 h-36 overflow-hidden rounded-t-2xl border-b-2 border-cream-border">
-                <img
-                  src={project.image}
-                  alt={`${project.title} screenshot`}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            )}
-
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                {project.category === "Systems" ? (
-                  <div className="p-2 bg-williams-purple/20 text-williams-purple dark:text-williams-gold rounded-lg border border-williams-purple-light/30">
-                    <Cpu className="w-5 h-5" />
-                  </div>
-                ) : project.category === "Theory/Math" ? (
-                  <div className="p-2 bg-tufts-blue/20 text-tufts-blue rounded-lg border border-tufts-blue-dark/30">
-                    <Layers className="w-5 h-5" />
-                  </div>
-                ) : project.category === "Machine Learning" ? (
-                  <div className="p-2 bg-emerald-600/15 text-emerald-700 dark:text-emerald-400 rounded-lg border border-emerald-600/30">
-                    <BrainCircuit className="w-5 h-5" />
-                  </div>
-                ) : (
-                  <div className="p-2 bg-amber-500/10 text-amber-700 dark:text-williams-gold rounded-lg border border-williams-gold-dark/30">
-                    <Database className="w-5 h-5" />
-                  </div>
-                )}
-                <span className="font-mono text-[10px] tracking-widest text-charcoal-light uppercase font-semibold">
-                  {project.category}
-                </span>
-              </div>
-
-              <h4 className="font-serif text-xl text-charcoal font-semibold group-hover:text-williams-purple dark:group-hover:text-williams-gold transition-colors mb-2">
-                {project.title}
-              </h4>
-              <p className="text-sm text-charcoal-light leading-relaxed line-clamp-3">
-                {project.description}
-              </p>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-cream-border">
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                {project.tech.slice(0, 3).map((t) => (
-                  <span
-                    key={t}
-                    className="px-2 py-0.5 bg-cream-card-sub border border-cream-border text-[10px] font-mono text-charcoal-light rounded"
-                  >
-                    {t}
-                  </span>
-                ))}
-                {project.tech.length > 3 && (
-                  <span className="px-2 py-0.5 bg-cream-card-sub border border-cream-border text-[10px] font-mono text-charcoal-light rounded">
-                    +{project.tech.length - 3}
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center text-xs font-mono font-semibold text-williams-purple dark:text-williams-gold group-hover:text-tufts-blue dark:group-hover:text-tufts-blue-light transition-colors">
-                <span>Inspect Artifact</span>
-                <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1.5 transition-transform" />
-              </div>
-            </div>
-          </motion.div>
+            onOpen={() => setActiveProject(project)}
+          />
         ))}
       </motion.div>
 
