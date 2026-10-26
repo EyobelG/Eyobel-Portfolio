@@ -328,7 +328,19 @@ export default function ExperienceTimeline() {
                         </div>
                         <div>
                           <h4 className="font-serif text-lg sm:text-xl text-charcoal font-semibold mt-1">
-                            {edu.institution}
+                            {edu.website ? (
+                              <a
+                                href={edu.website}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title={edu.website.replace(/^https?:\/\//, "")}
+                                className="hover:text-tufts-blue hover:underline underline-offset-2 transition-colors"
+                              >
+                                {edu.institution}
+                              </a>
+                            ) : (
+                              edu.institution
+                            )}
                           </h4>
                           <p className="text-sm font-semibold text-williams-purple dark:text-williams-gold mt-0.5">
                             {edu.degree}

@@ -6,6 +6,7 @@ export const EDUCATION_DATA: Education[] = [
     location: "Medford, MA",
     degree: "Master's in Computer Science Candidate",
     period: "July 2025 – June 2027",
+    website: "https://www.tufts.edu",
     details: [
       "Rigorous coursework in Systems Programming, Advanced Algorithms, Web Development, and Machine Learning.",
       "Current coursework (Fall 2026): Machine Learning, Cloud Computing, Programming Languages.",
@@ -17,6 +18,7 @@ export const EDUCATION_DATA: Education[] = [
     location: "Remote / National",
     degree: "Advanced Software Engineering Fellow",
     period: "May 2026 – September 2026",
+    website: "https://www.codepath.org",
     details: [
       "Admitted to an intensive, highly selective algorithmic problem-solving program focused on complex data structures, algorithms, and technical evaluation methods.",
       "Engineered optimized software solutions weekly, analyzing runtime complexity benchmarks (Big O, space-time trade-offs)."
@@ -27,6 +29,7 @@ export const EDUCATION_DATA: Education[] = [
     location: "Philadelphia, PA",
     degree: "Independent School Teaching Residency (MS in Education Program)",
     period: "June 2022 – August 2024",
+    website: "https://www.gse.upenn.edu",
     details: [
       "Completed rigorous pedagogy coursework alongside intensive mathematics teaching residency at NMH.",
       "Authored query project about grading for equity and student motivation."
@@ -37,6 +40,7 @@ export const EDUCATION_DATA: Education[] = [
     location: "Williamstown, MA",
     degree: "Bachelor of Arts in Mathematics",
     period: "September 2017 – June 2022",
+    website: "https://www.williams.edu",
     details: [
       "Dean's List: Fall 2020, Spring 2021, Fall 2021, Spring 2022.",
       "Completed advanced projects in Graph Theory, Linear Algebra, and Combinatorics.",

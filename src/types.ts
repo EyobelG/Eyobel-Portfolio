@@ -50,6 +50,7 @@ export interface Education {
   location: string;
   degree: string;
   period: string;
+  website?: string;
   details?: string[];
 }
 
