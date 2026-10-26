@@ -170,6 +170,20 @@ export const PUBLICATIONS_DATA: Publication[] = [
 
 export const PROJECTS_DATA: Project[] = [
   {
+    id: "proj-cs135",
+    title: "Reading-Level Difficulty Classification — Tufts CS 135 (Project A)",
+    category: "Machine Learning",
+    tags: ["Machine Learning", "NLP", "Python", "Transformers", "DeBERTa", "PyTorch"],
+    description: "Built an advanced text-classification machine learning pipeline to assess reading difficulty (lower-level vs. upper-level) across thousands of Project Gutenberg passages.",
+    details: [
+      "Developed Problem 1 using Bag-of-Words (CountVectorizer) and Logistic Regression with L2 regularization (C=0.01), identifying and mitigating cross-validation data leakage from author repetition via author-grouped splits (5-fold CV).",
+      "For Problem 2, fine-tuned deberta-v3-large end-to-end on Tufts HPC GPU nodes with 10-fold author-grouped CV (learning rate 4×10^-6), achieving a 0.792 CV AUROC and test AUROC of 0.7726.",
+      "Ranked in the top 3 of the entire class on the Gradescope leaderboard."
+    ],
+    tech: ["Python", "scikit-learn", "Hugging Face Transformers", "DeBERTa", "PyTorch", "Tufts HPC"],
+    impact: "Ranked in the top 3 of the entire class on the Gradescope leaderboard with a 0.7726 test AUROC using a fine-tuned DeBERTa model and robust author-grouped cross-validation."
+  },
+  {
     id: "proj-quantfolio",
     title: "QuantFolio: Portfolio Analytics Platform",
     category: "Web Apps",
