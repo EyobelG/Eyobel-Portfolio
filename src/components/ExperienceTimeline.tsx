@@ -7,14 +7,9 @@ const getInstitutionLogo = (institution: string) => {
   switch (institution) {
     case "Tufts University":
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Tufts Blue Crest */}
-          <rect width="100" height="100" rx="20" fill="#1b5ca0" />
-          <path d="M25 30 C 25 15, 75 15, 75 30 C 75 60, 50 85, 50 85 C 50 85, 25 60, 25 30 Z" fill="#3e8ede" stroke="#ffffff" strokeWidth="4" />
-          <path d="M35 45 H 65 V 55 H 35 Z" fill="#ffffff" />
-          <path d="M50 45 V 55" stroke="#1b5ca0" strokeWidth="2" />
-          <circle cx="50" cy="35" r="5" fill="#ffcc00" />
-        </svg>
+        <div className="w-full h-full rounded-md bg-white flex items-center justify-center p-1.5">
+          <img src="/logos/tufts.svg" alt="Tufts University logo" className="w-full h-full object-contain" />
+        </div>
       );
     case "SCOOP":
       return (
@@ -48,32 +43,21 @@ const getInstitutionLogo = (institution: string) => {
       );
     case "University of Pennsylvania":
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* UPenn Red & Blue shield */}
-          <rect width="100" height="100" rx="20" fill="#011F5B" />
-          <path d="M25 25 H 75 V 55 C 75 70, 50 85, 50 85 C 50 85, 25 70, 25 55 Z" fill="#990000" stroke="#ffcc00" strokeWidth="3" />
-          <path d="M40 40 H 60 M40 50 H 60 M40 60 H 60" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" />
-          <path d="M50 35 V 65" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" />
-        </svg>
+        <div className="w-full h-full rounded-md bg-white flex items-center justify-center p-1.5">
+          <img src="/logos/penn.svg" alt="University of Pennsylvania shield" className="w-full h-full object-contain" />
+        </div>
       );
     case "Williams College":
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Williams Purple and Gold shield */}
-          <rect width="100" height="100" rx="20" fill="#3c1053" />
-          <path d="M25 25 C 25 25, 50 15, 50 15 C 50 15, 75 25, 75 25 V 55 C 75 70, 50 85, 50 85 C 50 85, 25 70, 25 55 Z" fill="#210730" stroke="#f2a900" strokeWidth="4" />
-          <path d="M35 35 L43 65 L50 48 L57 65 L65 35" stroke="#f2a900" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-        </svg>
+        <div className="w-full h-full rounded-md bg-white flex items-center justify-center p-1">
+          <img src="/logos/williams.png" alt="Williams College seal" className="w-full h-full object-contain" />
+        </div>
       );
     case "Lideta Catholic Cathedral School":
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Ethiopian style blue/yellow cathedral school crest */}
-          <rect width="100" height="100" rx="20" fill="#1e3a8a" />
-          <circle cx="50" cy="50" r="30" fill="none" stroke="#eab308" strokeWidth="4" />
-          <path d="M50 28 V 72 M28 50 H 72" stroke="#eab308" strokeWidth="5" strokeLinecap="round" />
-          <polygon points="50,38 53,47 62,47 55,53 57,62 50,56 43,62 45,53 38,47 47,47" fill="#ffffff" />
-        </svg>
+        <div className="w-full h-full rounded-md bg-white flex items-center justify-center p-1">
+          <img src="/logos/lideta.jpg" alt="Lideta Catholic Cathedral School crest" className="w-full h-full object-contain rounded" />
+        </div>
       );
     default:
       return (
