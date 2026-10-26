@@ -52,6 +52,7 @@ export const EDUCATION_DATA: Education[] = [
     location: "Addis Ababa, Ethiopia",
     degree: "High School Diploma",
     period: "Graduated June 2016",
+    website: "https://lidetacatholiccathedralschool.com",
     details: [
       "Valedictorian, Mathematics Achievement Award.",
       "Scored in the Top 10 National Exam scores in Ethiopia (2016)."
