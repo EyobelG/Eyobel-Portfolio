@@ -394,6 +394,17 @@ const TECH_STACK: TechSkill[] = [
     description: "Supervised learning, model evaluation, and Scikit-Learn pipelines for numerical and classification tasks.",
   },
   {
+    name: "Tufts HPC",
+    category: "tools",
+    icon: Cpu,
+    color: "#1B5CA0",
+    accentClass: "text-[#1b5ca0]",
+    bgGlowClass: "hover:border-[#1b5ca0]/50 hover:shadow-[#1b5ca0]/20",
+    level: "Intermediate",
+    years: "2026",
+    description: "GPU compute nodes for end-to-end fine-tuning of deberta-v3-large with 10-fold author-grouped cross-validation.",
+  },
+  {
     name: "R",
     category: "languages",
     icon: Code,
@@ -525,6 +536,18 @@ const renderBrandLogo = (name: string, isHovered: boolean) => {
           >
             ML
           </text>
+        </svg>
+      );
+    case "Tufts HPC":
+      return (
+        <svg viewBox="0 0 100 100" className={baseClass}>
+          <rect x="22" y="18" width="56" height="64" rx="8" fill="var(--color-cream-card)" stroke="#1B5CA0" strokeWidth="5" />
+          <rect x="32" y="28" width="36" height="10" rx="2" fill="#1B5CA0" opacity="0.85" />
+          <rect x="32" y="45" width="36" height="10" rx="2" fill="#1B5CA0" opacity="0.6" />
+          <rect x="32" y="62" width="36" height="10" rx="2" fill="#1B5CA0" opacity="0.35" />
+          <circle cx="38" cy="33" r="2" fill="#ffffff" />
+          <circle cx="38" cy="50" r="2" fill="#ffffff" />
+          <circle cx="38" cy="67" r="2" fill="#ffffff" />
         </svg>
       );
     case "Assembly (UM)":
