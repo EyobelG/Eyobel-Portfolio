@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { PHOTOS_DATA } from "../data";
 
@@ -38,13 +38,6 @@ export default function PhotoGallery() {
                   loading="lazy"
                   className="w-full h-72 object-cover"
                 />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                  <p className="text-white text-sm font-semibold">{photo.caption}</p>
-                  <p className="text-white/80 text-xs flex items-center gap-1 mt-0.5">
-                    <MapPin className="w-3 h-3" />
-                    {photo.location}
-                  </p>
-                </div>
               </motion.div>
             ))}
           </AnimatePresence>
@@ -66,13 +59,6 @@ export default function PhotoGallery() {
                 loading="lazy"
                 className="w-full h-80 object-cover"
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                <p className="text-white text-sm font-semibold">{PHOTOS_DATA[index].caption}</p>
-                <p className="text-white/80 text-xs flex items-center gap-1 mt-0.5">
-                  <MapPin className="w-3 h-3" />
-                  {PHOTOS_DATA[index].location}
-                </p>
-              </div>
             </motion.div>
           </AnimatePresence>
         </div>
