@@ -1,9 +1,18 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { PHOTOS_DATA } from "../data";
 
-const VISIBLE_ON_DESKTOP = 3;
+const SPREAD = [-2, -1, 0, 1, 2] as const;
+
+function cardStyle(offset: number) {
+  const abs = Math.abs(offset);
+  return {
+    transform: `translateX(${offset * 58}%) translateZ(${-abs * 160}px) rotateY(${offset * -32}deg) scale(${1 - abs * 0.18})`,
+    zIndex: 10 - abs,
+    opacity: abs > 2 ? 0 : 1 - abs * 0.22
+  };
+}
 
 export default function PhotoGallery() {
   const [index, setIndex] = useState(0);
@@ -13,54 +22,35 @@ export default function PhotoGallery() {
     setIndex((prev) => (prev + dir + total) % total);
   };
 
-  const visible = Array.from({ length: VISIBLE_ON_DESKTOP }, (_, i) => PHOTOS_DATA[(index + i) % total]);
+  const photoAt = (offset: number) => PHOTOS_DATA[(index + offset + total * 2) % total];
 
   return (
     <div className="space-y-6">
-      <div className="relative overflow-hidden rounded-3xl bg-cream-card-sub border-2 border-cream-border px-4 py-10 sm:px-8">
-        <div className="hidden md:grid grid-cols-3 gap-5">
-          <AnimatePresence mode="popLayout" initial={false}>
-            {visible.map((photo, slot) => (
+      <div
+        className="relative overflow-hidden rounded-3xl bg-cream-card-sub border-2 border-cream-border py-12 px-4"
+        style={{ perspective: "1400px" }}
+      >
+        <div className="relative h-72 sm:h-80" style={{ transformStyle: "preserve-3d" }}>
+          {SPREAD.map((offset) => {
+            const photo = photoAt(offset);
+            const style = cardStyle(offset);
+            return (
               <motion.div
-                key={photo.id}
-                layout
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                className={`relative rounded-2xl overflow-hidden shadow-lg border border-cream-border bg-cream-card ${
-                  slot === 1 ? "md:scale-105 md:z-10" : "opacity-80"
-                }`}
+                key={`${index}-${offset}`}
+                className="absolute left-1/2 top-0 -ml-[38%] sm:-ml-[26%] w-[76%] sm:w-[52%] h-full rounded-[2rem] overflow-hidden shadow-2xl border border-cream-border bg-cream-card"
+                animate={style}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                style={{ transformStyle: "preserve-3d" }}
               >
                 <img
                   src={photo.src}
                   alt={photo.caption}
                   loading="lazy"
-                  className="w-full h-72 object-cover"
+                  className="w-full h-full object-cover"
                 />
               </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {/* Mobile: single photo slide */}
-        <div className="md:hidden relative rounded-2xl overflow-hidden shadow-lg border border-cream-border bg-cream-card">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={PHOTOS_DATA[index].id}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.3 }}
-            >
-              <img
-                src={PHOTOS_DATA[index].src}
-                alt={PHOTOS_DATA[index].caption}
-                loading="lazy"
-                className="w-full h-80 object-cover"
-              />
-            </motion.div>
-          </AnimatePresence>
+            );
+          })}
         </div>
       </div>
 
