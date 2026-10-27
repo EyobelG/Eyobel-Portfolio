@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, type PanInfo } from "motion/react";
 import { PHOTOS_DATA } from "../data";
 
 const SPREAD = [-2, -1, 0, 1, 2] as const;
+const SWIPE_THRESHOLD = 60;
 
 function cardStyle(offset: number) {
   const abs = Math.abs(offset);
@@ -24,20 +25,36 @@ export default function PhotoGallery() {
 
   const photoAt = (offset: number) => PHOTOS_DATA[(index + offset + total * 2) % total];
 
+  const handleDragEnd = (_: unknown, info: PanInfo) => {
+    if (info.offset.x < -SWIPE_THRESHOLD || info.velocity.x < -400) {
+      go(1);
+    } else if (info.offset.x > SWIPE_THRESHOLD || info.velocity.x > 400) {
+      go(-1);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div
-        className="relative overflow-hidden rounded-3xl bg-cream-card-sub border-2 border-cream-border py-12 px-4"
+        className="relative overflow-hidden rounded-3xl bg-cream-card-sub border-2 border-cream-border py-12 px-4 cursor-grab active:cursor-grabbing"
         style={{ perspective: "1400px" }}
       >
-        <div className="relative h-72 sm:h-80" style={{ transformStyle: "preserve-3d" }}>
+        <motion.div
+          className="relative h-72 sm:h-80 touch-pan-y"
+          style={{ transformStyle: "preserve-3d" }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.7}
+          dragTransition={{ bounceStiffness: 400, bounceDamping: 30 }}
+          onDragEnd={handleDragEnd}
+        >
           {SPREAD.map((offset) => {
             const photo = photoAt(offset);
             const style = cardStyle(offset);
             return (
               <motion.div
                 key={`${index}-${offset}`}
-                className="absolute left-1/2 top-0 -ml-[38%] sm:-ml-[26%] w-[76%] sm:w-[52%] h-full rounded-[2rem] overflow-hidden shadow-2xl border border-cream-border bg-cream-card"
+                className="absolute left-1/2 top-0 -ml-[38%] sm:-ml-[26%] w-[76%] sm:w-[52%] h-full rounded-[2rem] overflow-hidden shadow-2xl border border-cream-border bg-cream-card pointer-events-none"
                 animate={style}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 style={{ transformStyle: "preserve-3d" }}
@@ -49,20 +66,21 @@ export default function PhotoGallery() {
                     muted
                     playsInline
                     preload="metadata"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-auto"
                   />
                 ) : (
                   <img
                     src={photo.src}
                     alt={photo.caption}
                     loading="lazy"
+                    draggable={false}
                     className="w-full h-full object-cover"
                   />
                 )}
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
 
       <div className="flex items-center justify-center gap-4">
