@@ -42,12 +42,23 @@ export default function PhotoGallery() {
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <img
-                  src={photo.src}
-                  alt={photo.caption}
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
+                {photo.type === "video" ? (
+                  <video
+                    src={photo.src}
+                    controls={offset === 0}
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <img
+                    src={photo.src}
+                    alt={photo.caption}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </motion.div>
             );
           })}

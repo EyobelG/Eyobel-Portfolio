@@ -80,6 +80,7 @@ export interface Museum {
 
 export interface Photo {
   id: string;
+  type?: "image" | "video";
   src: string;
   caption: string;
   location: string;
