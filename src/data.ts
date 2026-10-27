@@ -1,4 +1,32 @@
-import { Project, Publication, Experience, Education, Certification } from "./types";
+import { Project, Publication, Experience, Education, Certification, Photo } from "./types";
+
+export const PHOTOS_DATA: Photo[] = [
+  { id: "getty-villa", src: "/photos/getty-villa-gardens.jpg", caption: "The Getty Villa", location: "Los Angeles, CA" },
+  { id: "painted-ladies", src: "/photos/painted-ladies-sf.jpg", caption: "Painted Ladies, Alamo Square", location: "San Francisco, CA" },
+  { id: "golden-gate", src: "/photos/golden-gate-bridge.jpg", caption: "Golden Gate Bridge", location: "San Francisco, CA" },
+  { id: "twin-peaks", src: "/photos/twin-peaks-sf-skyline.jpg", caption: "City skyline from Twin Peaks", location: "San Francisco, CA" },
+  { id: "isgm-tapestry", src: "/photos/isabella-stewart-gardner-tapestry.jpg", caption: "Woven sculpture installation", location: "Isabella Stewart Gardner Museum, Boston" },
+  { id: "miro-prints", src: "/photos/miro-prints-isgm.jpg", caption: "Miró print series", location: "Isabella Stewart Gardner Museum, Boston" },
+  { id: "isgm-night-1", src: "/photos/isgm-courtyard-night-1.jpg", caption: "Courtyard at night", location: "Isabella Stewart Gardner Museum, Boston" },
+  { id: "isgm-night-2", src: "/photos/isgm-courtyard-night-2.jpg", caption: "Courtyard at night, another angle", location: "Isabella Stewart Gardner Museum, Boston" },
+  { id: "old-state-house", src: "/photos/old-state-house-boston.jpg", caption: "Old State House", location: "Boston, MA" },
+  { id: "freedom-trail-clock", src: "/photos/freedom-trail-clock.jpg", caption: "Street clock on the Freedom Trail", location: "Boston, MA" },
+  { id: "isgm-aerial", src: "/photos/isgm-courtyard-aerial.jpg", caption: "Courtyard from above", location: "Isabella Stewart Gardner Museum, Boston" },
+  { id: "koi-pond", src: "/photos/koi-pond.jpg", caption: "Koi pond", location: "Boston, MA" },
+  { id: "carved-elephants", src: "/photos/carved-elephants.jpg", caption: "Carved wooden elephants", location: "New York, NY" },
+  { id: "face-masks", src: "/photos/face-masks-installation.jpg", caption: "Face mask installation", location: "Museum of Fine Arts, Boston" },
+  { id: "hanging-sculptures", src: "/photos/hanging-sculptures.jpg", caption: "Hanging fiber sculptures", location: "Museum of Fine Arts, Boston" },
+  { id: "faneuil-hall", src: "/photos/faneuil-hall-statue.jpg", caption: "Faneuil Hall", location: "Boston, MA" },
+  { id: "palace-fine-arts", src: "/photos/palace-of-fine-arts.jpg", caption: "Palace of Fine Arts", location: "San Francisco, CA" },
+  { id: "orange-ring", src: "/photos/orange-ring-sculpture.jpg", caption: "Ring sculpture", location: "New York, NY" },
+  { id: "meditating-figure", src: "/photos/meditating-figure-sculpture.jpg", caption: "Meditating figure sculpture", location: "New York, NY" },
+  { id: "quilt-exhibition", src: "/photos/quilt-exhibition.jpg", caption: "Quilt exhibition", location: "Boston, MA" },
+  { id: "vessel", src: "/photos/vessel-hudson-yards.jpg", caption: "The Vessel", location: "Hudson Yards, New York, NY" },
+  { id: "nyc-aerial", src: "/photos/nyc-aerial-rooftop.jpg", caption: "Manhattan skyline from a rooftop", location: "New York, NY" },
+  { id: "boston-common-snow", src: "/photos/boston-common-snow.jpg", caption: "Boston Common in snow", location: "Boston, MA" },
+  { id: "oculus", src: "/photos/oculus-wtc.jpg", caption: "The Oculus", location: "World Trade Center, New York, NY" },
+  { id: "north-end", src: "/photos/north-end-brownstone.jpg", caption: "Brownstone corner building", location: "North End, Boston, MA" }
+];
 
 export const EDUCATION_DATA: Education[] = [
   {

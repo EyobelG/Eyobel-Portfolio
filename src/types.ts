@@ -78,3 +78,10 @@ export interface Museum {
   yearVisited?: string;
 }
 
+export interface Photo {
+  id: string;
+  src: string;
+  caption: string;
+  location: string;
+}
+

@@ -22,7 +22,8 @@ import {
   Award,
   BookMarked,
   Sun,
-  Moon
+  Moon,
+  Camera
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -36,6 +37,7 @@ import SkillsGrid from "./components/SkillsGrid";
 import InteractivePortrait from "./components/InteractivePortrait";
 import HeroWireframe from "./components/HeroWireframe";
 import PersonalChatbot from "./components/PersonalChatbot";
+import PhotoGallery from "./components/PhotoGallery";
 
 function BrandLogo({ size = "large" }: { size?: "small" | "large" }) {
   const containerClasses = size === "large" 
@@ -74,6 +76,7 @@ export default function App() {
     { id: "projects", label: "CS Artifacts", icon: Cpu },
     { id: "timeline", label: "Teaching & Experience", icon: GraduationCap },
     { id: "skills", label: "Skills & Certifications", icon: Wrench },
+    { id: "photos", label: "Through My Lens", icon: Camera },
     { id: "contact", label: "Connect", icon: Mail }
   ];
 
@@ -533,7 +536,24 @@ export default function App() {
             <SkillsGrid />
           </section>
 
-          {/* SECTION 7: CONNECT */}
+          {/* SECTION 7: PHOTOS */}
+          <section id="photos" className="scroll-mt-24 border-t border-cream-border/60 pt-16 space-y-6">
+            <div className="flex items-center space-x-4 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-williams-purple/5 border border-williams-purple/10 flex items-center justify-center text-williams-purple dark:text-williams-purple-light">
+                <Camera className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold"><ScrambleText text="Section 07" revealEvery={1} /></span>
+                <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
+                  <BlurWords text="Through My Lens" />
+                </h3>
+              </div>
+            </div>
+
+            <PhotoGallery />
+          </section>
+
+          {/* SECTION 8: CONNECT */}
           <section id="contact" className="scroll-mt-24 border-t border-cream-border/60 pt-16 space-y-8">
             <div className="flex items-center space-x-4">
               <div className="w-10 h-10 rounded-xl bg-zinc-500/5 border border-zinc-500/10 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
