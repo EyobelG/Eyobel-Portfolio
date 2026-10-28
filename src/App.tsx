@@ -322,7 +322,7 @@ export default function App() {
             </motion.a>
           </div>
           <div className="text-center text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">
-            Eyobel Gebre • © 2026
+            © {new Date().getFullYear()} Eyobel Gebre. All rights reserved.
           </div>
         </div>
       </aside>
