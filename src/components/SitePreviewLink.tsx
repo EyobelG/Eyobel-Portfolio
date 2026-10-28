@@ -7,8 +7,14 @@ interface SitePreviewLinkProps {
   children: ReactNode;
 }
 
+// Server-rendered screenshot avoids X-Frame-Options/CSP blocks that make live iframes blank on most school sites.
+// embed=screenshot.url makes Microlink redirect straight to the image bytes, so it's usable as a plain <img src>.
+const screenshotUrl = (url: string) =>
+  `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`;
+
 export default function SitePreviewLink({ href, className, title, children }: SitePreviewLinkProps) {
   const [hovered, setHovered] = useState(false);
+  const [errored, setErrored] = useState(false);
 
   return (
     <span
@@ -21,22 +27,23 @@ export default function SitePreviewLink({ href, className, title, children }: Si
       </a>
 
       {/* Faded miniature site preview, desktop hover only */}
-      <span
-        className={`hidden sm:block absolute left-0 top-full mt-2 z-50 w-64 h-40 rounded-xl border-2 border-cream-border bg-cream-card shadow-2xl overflow-hidden pointer-events-none transition-all duration-200 ${
-          hovered ? "opacity-80 visible translate-y-0" : "opacity-0 invisible -translate-y-1"
-        }`}
-      >
-        {hovered && (
-          <iframe
-            src={href}
-            title={`${title ?? href} preview`}
-            loading="lazy"
-            sandbox=""
-            className="origin-top-left"
-            style={{ width: "400%", height: "400%", border: "none", transform: "scale(0.25)" }}
-          />
-        )}
-      </span>
+      {!errored && (
+        <span
+          className={`hidden sm:block absolute left-0 top-full mt-2 z-50 w-64 h-40 rounded-xl border-2 border-cream-border bg-cream-card shadow-2xl overflow-hidden pointer-events-none transition-all duration-200 ${
+            hovered ? "opacity-85 visible translate-y-0" : "opacity-0 invisible -translate-y-1"
+          }`}
+        >
+          {hovered && (
+            <img
+              src={screenshotUrl(href)}
+              alt={`${title ?? href} preview`}
+              loading="lazy"
+              onError={() => setErrored(true)}
+              className="w-full h-full object-cover object-top"
+            />
+          )}
+        </span>
+      )}
     </span>
   );
 }
