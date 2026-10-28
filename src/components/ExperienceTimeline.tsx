@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { EXPERIENCE_DATA, EDUCATION_DATA } from "../data";
+import SitePreviewLink from "./SitePreviewLink";
 import { Briefcase, GraduationCap, MapPin, Calendar, BookOpen, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 
@@ -329,15 +330,13 @@ export default function ExperienceTimeline() {
                         <div>
                           <h4 className="font-serif text-lg sm:text-xl text-charcoal font-semibold mt-1">
                             {edu.website ? (
-                              <a
+                              <SitePreviewLink
                                 href={edu.website}
-                                target="_blank"
-                                rel="noopener noreferrer"
                                 title={edu.website.replace(/^https?:\/\//, "")}
                                 className="hover:text-tufts-blue hover:underline underline-offset-2 transition-colors"
                               >
                                 {edu.institution}
-                              </a>
+                              </SitePreviewLink>
                             ) : (
                               edu.institution
                             )}
