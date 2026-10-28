@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Publication } from "../types";
+import SitePreviewLink from "./SitePreviewLink";
 
 export default function PublicationsSection() {
   const [activePubId, setActivePubId] = useState<string>(PUBLICATIONS_DATA[0].id);
@@ -273,26 +274,24 @@ export default function PublicationsSection() {
             {/* Link buttons */}
             <div className="flex items-center space-x-3 pt-2">
               {activePub.link && (
-                <a
+                <SitePreviewLink
                   href={activePub.link}
-                  target="_blank"
-                  rel="noreferrer"
+                  title="View Full Manuscript"
                   className="inline-flex items-center space-x-2 px-4 py-2.5 bg-williams-purple hover:bg-williams-purple-light text-white font-mono text-xs font-semibold rounded-lg shadow-sm border border-williams-gold/30 transition-all"
                 >
                   <span>View Full Manuscript</span>
                   <ExternalLink className="w-3.5 h-3.5" />
-                </a>
+                </SitePreviewLink>
               )}
               {activePub.arxiv && (
-                <a
+                <SitePreviewLink
                   href={`https://arxiv.org/abs/${activePub.arxiv}`}
-                  target="_blank"
-                  rel="noreferrer"
+                  title={`arXiv:${activePub.arxiv}`}
                   className="inline-flex items-center space-x-2 px-4 py-2.5 border border-cream-border bg-cream-card-sub hover:opacity-80 text-charcoal font-mono text-xs transition-all rounded-lg"
                 >
                   <span>arXiv:{activePub.arxiv}</span>
                   <ExternalLink className="w-3.5 h-3.5 text-charcoal-light" />
-                </a>
+                </SitePreviewLink>
               )}
             </div>
           </motion.div>
