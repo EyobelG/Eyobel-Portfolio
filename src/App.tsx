@@ -36,6 +36,9 @@ import ExperienceTimeline from "./components/ExperienceTimeline";
 import SkillsGrid from "./components/SkillsGrid";
 import InteractivePortrait from "./components/InteractivePortrait";
 import HeroWireframe from "./components/HeroWireframe";
+import AccentPicker from "./components/AccentPicker";
+
+const HeroScene3D = React.lazy(() => import("./components/three/HeroScene3D"));
 import PersonalChatbot from "./components/PersonalChatbot";
 import PhotoGallery from "./components/PhotoGallery";
 
@@ -140,6 +143,7 @@ export default function App() {
           </div>
         </div>
         <div className="flex items-center space-x-2">
+          <AccentPicker />
           <button
             id="btn-mobile-theme-toggle"
             onClick={() => setIsDarkMode(!isDarkMode)}
@@ -277,6 +281,7 @@ export default function App() {
         {/* Desktop Sidebar Footer with Social Links */}
         <div className="space-y-4 pt-6 border-t border-cream-border">
           <div className="flex items-center justify-center space-x-3">
+            <AccentPicker />
             <motion.button
               id="btn-desktop-theme-toggle"
               onClick={() => setIsDarkMode(!isDarkMode)}
@@ -331,6 +336,12 @@ export default function App() {
       <main className="flex-1 overflow-x-hidden">
         {/* Banner Highlight Container */}
         <div className="relative bg-gradient-to-r from-zinc-200/50 via-zinc-100/30 to-zinc-50/25 dark:from-zinc-900/30 dark:via-zinc-950/20 dark:to-zinc-950/10 border-b border-cream-border py-12 px-6 lg:px-12 xl:px-16 overflow-hidden">
+          {/* WebGL hero backdrop: floating 3D geometry reacting to the cursor */}
+          <div className="absolute inset-0 pointer-events-none">
+            <React.Suspense fallback={null}>
+              <HeroScene3D />
+            </React.Suspense>
+          </div>
           {/* Micro Geometric Accents */}
           <div className="absolute -bottom-10 left-10 w-48 h-48 rounded-full border border-zinc-300/15 dark:border-white/5 pointer-events-none" />
           <div className="hidden lg:block absolute top-1/2 left-[56%] xl:left-[58%] -translate-y-1/2 opacity-60">

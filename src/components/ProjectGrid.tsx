@@ -4,6 +4,30 @@ import { PROJECTS_DATA } from "../data";
 import { ExternalLink, Terminal, Cpu, Database, ChevronRight, X, ArrowRight, Layers, BrainCircuit } from "lucide-react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, type Variants } from "motion/react";
 import ProjectSimulator from "./ProjectSimulator";
+import { type ProjectSceneVariant } from "./three/ProjectScene3D";
+
+const ProjectScene3D = React.lazy(() => import("./three/ProjectScene3D"));
+
+/** Each project gets a small bespoke WebGL badge standing in for a generic category icon. */
+const PROJECT_SCENE_VARIANT: Record<string, ProjectSceneVariant> = {
+  "proj-quantfolio": "orbitRings",
+  "proj-scoop-site": "nodeGraph",
+  "proj-ml-reading-level": "chipGrid",
+  "proj-1": "wireframeCore",
+  "proj-2": "chipGrid",
+  "proj-3": "cubeGrid",
+  "proj-4": "orbitRings",
+  "proj-5": "documentScan",
+  "proj-6": "cubeGrid",
+  "proj-7": "stackBlocks",
+  "proj-8": "nodeGraph",
+  "proj-9": "wireframeCore",
+  "proj-10": "stackBlocks",
+  "proj-11": "orbitRings",
+  "proj-12": "nodeGraph",
+  "proj-13": "documentScan",
+  "proj-14": "nodeGraph"
+};
 
 /** Pointer-tracked 3D tilt, reset on leave. Inert for touch/reduced-motion. */
 function useCardTilt() {
@@ -67,7 +91,13 @@ function ProjectCard({
 
       <div>
         <div className="flex items-center justify-between mb-4">
-          {project.category === "Systems" ? (
+          {PROJECT_SCENE_VARIANT[project.id] ? (
+            <div className="w-12 h-12 -ml-1 rounded-lg border border-williams-purple-light/20 bg-williams-purple/5 group-hover:border-williams-gold/40 transition-colors overflow-hidden">
+              <React.Suspense fallback={null}>
+                <ProjectScene3D variant={PROJECT_SCENE_VARIANT[project.id]} size={48} />
+              </React.Suspense>
+            </div>
+          ) : project.category === "Systems" ? (
             <div className="p-2 bg-williams-purple/20 text-williams-purple dark:text-williams-gold rounded-lg border border-williams-purple-light/30">
               <Cpu className="w-5 h-5" />
             </div>

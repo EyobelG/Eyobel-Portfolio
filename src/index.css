@@ -37,10 +37,68 @@
   --williams-purple: #3b0764;
   --williams-purple-light: #581c87;
   --williams-purple-dark: #1e1b4b;
-  
+
   --williams-gold: #b45309;
   --williams-gold-light: #d97706;
   --williams-gold-dark: #78350f;
+}
+
+/* ---------------- Accent palettes (dark mode) ---------------- */
+/* Default (no [data-accent]) = violet/gold above. Pick another via the swatch picker. */
+
+[data-accent="cyan"] {
+  --williams-purple: #06b6d4;
+  --williams-purple-light: #22d3ee;
+  --williams-purple-dark: #0e7490;
+  --williams-gold: #e879f9;
+  --williams-gold-light: #f0abfc;
+  --williams-gold-dark: #a21caf;
+}
+
+[data-accent="emerald"] {
+  --williams-purple: #10b981;
+  --williams-purple-light: #34d399;
+  --williams-purple-dark: #065f46;
+  --williams-gold: #facc15;
+  --williams-gold-light: #fde047;
+  --williams-gold-dark: #a16207;
+}
+
+[data-accent="crimson"] {
+  --williams-purple: #e11d48;
+  --williams-purple-light: #fb7185;
+  --williams-purple-dark: #881337;
+  --williams-gold: #fb923c;
+  --williams-gold-light: #fdba74;
+  --williams-gold-dark: #c2410c;
+}
+
+/* Same palettes, re-tuned darker/richer so they stay legible on a light background */
+.light-theme[data-accent="cyan"] {
+  --williams-purple: #0e7490;
+  --williams-purple-light: #0891b2;
+  --williams-purple-dark: #164e63;
+  --williams-gold: #a21caf;
+  --williams-gold-light: #c026d3;
+  --williams-gold-dark: #701a75;
+}
+
+.light-theme[data-accent="emerald"] {
+  --williams-purple: #065f46;
+  --williams-purple-light: #047857;
+  --williams-purple-dark: #022c22;
+  --williams-gold: #a16207;
+  --williams-gold-light: #ca8a04;
+  --williams-gold-dark: #713f12;
+}
+
+.light-theme[data-accent="crimson"] {
+  --williams-purple: #9f1239;
+  --williams-purple-light: #be123c;
+  --williams-purple-dark: #4c0519;
+  --williams-gold: #c2410c;
+  --williams-gold-light: #ea580c;
+  --williams-gold-dark: #7c2d12;
 }
 
 @theme {
