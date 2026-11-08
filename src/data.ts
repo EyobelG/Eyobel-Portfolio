@@ -8,7 +8,6 @@ export const PHOTOS_DATA: Photo[] = [
   { id: "isgm-tapestry", src: "/photos/isabella-stewart-gardner-tapestry.jpg", caption: "Woven sculpture installation", location: "Isabella Stewart Gardner Museum, Boston" },
   { id: "miro-prints", src: "/photos/miro-prints-isgm.jpg", caption: "Miró print series", location: "Isabella Stewart Gardner Museum, Boston" },
   { id: "isgm-night-1", src: "/photos/isgm-courtyard-night-1.jpg", caption: "Courtyard at night", location: "Isabella Stewart Gardner Museum, Boston" },
-  { id: "isgm-night-2", src: "/photos/isgm-courtyard-night-2.jpg", caption: "Courtyard at night, another angle", location: "Isabella Stewart Gardner Museum, Boston" },
   { id: "old-state-house", src: "/photos/old-state-house-boston.jpg", caption: "Old State House", location: "Boston, MA" },
   { id: "freedom-trail-clock", src: "/photos/freedom-trail-clock.jpg", caption: "Street clock on the Freedom Trail", location: "Boston, MA" },
   { id: "isgm-aerial", src: "/photos/isgm-courtyard-aerial.jpg", caption: "Courtyard from above", location: "Isabella Stewart Gardner Museum, Boston" },

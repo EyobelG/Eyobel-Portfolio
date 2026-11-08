@@ -36,7 +36,7 @@ export default function PhotoGallery() {
       const oldPhoto = PHOTOS_DATA[index];
       const newIndex = (index + dir + total) % total;
       flipCounter.current += 1;
-      setFlipLeaf({ photo: oldPhoto, dir, key: flipCounter.current });
+      setFlipLeaf({ photo: oldPhoto, dir: dir === 1 ? -1 : 1, key: flipCounter.current });
       setIndex(newIndex);
     },
     [flipLeaf, index, total]
