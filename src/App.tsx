@@ -31,6 +31,7 @@ import { Typewriter, ScrambleText, BlurWords, ShinyText } from "./components/Tex
 
 import MathLab from "./components/MathLab";
 import ProjectGrid from "./components/ProjectGrid";
+import ArchitectureDiagrams from "./components/ArchitectureDiagrams";
 import PublicationsSection from "./components/PublicationsSection";
 import ExperienceTimeline from "./components/ExperienceTimeline";
 import SkillsGrid from "./components/SkillsGrid";
@@ -77,6 +78,7 @@ export default function App() {
     { id: "mathlab", label: "Math Lab (Chip-Firing)", icon: Network },
     { id: "publications", label: "Publications", icon: BookOpen },
     { id: "projects", label: "CS Artifacts", icon: Cpu },
+    { id: "architecture", label: "System Architecture", icon: Layers },
     { id: "timeline", label: "Teaching & Experience", icon: GraduationCap },
     { id: "skills", label: "Skills & Certifications", icon: Wrench },
     { id: "photos", label: "Through My Lens", icon: Camera },
@@ -511,6 +513,25 @@ export default function App() {
             </div>
             
             <ProjectGrid />
+          </section>
+
+          {/* SECTION 4B: SYSTEM ARCHITECTURE */}
+          <section id="architecture" className="scroll-mt-24 border-t border-cream-border/60 pt-16 space-y-6">
+            <div className="flex items-center space-x-4 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-zinc-500/5 border border-zinc-500/10 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
+                <Layers className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold">System Design</span>
+                <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
+                  System Architecture
+                </h3>
+              </div>
+            </div>
+            <p className="text-sm text-charcoal-light max-w-2xl">
+              Three diagrams, each drawing one real decision from a shipped project — not a component-tree inventory.
+            </p>
+            <ArchitectureDiagrams />
           </section>
 
           {/* SECTION 5: TIMELINE */}

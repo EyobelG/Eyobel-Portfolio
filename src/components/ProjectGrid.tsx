@@ -4,6 +4,7 @@ import { PROJECTS_DATA } from "../data";
 import { ExternalLink, Terminal, Cpu, Database, ChevronRight, X, ArrowRight, Layers, BrainCircuit } from "lucide-react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, type Variants } from "motion/react";
 import ProjectSimulator from "./ProjectSimulator";
+import ScoopWordmark from "./ScoopWordmark";
 import { type ProjectSceneVariant } from "./three/ProjectScene3D";
 
 const ProjectScene3D = React.lazy(() => import("./three/ProjectScene3D"));
@@ -122,6 +123,11 @@ function ProjectCard({
         <h4 className="font-serif text-xl text-charcoal font-semibold group-hover:text-williams-purple dark:group-hover:text-williams-gold transition-colors mb-2">
           {project.title}
         </h4>
+        {project.id === "proj-scoop-site" && (
+          <div className="mb-2 -mt-1">
+            <ScoopWordmark size="sm" />
+          </div>
+        )}
         <p className="text-sm text-charcoal-light leading-relaxed line-clamp-3">
           {project.description}
         </p>
@@ -245,6 +251,11 @@ export default function ProjectGrid() {
                   <h3 className="font-serif text-2xl lg:text-3xl text-charcoal font-bold tracking-tight mt-1">
                     {activeProject.title}
                   </h3>
+                  {activeProject.id === "proj-scoop-site" && (
+                    <div className="mt-2">
+                      <ScoopWordmark size="lg" />
+                    </div>
+                  )}
                 </div>
                 <button
                   id="btn-close-drawer"

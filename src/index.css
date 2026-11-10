@@ -288,6 +288,52 @@
   to { transform: rotateX(360deg) rotateY(360deg); }
 }
 
+/* ---------------- Global button depth (3D bevel + press feedback) ---------------- */
+:root {
+  --btn-shadow-rest: inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 2px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.35);
+  --btn-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 2px rgba(0, 0, 0, 0.35), 0 2px 2px rgba(0, 0, 0, 0.3), 0 8px 18px rgba(0, 0, 0, 0.4);
+  --btn-shadow-active: inset 0 1px 3px rgba(0, 0, 0, 0.45), 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.light-theme {
+  --btn-shadow-rest: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -1px 2px rgba(0, 0, 0, 0.06), 0 1px 1px rgba(0, 0, 0, 0.04), 0 3px 8px rgba(0, 0, 0, 0.08);
+  --btn-shadow-hover: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 2px rgba(0, 0, 0, 0.07), 0 2px 2px rgba(0, 0, 0, 0.05), 0 8px 16px rgba(0, 0, 0, 0.1);
+  --btn-shadow-active: inset 0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+button:not(.no-3d) {
+  box-shadow: var(--btn-shadow-rest);
+  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+  will-change: transform;
+}
+
+button:not(.no-3d):hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--btn-shadow-hover);
+  filter: brightness(1.04);
+}
+
+button:not(.no-3d):active:not(:disabled) {
+  transform: translateY(1px) scale(0.985);
+  box-shadow: var(--btn-shadow-active);
+  transition-duration: 70ms;
+  filter: brightness(0.98);
+}
+
+button:not(.no-3d):disabled {
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:not(.no-3d) {
+    transition: box-shadow 150ms ease, filter 150ms ease;
+  }
+  button:not(.no-3d):hover:not(:disabled),
+  button:not(.no-3d):active:not(:disabled) {
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .eg-cube { animation: none; transform: rotateX(-18deg) rotateY(28deg); }
 }
