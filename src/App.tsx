@@ -363,7 +363,7 @@ export default function App() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <ScrambleText text="Seeking Summer 2026 Internships & Full-Time Roles" trigger="mount" delay={450} speed={24} revealEvery={1} />
+                <ScrambleText text="Seeking Summer 2027 Internships, Co-ops & Full-Time Roles" trigger="mount" delay={450} speed={24} revealEvery={1} />
               </motion.span>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-charcoal font-bold tracking-tight leading-tight">
@@ -451,7 +451,7 @@ export default function App() {
                   In the summer of 2021, I was selected to join the prestigious <strong>SMALL REU</strong> at Williams College, where I worked with Prof. Ralph Morrison to co-author <strong>four research papers</strong> on divisor theory, circulant graphs, and higher graph gonality, published in journals such as the <i>Australasian Journal of Combinatorics</i>.
                 </p>
                 <p>
-                  I am currently seeking <strong>Software Engineering, Product Management, or Quantitative Research intern roles for Summer 2026</strong>. I possess full employment authorization (EAD via TPS Ethiopia) and am fully prepared to relocate anywhere in the United States.
+                  I am currently seeking <strong>Software Engineering, Product Management, or Quantitative Research intern and co-op roles for Summer 2027</strong>. I possess full employment authorization (EAD via TPS Ethiopia) and am fully prepared to relocate anywhere in the United States.
                 </p>
               </div>
 

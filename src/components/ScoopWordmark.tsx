@@ -6,9 +6,17 @@ import { motion, useReducedMotion } from "motion/react";
  * project exists to account for, so it's the one thing that moves — drifting
  * up and fading like a released bubble, looping.
  */
-export default function ScoopWordmark({ size = "sm" }: { size?: "sm" | "lg" }) {
+const FONT_SIZE = { xs: "11px", sm: "17px", lg: "28px" };
+
+export default function ScoopWordmark({
+  size = "sm",
+  tone = "auto"
+}: {
+  size?: "xs" | "sm" | "lg";
+  /** "auto" follows the page's charcoal token; "dark" is fixed for use on a light tile regardless of site theme. */
+  tone?: "auto" | "dark";
+}) {
   const reduce = useReducedMotion();
-  const isLg = size === "lg";
 
   return (
     <span
@@ -18,9 +26,9 @@ export default function ScoopWordmark({ size = "sm" }: { size?: "sm" | "lg" }) {
       style={{
         fontFamily: "var(--font-sans)",
         fontWeight: 800,
-        fontSize: isLg ? "28px" : "17px",
+        fontSize: FONT_SIZE[size],
         letterSpacing: "-0.02em",
-        color: "var(--color-charcoal)"
+        color: tone === "dark" ? "#0b1f16" : "var(--color-charcoal)"
       }}
     >
       S

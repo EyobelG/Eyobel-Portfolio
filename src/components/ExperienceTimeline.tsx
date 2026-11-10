@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { EXPERIENCE_DATA, EDUCATION_DATA } from "../data";
 import SitePreviewLink from "./SitePreviewLink";
+import ScoopWordmark from "./ScoopWordmark";
 import { Briefcase, GraduationCap, MapPin, Calendar, BookOpen, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 
@@ -14,23 +15,9 @@ const getInstitutionLogo = (institution: string) => {
       );
     case "SCOOP":
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* SCOOP: carbon leaf over a chained ledger, in Tufts blue */}
-          <rect width="100" height="100" rx="20" fill="#0f3f6e" />
-          <path
-            d="M50 16 C 30 28, 24 48, 34 62 C 44 76, 64 70, 70 52 C 75 37, 66 24, 50 16 Z"
-            fill="#2fbf71"
-            stroke="#eaf7f0"
-            strokeWidth="3"
-          />
-          <path d="M50 20 C 46 40, 44 54, 38 66" stroke="#0f3f6e" strokeWidth="3" strokeLinecap="round" />
-          <g stroke="#ffcc00" strokeWidth="3" fill="none">
-            <rect x="22" y="74" width="14" height="12" rx="3" />
-            <rect x="43" y="74" width="14" height="12" rx="3" />
-            <rect x="64" y="74" width="14" height="12" rx="3" />
-            <path d="M36 80 H 43 M57 80 H 64" strokeLinecap="round" />
-          </g>
-        </svg>
+        <div className="w-full h-full bg-white flex items-center justify-center">
+          <ScoopWordmark size="xs" tone="dark" />
+        </div>
       );
     case "CodePath":
       return (
