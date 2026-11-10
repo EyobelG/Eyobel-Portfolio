@@ -442,6 +442,67 @@ export const PROJECTS_DATA: Project[] = [
     impact: "Shows how to keep multi-user privacy in the database itself: the server never sends a note a reader hasn't reached, so nothing can leak through the browser.",
     liveUrl: "https://coread-beta.vercel.app",
     github: "https://github.com/EyobelG/coread"
+  },
+  {
+    id: "proj-16",
+    title: "The Unofficial Guide: RAG System",
+    category: "Machine Learning",
+    tags: ["RAG", "Retrieval", "Python", "CodePath AI 201"],
+    description: "A retrieval-augmented generation system over a 14-guide travel corpus, built for CodePath's AI Engineering (AI 201) coursework. Answers questions a guide covers by retrieving the right section and citing the file; says so instead of guessing on anything outside the corpus.",
+    details: [
+      "Chunks documents on their own markdown headers rather than a fixed-size window, so each chunk is a complete section instead of a mid-thought slice; the 800-char/120-char size and overlap settings only engage as a fallback for oversized sections.",
+      "Validated the 0.6 relevance cutoff against five in-corpus and five out-of-scope test questions — worst in-corpus distance 0.452, best out-of-scope 0.754, a clean gap with the cutoff sitting in the middle.",
+      "Diagnosed retrieval misses by pipeline stage and iterated with hybrid search and top-k tuning, measuring each change against a before/after run log."
+    ],
+    tech: ["Python", "RAG", "Vector Retrieval", "Markdown-aware Chunking"],
+    github: "https://github.com/EyobelG/ai201-project1-unofficial-guide-starter-v2026",
+    impact: "A from-scratch look at why chunking strategy, not model choice, is usually what breaks a RAG system's retrieval."
+  },
+  {
+    id: "proj-17",
+    title: "FitFindr: Natural-Language Clothing Search",
+    category: "Machine Learning",
+    tags: ["LLM Agents", "Tool Use", "MCP", "Python", "CodePath AI 201"],
+    description: "An LLM agent with a custom tool suite that turns a plain-language query like \"vintage graphic tee under $30\" into a matched secondhand listing, styled against the user's own wardrobe. Built for CodePath's AI Engineering (AI 201) coursework.",
+    details: [
+      "search_listings parses size and price out of the query and filters a 40-item dataset with token-exact size matching — avoiding substring bugs like \"S\" matching \"US 9\" — then ranks survivors by title/tag-weighted keyword overlap.",
+      "suggest_outfit and create_fit_card style the best match against the user's wardrobe and write a postable caption; compare_prices was added as a fourth tool and later migrated onto MCP.",
+      "Added a looser-retry path that drops a constraint and tells the user which one when a search returns zero matches, rather than failing silently; measured the effect with before/after run logs."
+    ],
+    tech: ["Python", "LLM Agents", "Tool Calling", "MCP"],
+    github: "https://github.com/EyobelG/ai201-project2-fitfindr-starter-v2026",
+    impact: "Shows an agent degrading gracefully — naming which constraint to loosen — instead of returning nothing or hallucinating a match."
+  },
+  {
+    id: "proj-18",
+    title: "TakeMeter: r/stocks Take Classifier",
+    category: "Machine Learning",
+    tags: ["Fine-tuning", "DistilBERT", "Text Classification", "CodePath AI 201"],
+    description: "A fine-tuned text classifier that sorts r/stocks posts into analysis, hot_take, or reaction — so a reader can tell an argument from a feeling before weighting it. Built for CodePath's AI Engineering (AI 201) coursework.",
+    details: [
+      "Collected and hand-labeled 220 r/stocks posts against a written taxonomy and a consistent decision rule (“delete the number and reread — if the claim survives unchanged, it's a hot_take”), spanning ten months to avoid skewing toward one week's market mood.",
+      "Fine-tuned distilbert-base-uncased (3 epochs, lr 2e-5, batch size 16, stratified 70/15/15 split) on Apple Silicon GPU (mps).",
+      "Measured baseline-vs-trained performance with a confusion matrix and per-label error write-up, then added a confidence check and a second measured improvement as stretch features."
+    ],
+    tech: ["Python", "PyTorch", "Hugging Face Transformers", "DistilBERT"],
+    github: "https://github.com/EyobelG/ai201-project3-takemeter-starter-v2026",
+    impact: "An end-to-end fine-tuning loop on a small, self-labeled dataset — from taxonomy design through confusion-matrix diagnosis to a measured second improvement."
+  },
+  {
+    id: "proj-19",
+    title: "Provenance Guard: AI-Text Detection Service",
+    category: "Machine Learning",
+    tags: ["NLP", "Flask", "Stylometry", "CodePath AI 201"],
+    description: "A Flask API that scores submitted text for likely AI authorship by combining three independent signals, engineered so disagreement between signals pulls the verdict toward “unsure” rather than a false-confident guess. Built for CodePath's AI Engineering (AI 201) coursework.",
+    details: [
+      "Three signals score each submission 0–1: GPT-2 perplexity (model signal), sentence-length variance/type-token ratio/punctuation density (stylometric signal), and distance from a generic function-word/word-length center (lexical signal, stretch).",
+      "scoring.combine_signals takes a weighted average rather than a veto, so two disagreeing signals pull the combined score toward 0.5 (“unsure”) — the label that costs a writer nothing — instead of forcing a confident wrong call.",
+      "Routes for /submit, /appeal, and /verify (verified-human credential), with every decision logged to an audit trail and rate limiting against repeated attack probing.",
+      "Refactored validation in response to grader feedback — deduped three near-identical checks into shared helpers, centralized tunables, and added tests."
+    ],
+    tech: ["Python", "Flask", "GPT-2", "Stylometry", "NLP"],
+    github: "https://github.com/EyobelG/ai201-project4-provenance-guard-starter-v2026",
+    impact: "Makes the blind spots of each AI-detection signal explicit — and treats signal disagreement as a real uncertainty finding, not noise to average away."
   }
 ];
 
