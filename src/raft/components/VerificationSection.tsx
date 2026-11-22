@@ -38,7 +38,7 @@ const TEST_CASES: TestCaseItem[] = [
     mechanism: 'CreateDefinedLocalCluster + findLeader',
     scenario:
       'Boots a 3- and 5-node cluster, verifies exactly one leader emerges per term, and confirms an opening no-op entry is committed.',
-    verifiedInvariant: 'Election Safety (§5.2) — at most one leader per term.',
+    verifiedInvariant: 'Election Safety (§5.2) - at most one leader per term.',
   },
   {
     name: 'TestCandidateSplitVoteRecovery',
@@ -47,7 +47,7 @@ const TEST_CASES: TestCaseItem[] = [
     mechanism: 'randomTimeout() jitter validation',
     scenario:
       'Forces simultaneous election timeouts and confirms randomized backoff resolves split votes within bounded latency.',
-    verifiedInvariant: 'Liveness — cluster converges to a single leader without livelock.',
+    verifiedInvariant: 'Liveness - cluster converges to a single leader without livelock.',
   },
   {
     name: 'TestFollowerLogTruncationOnConflict',
@@ -56,7 +56,7 @@ const TEST_CASES: TestCaseItem[] = [
     mechanism: 'AppendEntries prevLogIndex/prevLogTerm check',
     scenario:
       'Injects uncommitted conflicting entries on a lagged follower and verifies nextIndex decrements until conflicting suffixes are overwritten.',
-    verifiedInvariant: 'Log Matching Property (§5.3) — identical index & term imply identical prefix.',
+    verifiedInvariant: 'Log Matching Property (§5.3) - identical index & term imply identical prefix.',
   },
   {
     name: 'TestBoltDBCrashAndRestart',
@@ -65,7 +65,7 @@ const TEST_CASES: TestCaseItem[] = [
     mechanism: 'BoltStore (InMemory: false)',
     scenario:
       'Shuts down a node via gracefulExit, restarts it on the same listener port, and confirms currentTerm, votedFor, and log[] replay intact.',
-    verifiedInvariant: 'Durability — restarted node never double-votes in the same term.',
+    verifiedInvariant: 'Durability - restarted node never double-votes in the same term.',
   },
   {
     name: 'TestClientFollowerRedirectAndCommit',
@@ -74,7 +74,7 @@ const TEST_CASES: TestCaseItem[] = [
     mechanism: 'LeaderHint + hashmachine FSM',
     scenario:
       'Submits hash-chain commands to a Follower, follows LeaderHint to the Leader, and verifies deterministic digest agreement across all nodes.',
-    verifiedInvariant: 'State Machine Safety — every node applies the same commands in order.',
+    verifiedInvariant: 'State Machine Safety - every node applies the same commands in order.',
   },
   {
     name: 'TestDuplicateInFlightAndCachedReplies',
@@ -83,7 +83,7 @@ const TEST_CASES: TestCaseItem[] = [
     mechanism: 'requestsByCacheId + GetCachedReply',
     scenario:
       'Dispatches duplicate (ClientID, SeqNum) writes both concurrently before commit and sequentially after commit.',
-    verifiedInvariant: 'Linearizable Once-Only Semantics (§8) — zero duplicate hash mutations.',
+    verifiedInvariant: 'Linearizable Once-Only Semantics (§8) - zero duplicate hash mutations.',
   },
   {
     name: 'TestMinorityLeaderIsolationAndHeal',
@@ -92,7 +92,7 @@ const TEST_CASES: TestCaseItem[] = [
     mechanism: 'network_policy.go (2 vs 3 split)',
     scenario:
       'Partitions the current leader with one follower, writes to both partitions, elects a higher-term majority leader, and heals the link.',
-    verifiedInvariant: 'Split-Brain Safety — old leader steps down; uncommitted writes roll back.',
+    verifiedInvariant: 'Split-Brain Safety - old leader steps down; uncommitted writes roll back.',
   },
   {
     name: 'TestHangingRPCNonBlockingQuorum',
@@ -101,7 +101,7 @@ const TEST_CASES: TestCaseItem[] = [
     mechanism: 'Async sendHeartbeats goroutines',
     scenario:
       'Drops outbound RPC replies to an isolated peer while sending continuous client writes to the majority partition.',
-    verifiedInvariant: 'Availability — hanging peer never stalls majority commits (< 60s budget).',
+    verifiedInvariant: 'Availability - hanging peer never stalls majority commits (< 60s budget).',
   },
 ];
 

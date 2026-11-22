@@ -181,7 +181,7 @@ export function HeroSection({
 
               <p className="text-[15.5px] leading-[1.72] text-[#111111]/70 dark:text-white/70 max-w-[56ch] mb-8">
                 Working as a two-engineer team, we translated Ongaro &amp; Ousterhout&rsquo;s 2014
-                Raft consensus paper into a fault-tolerant Go implementation—complete with
+                Raft consensus paper into a fault-tolerant Go implementation - complete with
                 function-pointer state machines, BoltDB crash recovery, hash-chain state
                 replication, idempotent client caching, and split-brain partition resilience.
               </p>

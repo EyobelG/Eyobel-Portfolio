@@ -70,7 +70,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
     title: 'Split-Brain Partition',
     subtitle: 'Isolate leader (2 vs 3), then heal',
     takeaway:
-      'Unlike classic Raft demos, our test suite uses network_policy.go to split clusters. Watch the 2-node minority leader stall while the 3-node majority elects a higher-term leader—then heal the partition to observe safe log reconciliation.',
+      'Unlike classic Raft demos, our test suite uses network_policy.go to split clusters. Watch the 2-node minority leader stall while the 3-node majority elects a higher-term leader - then heal the partition to observe safe log reconciliation.',
   },
 ];
 
@@ -254,7 +254,7 @@ export function RaftSandbox({ isDark }: RaftSandboxProps) {
               Watch the Cluster Survive Crashes &amp; Network Partitions
             </h2>
             <p className="text-[15px] leading-relaxed text-[#111111]/70 dark:text-white/70 mt-3">
-              Standard Raft demos skip network splits. Click a guided story scenario below—or
+              Standard Raft demos skip network splits. Click a guided story scenario below - or
               manually crash nodes, send hash-chain commands, and slice the network to watch our
               exact protocol rules play out in real time.
             </p>

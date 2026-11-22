@@ -7,7 +7,7 @@ const EDGE_CASES = [
     number: '01',
     title: 'Preventing Hanging RPCs From Stalling Heartbeats',
     problem:
-      'In a naive sequential loop, a partitioned or crashed follower causes AppendEntriesRPC to hang until TCP timeout—starving healthy followers and triggering cascading re-elections.',
+      'In a naive sequential loop, a partitioned or crashed follower causes AppendEntriesRPC to hang until TCP timeout - starving healthy followers and triggering cascading re-elections.',
     resolution:
       'Fired peer RPCs concurrently inside asynchronous goroutines inside sendHeartbeats() and requestVotes(), committing logs as soon as a strict majority responded rather than waiting on stragglers.',
   },

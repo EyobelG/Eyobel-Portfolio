@@ -150,7 +150,7 @@ export function ArchitectureExplorer() {
           </h2>
           <p className="text-[15px] leading-relaxed text-[#111111]/70 dark:text-white/70 mt-3">
             Rather than locking shared structs across dozens of callbacks, our implementation
-            uses Go&rsquo;s CSP primitives—channel multiplexing, asynchronous RPC goroutines, and
+            uses Go&rsquo;s CSP primitives - channel multiplexing, asynchronous RPC goroutines, and
             a pluggable StableStore interface backed by BoltDB.
           </p>
         </div>
@@ -291,7 +291,7 @@ export function ArchitectureExplorer() {
                   <code className="font-mono text-[#111111] dark:text-white">sendHeartbeats()</code>{' '}
                   and{' '}
                   <code className="font-mono text-[#111111] dark:text-white">requestVotes()</code>{' '}
-                  calls launch in asynchronous goroutines—a slow or partitioned peer never blocks
+                  calls launch in asynchronous goroutines - a slow or partitioned peer never blocks
                   quorum commitment for healthy nodes.
                 </div>
               </div>
@@ -336,7 +336,7 @@ export function ArchitectureExplorer() {
 
                 <p className="text-sm leading-relaxed text-[#111111]/70 dark:text-white/70 mb-5">
                   {storageEngine === 'bolt'
-                    ? 'Powered by BoltDB—the same embedded Go key-value store behind HashiCorp Consul and InfluxDB. Persists currentTerm, votedFor, and every replicated log entry to disk before RPC responses are sent, enabling full crash recovery per listener port.'
+                    ? 'Powered by BoltDB - the same embedded Go key-value store behind HashiCorp Consul and InfluxDB. Persists currentTerm, votedFor, and every replicated log entry to disk before RPC responses are sent, enabling full crash recovery per listener port.'
                     : 'Configured via Config.InMemory = true for rapid parallel unit testing. Keeps logs in memory so isolated test clusters can boot, partition, and tear down in milliseconds without disk I/O overhead.'}
                 </p>
 
@@ -363,8 +363,8 @@ export function ArchitectureExplorer() {
                     </span>
                     <span className="font-semibold text-[#111111] dark:text-white">
                       {storageEngine === 'bolt'
-                        ? 'Yes — reloads log & votes from LogPath'
-                        : 'No — ephemeral test state'}
+                        ? 'Yes - reloads log & votes from LogPath'
+                        : 'No - ephemeral test state'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between py-1">
@@ -540,9 +540,9 @@ export function ArchitectureExplorer() {
                   <div className="text-[#111111] dark:text-white font-semibold font-sans mb-2">
                     Core Packages
                   </div>
-                  <div>raft/         — election, replication, state loops</div>
-                  <div>hashmachine/  — deterministic hash-chain FSM</div>
-                  <div>client/       — client RPC &amp; LeaderHint routing</div>
+                  <div>raft/ - election, replication, state loops</div>
+                  <div>hashmachine/ - deterministic hash-chain FSM</div>
+                  <div>client/ - client RPC &amp; LeaderHint routing</div>
                 </div>
               </div>
 
