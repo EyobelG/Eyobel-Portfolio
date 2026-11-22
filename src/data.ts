@@ -222,7 +222,7 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: "proj-raft",
-    title: "Raft Consensus Case Study",
+    title: "Project Raft",
     category: "Systems",
     tags: ["Distributed Systems", "Go", "Consensus", "Interactive Demo"],
     description: "Interactive case study for a fault-tolerant Raft distributed consensus implementation in Go with BoltDB persistence, hash-chain state replication, and live network partition simulation.",
