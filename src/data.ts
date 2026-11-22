@@ -221,6 +221,21 @@ export const PROJECTS_DATA: Project[] = [
     impact: "Top-3 class result built on a methodology fix most submissions missed: grouping cross-validation splits by author to stop leakage from inflating the score."
   },
   {
+    id: "proj-raft",
+    title: "Raft Consensus Case Study",
+    category: "Systems",
+    tags: ["Distributed Systems", "Go", "Consensus", "Interactive Demo"],
+    description: "Interactive case study for a fault-tolerant Raft distributed consensus implementation in Go with BoltDB persistence, hash-chain state replication, and live network partition simulation.",
+    details: [
+      "Cluster sandbox simulates leader election, log replication, and network partitions in real time.",
+      "Architecture explorer walks through the Go implementation's design decisions.",
+      "Built for CS 118 Distributed Systems."
+    ],
+    tech: ["Go", "BoltDB", "Raft", "Distributed Systems"],
+    liveUrl: "/raft.html",
+    impact: "Lets a visitor run leader elections and network partitions themselves instead of reading about them."
+  },
+  {
     id: "proj-1",
     title: "Universal Machine (UM)",
     category: "Systems",
