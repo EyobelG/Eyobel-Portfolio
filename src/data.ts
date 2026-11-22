@@ -85,7 +85,8 @@ export const EDUCATION_DATA: Education[] = [
     website: "https://www.codepath.org",
     details: [
       "Admitted to an intensive, highly selective algorithmic problem-solving program focused on complex data structures, algorithms, and technical evaluation methods.",
-      "Engineered optimized software solutions weekly, analyzing runtime complexity benchmarks (Big O, space-time trade-offs)."
+      "Engineered optimized software solutions weekly, analyzing runtime complexity benchmarks (Big O, space-time trade-offs).",
+      "Completed the AI Engineering pathway (AI 201) with a 100% grade and extra credit; certificate pending (expected Dec 2026)."
     ]
   },
   {
