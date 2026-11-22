@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Terminal, Cpu, Play, Square, RotateCcw, ArrowRight, CornerDownLeft, ShieldAlert, CheckCircle2, Sliders, Layers, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { RaftSandbox } from "../raft/components/RaftSandbox";
 
 interface ProjectSimulatorProps {
   projectId: string;
@@ -261,8 +262,17 @@ export default function ProjectSimulator({ projectId }: ProjectSimulatorProps) {
     }
   };
 
+  // Raft Cluster Sandbox: the real demo component, embedded as-is (proj-raft)
+  if (projectId === "proj-raft") {
+    return (
+      <div className="-mx-6 lg:-mx-8 border-y border-cream-border">
+        <RaftSandbox isDark />
+      </div>
+    );
+  }
+
   return (
-    <div 
+    <div
       className="space-y-4 border border-white/10 bg-[#121212] p-5 rounded-2xl shadow-xl text-white"
       style={{
         ['--williams-purple' as any]: '#8b5cf6',
