@@ -592,7 +592,7 @@ export default function App() {
                 <Mail className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold"><ScrambleText text="Section 07" revealEvery={1} /></span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-tufts-blue-light font-bold"><ScrambleText text="Section 08" revealEvery={1} /></span>
                 <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
                   <BlurWords text="Contact Me" />
                 </h3>

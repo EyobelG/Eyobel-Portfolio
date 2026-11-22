@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "plus jakarta sans",
+        "createdAt": "2026-11-22T18:37:27.885Z",
+        "reason": "Deliberate 3-font system (Playfair Display serif + Plus Jakarta Sans body + Fira Code mono), not a generic default"
+      }
+    ]
+  }
+}

@@ -34,6 +34,12 @@ const SUGGESTED_QUESTIONS = [
 
 export default function PersonalChatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  // Let the hero's own reveal sequence finish before the floating teaser bubbles compete for attention.
+  const [teaserReady, setTeaserReady] = useState(false);
+  useEffect(() => {
+    const t = window.setTimeout(() => setTeaserReady(true), 3200);
+    return () => window.clearTimeout(t);
+  }, []);
   const [isEnlarged, setIsEnlarged] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -461,8 +467,8 @@ export default function PersonalChatbot() {
 
       {/* CLOSED FLOATING QUICK PROMPTS */}
       <AnimatePresence>
-        {!isOpen && (
-          <motion.div 
+        {!isOpen && teaserReady && (
+          <motion.div
             initial={{ opacity: 0, y: 15, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 15, scale: 0.95 }}

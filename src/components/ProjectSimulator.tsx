@@ -8,6 +8,9 @@ interface ProjectSimulatorProps {
 }
 
 export default function ProjectSimulator({ projectId }: ProjectSimulatorProps) {
+  // Raft Cluster Sandbox progressive-disclosure gate (proj-raft)
+  const [raftExpanded, setRaftExpanded] = useState(false);
+
   // General diagnostics simulation (fallback)
   const [valgrindLog, setValgrindLog] = useState<string[]>([]);
   const [generalProgress, setGeneralProgress] = useState(0);
@@ -262,8 +265,26 @@ export default function ProjectSimulator({ projectId }: ProjectSimulatorProps) {
     }
   };
 
-  // Raft Cluster Sandbox: the real demo component, embedded as-is (proj-raft)
+  // Raft Cluster Sandbox: the real demo, progressively disclosed (the modal's
+  // 672px drawer is too narrow to drop the full console in cold; let visitors
+  // opt in instead of landing on a wall of scenario buttons and a log table).
   if (projectId === "proj-raft") {
+    if (!raftExpanded) {
+      return (
+        <div className="-mx-6 lg:-mx-8 border-y border-cream-border bg-[#0a0a0a] px-6 py-10 flex flex-col items-center text-center gap-3">
+          <Terminal className="w-6 h-6 text-williams-gold" />
+          <p className="text-sm text-white/70 max-w-sm">
+            A live 5-node Raft cluster runs below: leader election, client writes, and network-partition recovery, all simulated in real time.
+          </p>
+          <button
+            onClick={() => setRaftExpanded(true)}
+            className="px-4 py-2 bg-williams-purple hover:bg-williams-purple-light text-white font-mono text-xs font-semibold rounded-lg border border-williams-gold/30 transition-all"
+          >
+            Run the interactive cluster
+          </button>
+        </div>
+      );
+    }
     return (
       <div className="-mx-6 lg:-mx-8 border-y border-cream-border">
         <RaftSandbox isDark />

@@ -225,7 +225,7 @@ export const PROJECTS_DATA: Project[] = [
     title: "Project Raft",
     category: "Systems",
     tags: ["Distributed Systems", "Go", "Consensus", "Interactive Demo"],
-    description: "Interactive case study for a fault-tolerant Raft distributed consensus implementation in Go with BoltDB persistence, hash-chain state replication, and live network partition simulation.",
+    description: "Pair project: a fault-tolerant Raft distributed consensus implementation in Go with BoltDB persistence, hash-chain state replication, and live network partition simulation.",
     details: [
       "Cluster sandbox simulates leader election, log replication, and network partitions in real time.",
       "Architecture explorer walks through the Go implementation's design decisions.",
