@@ -27,7 +27,11 @@ const PROJECT_SCENE_VARIANT: Record<string, ProjectSceneVariant> = {
   "proj-11": "orbitRings",
   "proj-12": "nodeGraph",
   "proj-13": "documentScan",
-  "proj-14": "nodeGraph"
+  "proj-14": "nodeGraph",
+  "proj-16": "citationBeacon",
+  "proj-17": "toolRing",
+  "proj-18": "gaugeDial",
+  "proj-19": "signalShield"
 };
 
 /** Pointer-tracked 3D tilt, reset on leave. Inert for touch/reduced-motion. */

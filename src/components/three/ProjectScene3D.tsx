@@ -25,7 +25,11 @@ export type ProjectSceneVariant =
   | "stackBlocks"
   | "wireframeCore"
   | "documentScan"
-  | "chipGrid";
+  | "chipGrid"
+  | "citationBeacon"
+  | "toolRing"
+  | "gaugeDial"
+  | "signalShield";
 
 const REDUCED_MOTION = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -192,6 +196,174 @@ function ChipGrid({ a, b }: { a: string; b: string }) {
   );
 }
 
+/** A pulse that expands and fades on loop, offset by phase so a group never breathes in sync. */
+function Pulse({ position, color, offset = 0 }: { position: THREE.Vector3; color: string; offset?: number }) {
+  const ref = useRef<THREE.Mesh>(null);
+  const mat = useRef<THREE.MeshBasicMaterial>(null);
+  useFrame((state) => {
+    if (!ref.current || !mat.current || REDUCED_MOTION) return;
+    const t = (Math.sin(state.clock.elapsedTime * 1.3 + offset) + 1) / 2;
+    ref.current.scale.setScalar(0.7 + t * 0.5);
+    mat.current.opacity = 0.35 + t * 0.55;
+  });
+  return (
+    <mesh ref={ref} position={position}>
+      <circleGeometry args={[0.07, 16]} />
+      <meshBasicMaterial ref={mat} color={color} transparent opacity={0.6} />
+    </mesh>
+  );
+}
+
+/** A cited passage pinging outward: RAG - the one chunk that answered, picked out of the page. */
+function CitationBeacon({ a, b }: { a: string; b: string }) {
+  const ring = useRef<THREE.Mesh>(null);
+  const mat = useRef<THREE.MeshBasicMaterial>(null);
+  useFrame((state) => {
+    if (!ring.current || !mat.current || REDUCED_MOTION) return;
+    const t = (state.clock.elapsedTime * 0.6) % 1;
+    ring.current.scale.setScalar(1 + t * 5);
+    mat.current.opacity = 0.65 * (1 - t);
+  });
+  return (
+    <group rotation={[0.1, -0.3, 0]}>
+      <mesh>
+        <planeGeometry args={[0.7, 0.95]} />
+        <meshBasicMaterial color={a} wireframe transparent opacity={0.55} />
+      </mesh>
+      <mesh position={[0, 0.08, 0.01]}>
+        <planeGeometry args={[0.5, 0.13]} />
+        <meshBasicMaterial color={b} transparent opacity={0.9} />
+      </mesh>
+      <mesh ref={ring} position={[0, 0.08, 0.02]}>
+        <ringGeometry args={[0.07, 0.09, 28]} />
+        <meshBasicMaterial ref={mat} color={b} transparent opacity={0.6} side={THREE.DoubleSide} />
+      </mesh>
+    </group>
+  );
+}
+
+/** A hub agent dispatching to orbiting tools: search, suggest, compare - each a distinct shape, not a recolor. */
+function ToolRing({ a, b }: { a: string; b: string }) {
+  const orbit = useRef<THREE.Group>(null);
+  useFrame((state) => {
+    if (!orbit.current || REDUCED_MOTION) return;
+    orbit.current.rotation.z = state.clock.elapsedTime * 0.3;
+  });
+  const tools = useMemo(
+    () =>
+      [0, 1, 2].map((i) => {
+        const angle = (i / 3) * Math.PI * 2;
+        return new THREE.Vector3(Math.cos(angle) * 0.56, Math.sin(angle) * 0.56, 0);
+      }),
+    []
+  );
+  return (
+    <group>
+      <mesh>
+        <sphereGeometry args={[0.16, 16, 16]} />
+        <meshBasicMaterial color={a} />
+      </mesh>
+      <group ref={orbit}>
+        {tools.map((p, i) => (
+          <group key={i}>
+            <Line points={[new THREE.Vector3(0, 0, 0), p]} color={a} transparent opacity={0.4} />
+            <mesh position={p}>
+              {i === 0 ? (
+                <boxGeometry args={[0.16, 0.16, 0.16]} />
+              ) : i === 1 ? (
+                <coneGeometry args={[0.11, 0.2, 4]} />
+              ) : (
+                <torusGeometry args={[0.09, 0.03, 8, 16]} />
+              )}
+              <meshBasicMaterial color={b} wireframe={i !== 2} />
+            </mesh>
+          </group>
+        ))}
+      </group>
+    </group>
+  );
+}
+
+/** A needle sweeping a dial: TakeMeter scoring each post along a continuous scale, not a binary flag. */
+function GaugeDial({ a, b }: { a: string; b: string }) {
+  const needle = useRef<THREE.Group>(null);
+  useFrame((state) => {
+    if (!needle.current || REDUCED_MOTION) return;
+    needle.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.7) * 1.0;
+  });
+  const start = Math.PI * 0.15;
+  const end = Math.PI * 0.85;
+  const arcPoints = useMemo(() => {
+    const segs = 28;
+    return Array.from({ length: segs + 1 }, (_, i) => {
+      const t = start + (end - start) * (i / segs);
+      return new THREE.Vector3(Math.cos(t) * 0.62, Math.sin(t) * 0.62 - 0.1, 0);
+    });
+  }, []);
+  const ticks = useMemo(
+    () =>
+      [0.18, 0.5, 0.82].map((frac) => {
+        const t = start + (end - start) * frac;
+        const inner = new THREE.Vector3(Math.cos(t) * 0.48, Math.sin(t) * 0.48 - 0.1, 0);
+        const outer = new THREE.Vector3(Math.cos(t) * 0.62, Math.sin(t) * 0.62 - 0.1, 0);
+        return [inner, outer] as [THREE.Vector3, THREE.Vector3];
+      }),
+    []
+  );
+  return (
+    <group>
+      <Line points={arcPoints} color={a} transparent opacity={0.65} />
+      {ticks.map(([i1, i2], idx) => (
+        <Line key={idx} points={[i1, i2]} color={a} transparent opacity={0.4} />
+      ))}
+      <group ref={needle} position={[0, -0.1, 0]}>
+        <Line points={[new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0.56, 0)]} color={b} />
+        <mesh>
+          <circleGeometry args={[0.05, 16]} />
+          <meshBasicMaterial color={b} />
+        </mesh>
+      </group>
+    </group>
+  );
+}
+
+/** A shield with independent signals pulsing out of phase: Provenance Guard's disagreement reads as a verdict, not noise. */
+function SignalShield({ a, b }: { a: string; b: string }) {
+  const group = useRef<THREE.Group>(null);
+  useFrame((state) => {
+    if (!group.current || REDUCED_MOTION) return;
+    group.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.5;
+  });
+  const shieldPoints = useMemo(
+    () => [
+      new THREE.Vector3(0, 0.6, 0),
+      new THREE.Vector3(0.5, 0.4, 0),
+      new THREE.Vector3(0.5, -0.08, 0),
+      new THREE.Vector3(0, -0.6, 0),
+      new THREE.Vector3(-0.5, -0.08, 0),
+      new THREE.Vector3(-0.5, 0.4, 0),
+      new THREE.Vector3(0, 0.6, 0)
+    ],
+    []
+  );
+  const signals = useMemo(
+    () =>
+      [0, 1, 2].map((i) => {
+        const angle = (i / 3) * Math.PI * 2 + Math.PI / 6;
+        return new THREE.Vector3(Math.cos(angle) * 0.82, Math.sin(angle) * 0.82 * 0.9, 0);
+      }),
+    []
+  );
+  return (
+    <group ref={group}>
+      <Line points={shieldPoints} color={a} transparent opacity={0.75} />
+      {signals.map((p, i) => (
+        <Pulse key={i} position={p} color={b} offset={i * 0.9} />
+      ))}
+    </group>
+  );
+}
+
 const SCENES: Record<ProjectSceneVariant, React.ComponentType<{ a: string; b: string }>> = {
   nodeGraph: NodeGraph,
   cubeGrid: CubeGrid,
@@ -199,7 +371,11 @@ const SCENES: Record<ProjectSceneVariant, React.ComponentType<{ a: string; b: st
   stackBlocks: StackBlocks,
   wireframeCore: WireframeCore,
   documentScan: DocumentScan,
-  chipGrid: ChipGrid
+  chipGrid: ChipGrid,
+  citationBeacon: CitationBeacon,
+  toolRing: ToolRing,
+  gaugeDial: GaugeDial,
+  signalShield: SignalShield
 };
 
 /**
