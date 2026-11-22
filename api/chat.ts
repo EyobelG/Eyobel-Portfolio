@@ -54,12 +54,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (ratelimit) {
     try {
-      const result = await ratelimit.limit(ip);
+      // A dead/unreachable Redis host can take 10-20+ seconds to fail DNS
+      // resolution outright - far too slow for a chat request. Race it
+      // against a short timeout so a bad host degrades to in-memory fast
+      // instead of stalling every request behind it.
+      const result = await Promise.race([
+        ratelimit.limit(ip),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("ratelimit check timed out")), 1500)
+        ),
+      ]);
       limited = !result.success;
       retryAfterSec = Math.ceil((result.reset - Date.now()) / 1000);
     } catch (err) {
-      // Redis unreachable (bad host, expired instance, etc.) - don't let the
-      // rate limiter's own failure take down chat; fall back to in-memory.
+      // Redis unreachable or too slow - don't let the rate limiter's own
+      // failure take down chat; fall back to in-memory.
       console.error("[ratelimit] Redis check failed, falling back to in-memory:", err);
       ({ limited, retryAfterSec } = checkMemoryRateLimit(ip));
     }
