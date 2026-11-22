@@ -49,21 +49,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const ip = getClientIp(req);
 
+  let limited = false;
+  let retryAfterSec = 0;
+
   if (ratelimit) {
-    const { success, reset } = await ratelimit.limit(ip);
-    if (!success) {
-      const retryAfterSec = Math.ceil((reset - Date.now()) / 1000);
-      res.setHeader("Retry-After", String(retryAfterSec));
-      res.status(429).json({ error: `Too many requests. Please try again in ${retryAfterSec}s.` });
-      return;
+    try {
+      const result = await ratelimit.limit(ip);
+      limited = !result.success;
+      retryAfterSec = Math.ceil((result.reset - Date.now()) / 1000);
+    } catch (err) {
+      // Redis unreachable (bad host, expired instance, etc.) - don't let the
+      // rate limiter's own failure take down chat; fall back to in-memory.
+      console.error("[ratelimit] Redis check failed, falling back to in-memory:", err);
+      ({ limited, retryAfterSec } = checkMemoryRateLimit(ip));
     }
   } else {
-    const { limited, retryAfterSec } = checkMemoryRateLimit(ip);
-    if (limited) {
-      res.setHeader("Retry-After", String(retryAfterSec));
-      res.status(429).json({ error: `Too many requests. Please try again in ${retryAfterSec}s.` });
-      return;
-    }
+    ({ limited, retryAfterSec } = checkMemoryRateLimit(ip));
+  }
+
+  if (limited) {
+    res.setHeader("Retry-After", String(retryAfterSec));
+    res.status(429).json({ error: `Too many requests. Please try again in ${retryAfterSec}s.` });
+    return;
   }
 
   const { messages } = req.body ?? {};
