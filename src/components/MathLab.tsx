@@ -116,7 +116,7 @@ interface Impact {
   y: number;
 }
 
-// Animated digit — slides/blurs in on change instead of popping (Jakub materialize recipe).
+// Animated digit - slides/blurs in on change instead of popping (Jakub materialize recipe).
 function StatNumber({ value, className }: { value: number | string; className?: string }) {
   const reduce = useReducedMotion();
   return (
@@ -479,7 +479,7 @@ export default function MathLab() {
             </div>
           )}
 
-          {/* Firing Vector — the σ(v) count of how many times each vertex has fired */}
+          {/* Firing Vector - the σ(v) count of how many times each vertex has fired */}
           {fireCount > 0 && (
             <div className="pt-1">
               <span className="block font-mono text-[10px] text-charcoal-light font-medium uppercase tracking-wider mb-2">

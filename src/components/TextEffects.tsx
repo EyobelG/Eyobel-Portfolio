@@ -240,7 +240,7 @@ export function BlurWords({
 }
 
 /* ------------------------------------------------------------------ *
- * ShinyText — a slow specular sweep across the text.
+ * ShinyText - a slow specular sweep across the text.
  * ------------------------------------------------------------------ */
 export function ShinyText({
   children,

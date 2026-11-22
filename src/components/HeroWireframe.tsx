@@ -1,7 +1,7 @@
 import React from "react";
 
 /**
- * Small rotating CSS-3D wireframe cube for the hero banner — a nod to the
+ * Small rotating CSS-3D wireframe cube for the hero banner - a nod to the
  * portfolio's math/CS identity (lattice geometry) rendered with real 3D
  * transforms rather than a flat SVG spinner.
  */

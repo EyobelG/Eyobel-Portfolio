@@ -39,7 +39,7 @@ function Spinner({ children }: { children: React.ReactNode }) {
   return <group ref={ref}>{children}</group>;
 }
 
-/** A compact set of connected nodes — chip-firing graphs, gRPC peers, carbon-event ledgers. */
+/** A compact set of connected nodes: chip-firing graphs, gRPC peers, carbon-event ledgers. */
 function NodeGraph({ a, b }: { a: string; b: string }) {
   const nodes = useMemo(
     () => [
@@ -66,7 +66,7 @@ function NodeGraph({ a, b }: { a: string; b: string }) {
   );
 }
 
-/** Blocks lighting up in sequence — cache tiling, DCT blocks, compression. */
+/** Blocks lighting up in sequence: cache tiling, DCT blocks, compression. */
 function CubeGrid({ a, b }: { a: string; b: string }) {
   const cubes = useMemo(() => {
     const arr: [number, number, number][] = [];
@@ -95,7 +95,7 @@ function CubeGrid({ a, b }: { a: string; b: string }) {
   );
 }
 
-/** Two interlocked rings — peer exchange, matchmaking, two-sided systems. */
+/** Two interlocked rings: peer exchange, matchmaking, two-sided systems. */
 function OrbitRings({ a, b }: { a: string; b: string }) {
   return (
     <Spinner>
@@ -111,7 +111,7 @@ function OrbitRings({ a, b }: { a: string; b: string }) {
   );
 }
 
-/** A vertical stack — stack machines, assembly, linked-list/editor backends. */
+/** A vertical stack: stack machines, assembly, linked-list/editor backends. */
 function StackBlocks({ a, b }: { a: string; b: string }) {
   const ref = useRef<THREE.Group>(null);
   useFrame((state) => {
@@ -130,7 +130,7 @@ function StackBlocks({ a, b }: { a: string; b: string }) {
   );
 }
 
-/** A faceted wireframe core — the VM, the binary bomb, raw low-level machinery. */
+/** A faceted wireframe core: the VM, the binary bomb, raw low-level machinery. */
 function WireframeCore({ a, b }: { a: string; b: string }) {
   return (
     <Spinner>
@@ -146,7 +146,7 @@ function WireframeCore({ a, b }: { a: string; b: string }) {
   );
 }
 
-/** A flat plane with a sweeping scan-line — OCR, scanning, perspective correction. */
+/** A flat plane with a sweeping scan-line: OCR, scanning, perspective correction. */
 function DocumentScan({ a, b }: { a: string; b: string }) {
   const line = useRef<THREE.Mesh>(null);
   useFrame((state) => {
@@ -167,7 +167,7 @@ function DocumentScan({ a, b }: { a: string; b: string }) {
   );
 }
 
-/** A small grid lighting up like circuit traces — the VM/interpreter, profiling. */
+/** A small grid lighting up like circuit traces: the VM/interpreter, profiling. */
 function ChipGrid({ a, b }: { a: string; b: string }) {
   const ref = useRef<THREE.Group>(null);
   useFrame((state) => {

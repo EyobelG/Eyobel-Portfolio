@@ -529,7 +529,7 @@ export default function App() {
               </div>
             </div>
             <p className="text-sm text-charcoal-light max-w-2xl">
-              Three diagrams, each drawing one real decision from a shipped project — not a component-tree inventory.
+              Three diagrams, each drawing one real decision from a shipped project - not a component-tree inventory.
             </p>
             <ArchitectureDiagrams />
           </section>

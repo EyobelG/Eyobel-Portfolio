@@ -7,7 +7,7 @@ interface SitePreviewLinkProps {
   children: ReactNode;
 }
 
-// Pre-captured screenshots, served from /public — avoids iframe X-Frame-Options blocks
+// Pre-captured screenshots, served from /public - avoids iframe X-Frame-Options blocks
 // and the rate limits of free third-party screenshot APIs. Add a new entry here whenever
 // a new linked site/paper gets a preview.
 const PREVIEW_IMAGES: Record<string, string> = {

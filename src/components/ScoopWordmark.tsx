@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "motion/react";
 /**
  * Real SCOOP wordmark, recreated from website-jade-eta-97.vercel.app (CO2 spelled
  * into the brand name: S-CO-O₂-P). The "2" is the CO2 molecule the whole
- * project exists to account for, so it's the one thing that moves — drifting
+ * project exists to account for, so it's the one thing that moves - drifting
  * up and fading like a released bubble, looping.
  */
 const FONT_SIZE = { xs: "11px", sm: "17px", lg: "28px" };

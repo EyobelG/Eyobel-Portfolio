@@ -134,7 +134,7 @@ export const PUBLICATIONS_DATA: Publication[] = [
     year: 2023,
     link: "https://ajc.maths.uq.edu.au/pdf/87/ajc_v87_p129.pdf",
     doi: "ajc_v87_p129",
-    description: "Explores the properties of 'scramble number' on graphs—a metric related to the graph's structural complexity—demonstrating uniform scrambles and proving lower bounds for complex networks."
+    description: "Explores the properties of 'scramble number' on graphs - a metric related to the graph's structural complexity - demonstrating uniform scrambles and proving lower bounds for complex networks."
   },
   {
     id: "pub-2",
@@ -176,9 +176,9 @@ export const PROJECTS_DATA: Project[] = [
     tags: ["Quantitative Finance", "Full-Stack", "Data Visualization"],
     description: "Built and deployed a full-stack quantitative finance platform that analyzes portfolio risk, optimizes allocations, validates them out-of-sample, and paper-trades the winning strategy live through Alpaca.",
     details: [
-      "Computes risk-adjusted performance metrics from live market data — Sharpe and Sortino ratios, maximum drawdown, 95% Value at Risk and Conditional VaR, plus beta and Jensen's alpha measured against the S&P 500.",
+      "Computes risk-adjusted performance metrics from live market data - Sharpe and Sortino ratios, maximum drawdown, 95% Value at Risk and Conditional VaR, plus beta and Jensen's alpha measured against the S&P 500.",
       "Solves mean-variance and Black-Litterman equilibrium optimization to trace the efficient frontier, identifying the max-Sharpe and minimum-volatility allocations and plotting the user's own portfolio against the curve.",
-      "Walk-forward backtests six allocation rules — max-Sharpe, risk parity, hierarchical risk parity, and equal-weight among them — with transaction costs, refitting at each rebalance on only the data available at the time to measure genuine out-of-sample performance instead of an in-sample curve fit.",
+      "Walk-forward backtests six allocation rules - max-Sharpe, risk parity, hierarchical risk parity, and equal-weight among them - with transaction costs, refitting at each rebalance on only the data available at the time to measure genuine out-of-sample performance instead of an in-sample curve fit.",
       "Adds statistical rigor with deflated and probabilistic Sharpe ratios, stationary-bootstrap confidence intervals, and a GARCH(1,1) volatility model fit by maximum likelihood, implemented from the underlying math rather than pulled from a library.",
       "Closes the loop from analysis to execution: a live Alpaca paper-trading integration auto-selects whichever strategy currently backtests best out-of-sample, diffs it against real account positions, and places the rebalancing orders on user confirmation.",
       "Designed the API so slower upstream metadata calls degrade gracefully rather than failing the analysis, and cached price downloads to stay within provider rate limits."
@@ -186,7 +186,7 @@ export const PROJECTS_DATA: Project[] = [
     tech: ["Python", "FastAPI", "React", "TypeScript", "PyPortfolioOpt", "pandas", "NumPy", "Recharts", "Alpaca API", "Docker", "Render"],
     github: "https://github.com/EyobelG/quant-portfolio-analytics",
     liveUrl: "https://quant-portfolio-web.onrender.com",
-    impact: "Turns portfolio analysis into a tradeable decision — showing not just where a real portfolio sits versus the efficient frontier, but which allocation actually holds up out-of-sample, then executing it live in a paper account."
+    impact: "Turns portfolio analysis into a tradeable decision - showing not just where a real portfolio sits versus the efficient frontier, but which allocation actually holds up out-of-sample, then executing it live in a paper account."
   },
   {
     id: "proj-scoop-site",
@@ -195,7 +195,7 @@ export const PROJECTS_DATA: Project[] = [
     tags: ["Data Visualization", "Front-End", "Standards"],
     description: "Designed and built the public site for SCOOP (Sustainable Carbon Options with Open Protocols), the Tufts Auster Center's open carbon-accounting platform and reference implementation for the IEEE P7802 MMRV standard.",
     details: [
-      "Translates the project's core data model — carbon as time-stamped, source-attributed `carbon_event` records carrying an explicit measurement maturity level — into an interactive explanation aimed at engineers and standards reviewers.",
+      "Translates the project's core data model - carbon as time-stamped, source-attributed `carbon_event` records carrying an explicit measurement maturity level - into an interactive explanation aimed at engineers and standards reviewers.",
       "Built an annotated walkthrough of a single carbon event, tracing it from a ~6-second power read through integration to kWh, grid-factor attribution, and the ledger entry that records method and coverage.",
       "Built a scenario timeline contrasting estimated versus measured-and-settled carbon, labeled so projected years read as scenarios rather than measurements.",
       "Visualized the measured record from metered lab-server data, with each point representing one settled accounting period.",
@@ -215,7 +215,7 @@ export const PROJECTS_DATA: Project[] = [
       "Baseline (Problem 1): Bag-of-Words (CountVectorizer) features into L2-regularized Logistic Regression (C=0.01).",
       "Caught and fixed a cross-validation data leak caused by author repetition across folds by switching to author-grouped 5-fold CV, so held-out scores reflect genuine generalization rather than memorized author style.",
       "Deep model (Problem 2): fine-tuned `deberta-v3-large` end-to-end on Tufts HPC GPU nodes with 10-fold author-grouped CV (learning rate 4e-6).",
-      "Achieved 0.792 CV AUROC and 0.7726 test AUROC — ranked top 3 of the entire class on the Gradescope leaderboard."
+      "Achieved 0.792 CV AUROC and 0.7726 test AUROC - ranked top 3 of the entire class on the Gradescope leaderboard."
     ],
     tech: ["Python", "scikit-learn", "PyTorch", "HuggingFace Transformers", "deberta-v3-large", "Tufts HPC"],
     impact: "Top-3 class result built on a methodology fix most submissions missed: grouping cross-validation splits by author to stop leakage from inflating the score."
@@ -380,7 +380,7 @@ export const PROJECTS_DATA: Project[] = [
     title: "PlayDate",
     category: "Web Apps",
     tags: ["iOS", "SwiftUI", "Firebase", "AI-Assisted Dev"],
-    description: "A native iOS dating app built with Claude — two matched users must play a real-time mini-game together in a shared 'Game Arena' before chat unlocks, replacing swiping with cooperative play.",
+    description: "A native iOS dating app built with Claude - two matched users must play a real-time mini-game together in a shared 'Game Arena' before chat unlocks, replacing swiping with cooperative play.",
     details: [
       "Architected persistence behind a single PlayDatesBackend protocol with swappable in-memory mock and Firebase (Firestore/Auth/Storage) implementations, so the app builds and runs fully featured with zero Firebase SDK installed.",
       "Built a real-time 1v1 Game Arena spanning a dozen+ mini-games (Chess Duel, Vibe Mapping, Harmonic Match, Tarot Connection, Neon Stack 3D, trivia, and more), each gating chat unlock behind a server-enforced compatibility-score threshold.",
@@ -389,7 +389,7 @@ export const PROJECTS_DATA: Project[] = [
       "327 Swift files across 30+ XCTest suites, with dedicated coverage on safety-critical paths: age verification/age gating, content moderation, photo/face verification, secure reporting, and location-sharing privacy. GitHub Actions CI/CD on every push."
     ],
     tech: ["Swift", "SwiftUI", "Firebase (Firestore/Auth/Storage)", "XCTest", "MVVM", "CI/CD"],
-    impact: "A fully-featured, testable iOS dating app where compatibility is measured through shared play instead of profile scrolling — architected for AI-assisted development from day one.",
+    impact: "A fully-featured, testable iOS dating app where compatibility is measured through shared play instead of profile scrolling - architected for AI-assisted development from day one.",
     image: "/projects/playdate-matches.png"
   },
   {
@@ -400,13 +400,13 @@ export const PROJECTS_DATA: Project[] = [
     description: "A published VS Code extension that generates Python unit tests with an LLM and verifies them by actually executing them in a sandbox, auto-repairing failures instead of trusting generated code blindly.",
     details: [
       "Built a closed-loop generate-and-verify pipeline: an LLM writes unittest tests, a sandboxed subprocess runs python3 -m unittest against them, and failures are fed back into the next model attempt (up to a configurable retry count) rather than surfacing broken tests.",
-      "Designed a lightweight, embeddings-free RAG retrieval engine from scratch — per-function/class chunking with stopword-filtered term-frequency scoring — that supplies relevant codebase context for both test generation and a second AI review pass flagging bugs, duplicate logic, and convention drift.",
+      "Designed a lightweight, embeddings-free RAG retrieval engine from scratch - per-function/class chunking with stopword-filtered term-frequency scoring - that supplies relevant codebase context for both test generation and a second AI review pass flagging bugs, duplicate logic, and convention drift.",
       "Implemented multi-provider LLM routing (OpenAI-compatible, Anthropic, Google Gemini) with automatic provider detection, environment-variable credential fallback, and an explicit override setting for non-standard API key formats.",
       "Extended static analysis to detect Python class methods and nested functions (not just free functions) by walking the document for enclosing class/function context, with bracket-aware parameter parsing.",
       "Shipped it for real: unit test suite (Node's built-in test runner), MIT license, custom icon, and a published listing on the VS Code Marketplace."
     ],
     tech: ["TypeScript", "VS Code Extension API", "esbuild", "Node.js", "OpenAI/Anthropic/Gemini APIs"],
-    impact: "Live on the VS Code Marketplace — install it, generate tests on a real Python function, and watch it verify them in a sandbox before you see them.",
+    impact: "Live on the VS Code Marketplace - install it, generate tests on a real Python function, and watch it verify them in a sandbox before you see them.",
     github: "https://github.com/EyobelG/ContextLens",
     marketplace: "https://marketplace.visualstudio.com/items?itemName=eyobelg.context-lens-python"
   },
@@ -467,7 +467,7 @@ export const PROJECTS_DATA: Project[] = [
     description: "A retrieval-augmented generation system over a 14-guide travel corpus, built for CodePath's AI Engineering (AI 201) coursework. Answers questions a guide covers by retrieving the right section and citing the file; says so instead of guessing on anything outside the corpus.",
     details: [
       "Chunks documents on their own markdown headers rather than a fixed-size window, so each chunk is a complete section instead of a mid-thought slice; the 800-char/120-char size and overlap settings only engage as a fallback for oversized sections.",
-      "Validated the 0.6 relevance cutoff against five in-corpus and five out-of-scope test questions — worst in-corpus distance 0.452, best out-of-scope 0.754, a clean gap with the cutoff sitting in the middle.",
+      "Validated the 0.6 relevance cutoff against five in-corpus and five out-of-scope test questions - worst in-corpus distance 0.452, best out-of-scope 0.754, a clean gap with the cutoff sitting in the middle.",
       "Diagnosed retrieval misses by pipeline stage and iterated with hybrid search and top-k tuning, measuring each change against a before/after run log."
     ],
     tech: ["Python", "RAG", "Vector Retrieval", "Markdown-aware Chunking"],
@@ -481,28 +481,28 @@ export const PROJECTS_DATA: Project[] = [
     tags: ["LLM Agents", "Tool Use", "MCP", "Python", "CodePath AI 201"],
     description: "An LLM agent with a custom tool suite that turns a plain-language query like \"vintage graphic tee under $30\" into a matched secondhand listing, styled against the user's own wardrobe. Built for CodePath's AI Engineering (AI 201) coursework.",
     details: [
-      "search_listings parses size and price out of the query and filters a 40-item dataset with token-exact size matching — avoiding substring bugs like \"S\" matching \"US 9\" — then ranks survivors by title/tag-weighted keyword overlap.",
+      "search_listings parses size and price out of the query and filters a 40-item dataset with token-exact size matching - avoiding substring bugs like \"S\" matching \"US 9\" - then ranks survivors by title/tag-weighted keyword overlap.",
       "suggest_outfit and create_fit_card style the best match against the user's wardrobe and write a postable caption; compare_prices was added as a fourth tool and later migrated onto MCP.",
       "Added a looser-retry path that drops a constraint and tells the user which one when a search returns zero matches, rather than failing silently; measured the effect with before/after run logs."
     ],
     tech: ["Python", "LLM Agents", "Tool Calling", "MCP"],
     github: "https://github.com/EyobelG/ai201-project2-fitfindr-starter-v2026",
-    impact: "Shows an agent degrading gracefully — naming which constraint to loosen — instead of returning nothing or hallucinating a match."
+    impact: "Shows an agent degrading gracefully - naming which constraint to loosen - instead of returning nothing or hallucinating a match."
   },
   {
     id: "proj-18",
     title: "TakeMeter: r/stocks Take Classifier",
     category: "Machine Learning",
     tags: ["Fine-tuning", "DistilBERT", "Text Classification", "CodePath AI 201"],
-    description: "A fine-tuned text classifier that sorts r/stocks posts into analysis, hot_take, or reaction — so a reader can tell an argument from a feeling before weighting it. Built for CodePath's AI Engineering (AI 201) coursework.",
+    description: "A fine-tuned text classifier that sorts r/stocks posts into analysis, hot_take, or reaction - so a reader can tell an argument from a feeling before weighting it. Built for CodePath's AI Engineering (AI 201) coursework.",
     details: [
-      "Collected and hand-labeled 220 r/stocks posts against a written taxonomy and a consistent decision rule (“delete the number and reread — if the claim survives unchanged, it's a hot_take”), spanning ten months to avoid skewing toward one week's market mood.",
+      "Collected and hand-labeled 220 r/stocks posts against a written taxonomy and a consistent decision rule (“delete the number and reread - if the claim survives unchanged, it's a hot_take”), spanning ten months to avoid skewing toward one week's market mood.",
       "Fine-tuned distilbert-base-uncased (3 epochs, lr 2e-5, batch size 16, stratified 70/15/15 split) on Apple Silicon GPU (mps).",
       "Measured baseline-vs-trained performance with a confusion matrix and per-label error write-up, then added a confidence check and a second measured improvement as stretch features."
     ],
     tech: ["Python", "PyTorch", "Hugging Face Transformers", "DistilBERT"],
     github: "https://github.com/EyobelG/ai201-project3-takemeter-starter-v2026",
-    impact: "An end-to-end fine-tuning loop on a small, self-labeled dataset — from taxonomy design through confusion-matrix diagnosis to a measured second improvement."
+    impact: "An end-to-end fine-tuning loop on a small, self-labeled dataset - from taxonomy design through confusion-matrix diagnosis to a measured second improvement."
   },
   {
     id: "proj-19",
@@ -512,31 +512,31 @@ export const PROJECTS_DATA: Project[] = [
     description: "A Flask API that scores submitted text for likely AI authorship by combining three independent signals, engineered so disagreement between signals pulls the verdict toward “unsure” rather than a false-confident guess. Built for CodePath's AI Engineering (AI 201) coursework.",
     details: [
       "Three signals score each submission 0–1: GPT-2 perplexity (model signal), sentence-length variance/type-token ratio/punctuation density (stylometric signal), and distance from a generic function-word/word-length center (lexical signal, stretch).",
-      "scoring.combine_signals takes a weighted average rather than a veto, so two disagreeing signals pull the combined score toward 0.5 (“unsure”) — the label that costs a writer nothing — instead of forcing a confident wrong call.",
+      "scoring.combine_signals takes a weighted average rather than a veto, so two disagreeing signals pull the combined score toward 0.5 (“unsure”) - the label that costs a writer nothing - instead of forcing a confident wrong call.",
       "Routes for /submit, /appeal, and /verify (verified-human credential), with every decision logged to an audit trail and rate limiting against repeated attack probing.",
-      "Refactored validation in response to grader feedback — deduped three near-identical checks into shared helpers, centralized tunables, and added tests."
+      "Refactored validation in response to grader feedback - deduped three near-identical checks into shared helpers, centralized tunables, and added tests."
     ],
     tech: ["Python", "Flask", "GPT-2", "Stylometry", "NLP"],
     github: "https://github.com/EyobelG/ai201-project4-provenance-guard-starter-v2026",
-    impact: "Makes the blind spots of each AI-detection signal explicit — and treats signal disagreement as a real uncertainty finding, not noise to average away."
+    impact: "Makes the blind spots of each AI-detection signal explicit - and treats signal disagreement as a real uncertainty finding, not noise to average away."
   }
 ];
 
 export const EXPERIENCE_DATA: Experience[] = [
   {
     id: "exp-scoop",
-    role: "Core Model Engineer — SCOOP Carbon Accounting",
+    role: "Core Model Engineer - SCOOP Carbon Accounting",
     organization: "Tufts Auster Center for Applied Innovation and Research",
     location: "Medford, MA (Hybrid)",
     period: "September 2026 – Present",
     type: "Engineering",
     logoKey: "SCOOP",
     bullets: [
-      "Core Model Engineer on SCOOP (Sustainable Carbon Options with Open Protocols), the Auster Center's Environmental Innovation initiative building the missing accounting infrastructure for carbon markets — a general liability-and-asset MMRV (Measurement, Monitoring, Reporting, and Validation) framework.",
+      "Core Model Engineer on SCOOP (Sustainable Carbon Options with Open Protocols), the Auster Center's Environmental Innovation initiative building the missing accounting infrastructure for carbon markets - a general liability-and-asset MMRV (Measurement, Monitoring, Reporting, and Validation) framework.",
       "Designing the SCOOP core model stack with the Data Engineering and Impact Network teams: cloud-based transformation and normalization of carbon claims and emissions across the carbon data supply chain, so credits can be compared, restated, and traced back to their dynamic physical origin.",
-      "Mapping requirements against the SCOOP principles — interoperability, measurable externalities, verifiability, decentralization, privacy, scalability, and traceability — and instantiating the IEEE P7802 standard incrementally through prototypes with carbon project owners, raters, registries, and market makers.",
+      "Mapping requirements against the SCOOP principles - interoperability, measurable externalities, verifiability, decentralization, privacy, scalability, and traceability - and instantiating the IEEE P7802 standard incrementally through prototypes with carbon project owners, raters, registries, and market makers.",
       "Building and testing core model instances for reuse at scale (high processing volumes) and scope (multiple industries measuring claims, offsets, verifications, registries, and settlements), including API and self-service architecture for corporate and academic developers, policy makers, and auditors.",
-      "Evaluating and selecting tooling with the data engineering team — ETL and data movement, privacy and blockchain primitives, AI-assisted development — plus secure code versioning, DevOps, and threat modeling for the platform."
+      "Evaluating and selecting tooling with the data engineering team - ETL and data movement, privacy and blockchain primitives, AI-assisted development - plus secure code versioning, DevOps, and threat modeling for the platform."
     ],
     skills: ["Software Architecture", "API Development", "Python", "Cloud (AWS/GCP/Azure)", "Data Modeling", "ETL", "Secure Coding", "DevOps", "Carbon Accounting", "IEEE P7802"]
   },
@@ -563,7 +563,7 @@ export const EXPERIENCE_DATA: Experience[] = [
     type: "Teaching",
     bullets: [
       "Served as a full-time mathematics instructor responsible for teaching AP Calculus BC (2 sections), Linear Algebra, and Integrated Math 3.",
-      "Co-taught 'Innovation and Impact'—a project-based class encouraging students to design community-driven solutions mapped to UN Sustainable Goals.",
+      "Co-taught 'Innovation and Impact' - a project-based class encouraging students to design community-driven solutions mapped to UN Sustainable Goals.",
       "Applied Project-Based Learning (PBL) and Competency-Based Learning (CBL) to stimulate deep mathematical reasoning and application.",
       "Facilitated the Outdoor Sports Club twice a week, leading recreational hiking, climbing, and running excursions."
     ],

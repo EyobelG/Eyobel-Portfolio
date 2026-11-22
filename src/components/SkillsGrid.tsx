@@ -1033,7 +1033,7 @@ export default function SkillsGrid() {
         isOpen={certViewerOpen}
         onClose={() => setCertViewerOpen(false)}
         pdfUrl="/certificates/codepath-certificate.pdf"
-        title="Certificate of Achievement — Advanced Technical Interview Prep"
+        title="Certificate of Achievement - Advanced Technical Interview Prep"
         issuer="CodePath.org"
       />
     </div>

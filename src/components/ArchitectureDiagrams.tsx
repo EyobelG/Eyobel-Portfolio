@@ -44,7 +44,7 @@ function InboundDiagram() {
       caption={
         <>
           <b className="text-charcoal font-semibold">Inbound.</b> Authorization is enforced at the database, not in
-          application code — 22 RLS policies evaluate every query inside the boundary, so a forgotten check in one
+          application code - 22 RLS policies evaluate every query inside the boundary, so a forgotten check in one
           route can't leak a row. Map tiles carry no user data, so they skip the backend entirely for latency.
         </>
       }
@@ -69,7 +69,7 @@ function InboundDiagram() {
 
       <rect x="40" y="320" width="340" height="120" rx="10" className="text-tufts-blue" fill="currentColor" fillOpacity={0.08} stroke="currentColor" strokeWidth="1.6" />
       <text x="58" y="342" fontSize="10" fontWeight={700} className="text-tufts-blue" fill="currentColor" letterSpacing="0.06em">RLS BOUNDARY</text>
-      <text x="210" y="368" textAnchor="middle" fontSize="12.5" fontWeight={600} fill="currentColor">Cloud SQL — Postgres + PostGIS</text>
+      <text x="210" y="368" textAnchor="middle" fontSize="12.5" fontWeight={600} fill="currentColor">Cloud SQL - Postgres + PostGIS</text>
       <text x="210" y="388" textAnchor="middle" fontSize="10.5" fill="currentColor" opacity={0.65}>22 RLS policies · 11 tables · GiST indexes</text>
       <text x="210" y="420" textAnchor="middle" fontSize="10" className="text-tufts-blue" fill="currentColor">a row you don't own simply isn't returned</text>
       <line x1="210" y1="264" x2="210" y2="318" className="text-tufts-blue" stroke="currentColor" strokeWidth="2" markerEnd="url(#arch-arrow)" />
@@ -95,14 +95,14 @@ function QuantFolioDiagram() {
         <>
           <b className="text-charcoal font-semibold">QuantFolio.</b> The backtest engine produces an opinion across
           six allocation rules; it never gets a write path. The <b className="text-charcoal font-semibold">diff engine</b> is
-          the one component with access to place a real Alpaca order — and it only ever writes the gap between target
+          the one component with access to place a real Alpaca order - and it only ever writes the gap between target
           and live positions, never the raw model output.
         </>
       }
     >
       {arrow}
       <rect x="15" y="15" width="330" height="175" rx="10" fill="none" stroke="currentColor" strokeDasharray="3 4" strokeWidth="1.1" opacity={0.5} />
-      <text x="30" y="34" fontSize="9.5" letterSpacing="0.06em" fill="currentColor" opacity={0.55}>OFFLINE — HISTORICAL ONLY</text>
+      <text x="30" y="34" fontSize="9.5" letterSpacing="0.06em" fill="currentColor" opacity={0.55}>OFFLINE - HISTORICAL ONLY</text>
 
       <rect x="34" y="50" width="135" height="44" rx="8" fill="none" stroke="currentColor" strokeWidth="1.5" />
       <text x="101" y="76" textAnchor="middle" fontSize="11.5" fontWeight={600} fill="currentColor">Market data</text>
@@ -117,7 +117,7 @@ function QuantFolioDiagram() {
       <line x1="296" y1="153" x2="400" y2="153" className="text-tufts-blue" stroke="currentColor" strokeWidth="2" markerEnd="url(#arch-arrow)" />
 
       <rect x="402" y="15" width="340" height="175" rx="10" className="text-tufts-blue" fill="currentColor" fillOpacity={0.07} stroke="currentColor" strokeWidth="1.5" />
-      <text x="418" y="34" fontSize="9.5" letterSpacing="0.06em" className="text-tufts-blue" fill="currentColor">LIVE — TOUCHES REAL ACCOUNT</text>
+      <text x="418" y="34" fontSize="9.5" letterSpacing="0.06em" className="text-tufts-blue" fill="currentColor">LIVE - TOUCHES REAL ACCOUNT</text>
 
       <rect x="570" y="50" width="150" height="44" rx="8" fill="none" className="text-tufts-blue" stroke="currentColor" strokeWidth="1.5" />
       <text x="645" y="76" textAnchor="middle" fontSize="11.5" fontWeight={600} fill="currentColor">Alpaca account</text>
@@ -128,7 +128,7 @@ function QuantFolioDiagram() {
       <line x1="630" y1="150" x2="672" y2="136" className="text-tufts-blue" stroke="currentColor" strokeWidth="1.6" markerEnd="url(#arch-arrow)" />
       <text x="700" y="124" textAnchor="middle" fontSize="9" className="text-tufts-blue" fill="currentColor">order</text>
 
-      <text x="34" y="225" fontSize="10" fill="currentColor" opacity={0.6}>Nothing offline can place an order — the diff engine is</text>
+      <text x="34" y="225" fontSize="10" fill="currentColor" opacity={0.6}>Nothing offline can place an order - the diff engine is</text>
       <text x="34" y="242" fontSize="10" fill="currentColor" opacity={0.6}>the only write path, and it only ever writes the gap.</text>
     </Diagram>
   );
@@ -142,7 +142,7 @@ function CoReadDiagram() {
       caption={
         <>
           <b className="text-charcoal font-semibold">CoRead.</b> The trust boundary is the file parser, not the
-          server — an EPUB is attacker-controlled XML inside a ZIP, sanitized client-side before anything reaches the
+          server - an EPUB is attacker-controlled XML inside a ZIP, sanitized client-side before anything reaches the
           DOM. Room access is a separate concern: RLS decides who can read, and a race-safe DB trigger (not an
           app-code check) stops two simultaneous joins from overshooting the plan limit.
         </>
