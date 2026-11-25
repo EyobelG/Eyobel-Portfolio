@@ -5,6 +5,7 @@ import { ExternalLink, Terminal, Cpu, Database, ChevronRight, X, ArrowRight, Lay
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, type Variants } from "motion/react";
 import ProjectSimulator from "./ProjectSimulator";
 import ScoopWordmark from "./ScoopWordmark";
+import GlareHover from "./react-bits/GlareHover";
 import { type ProjectSceneVariant } from "./three/ProjectScene3D";
 
 const ProjectScene3D = React.lazy(() => import("./three/ProjectScene3D"));
@@ -83,6 +84,19 @@ function ProjectCard({
     >
       {/* Corner Decorative Accent */}
       <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-cream-card-sub to-transparent opacity-40 group-hover:from-williams-gold/10 transition-all pointer-events-none" />
+
+      {/* Ambient shine loop (react-bits GlareHover), decorative only — never intercepts clicks/tilt */}
+      <GlareHover
+        mode="loop"
+        variant="sheen"
+        interval={6}
+        rimGlint={false}
+        glareOpacity={0.3}
+        width="100%"
+        height="100%"
+        borderRadius="1rem"
+        style={{ position: "absolute", inset: 0, pointerEvents: "none", border: "none", zIndex: 1 }}
+      />
 
       {project.image && (
         <div className="-mx-6 -mt-6 mb-4 h-36 overflow-hidden rounded-t-2xl border-b-2 border-cream-border">

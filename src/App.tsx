@@ -42,6 +42,8 @@ import AccentPicker from "./components/AccentPicker";
 const HeroScene3D = React.lazy(() => import("./components/three/HeroScene3D"));
 import PersonalChatbot from "./components/PersonalChatbot";
 import PhotoGallery from "./components/PhotoGallery";
+import ScrollProgressBar from "./components/ScrollProgressBar";
+import VantaBackground from "./components/VantaBackground";
 
 function BrandLogo({ size = "large" }: { size?: "small" | "large" }) {
   const containerClasses = size === "large" 
@@ -124,6 +126,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-cream-bg flex flex-col lg:flex-row relative">
+      <ScrollProgressBar />
       {/* MOBILE MENU HEADER */}
       <header className="lg:hidden sticky top-0 z-40 bg-zinc-100/70 dark:bg-zinc-950/75 backdrop-blur-xl text-charcoal px-5 py-4 flex items-center justify-between border-b border-cream-border shadow-md">
         <div className="flex items-center space-x-2.5">
@@ -536,19 +539,24 @@ export default function App() {
 
           {/* SECTION 5: TIMELINE */}
           <section id="timeline" className="scroll-mt-24 border-t border-cream-border/60 pt-16 space-y-6">
-            <div className="flex items-center space-x-4 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-tufts-blue/5 border border-tufts-blue/10 flex items-center justify-center text-tufts-blue">
-                <GraduationCap className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold"><ScrambleText text="Section 05" revealEvery={1} /></span>
-                <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
-                  <BlurWords text="Chronological Journey &amp; Pedagogy" />
-                </h3>
+            <div className="relative h-40 -mt-4 mb-2 rounded-2xl overflow-hidden flex items-center px-6">
+              <VantaBackground />
+              <div className="relative flex items-center space-x-4">
+                <div className="w-10 h-10 rounded-xl bg-tufts-blue/5 border border-tufts-blue/10 flex items-center justify-center text-tufts-blue">
+                  <GraduationCap className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold"><ScrambleText text="Section 05" revealEvery={1} /></span>
+                  <h3 className="font-serif text-2xl lg:text-3xl font-semibold text-charcoal tracking-tight leading-tight">
+                    <BlurWords text="Chronological Journey &amp; Pedagogy" />
+                  </h3>
+                </div>
               </div>
             </div>
 
-            <ExperienceTimeline />
+            <div className="relative">
+              <ExperienceTimeline />
+            </div>
           </section>
 
           {/* SECTION 6: SKILLS */}
