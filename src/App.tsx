@@ -37,6 +37,7 @@ import ExperienceTimeline from "./components/ExperienceTimeline";
 import SkillsGrid from "./components/SkillsGrid";
 import InteractivePortrait from "./components/InteractivePortrait";
 import HeroWireframe from "./components/HeroWireframe";
+import FlowFieldBackground from "./components/FlowFieldBackground";
 import AccentPicker from "./components/AccentPicker";
 
 const HeroScene3D = React.lazy(() => import("./components/three/HeroScene3D"));
@@ -341,6 +342,10 @@ export default function App() {
       <main className="flex-1 overflow-x-hidden">
         {/* Banner Highlight Container */}
         <div className="relative bg-gradient-to-r from-zinc-200/50 via-zinc-100/30 to-zinc-50/25 dark:from-zinc-900/30 dark:via-zinc-950/20 dark:to-zinc-950/10 border-b border-cream-border py-12 px-6 lg:px-12 xl:px-16 overflow-hidden">
+          {/* Flow-field particle drift beneath the WebGL geometry */}
+          <div className="absolute inset-0 pointer-events-none">
+            <FlowFieldBackground />
+          </div>
           {/* WebGL hero backdrop: floating 3D geometry reacting to the cursor */}
           <div className="absolute inset-0 pointer-events-none">
             <React.Suspense fallback={null}>
