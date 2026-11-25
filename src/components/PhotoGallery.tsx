@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
-import { motion, AnimatePresence, useMotionValue } from "motion/react";
+import { motion, AnimatePresence, useMotionValue, useReducedMotion } from "motion/react";
 import { PHOTOS_DATA } from "../data";
 import type { Photo } from "../types";
 
@@ -29,6 +29,7 @@ export default function PhotoGallery() {
   const [flipLeaf, setFlipLeaf] = useState<{ photo: Photo; dir: 1 | -1; key: number } | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const flipCounter = useRef(0);
+  const reduceMotion = useReducedMotion();
 
   const go = useCallback(
     (dir: 1 | -1) => {
@@ -78,6 +79,24 @@ export default function PhotoGallery() {
             style={{ transformStyle: "preserve-3d" }}
           >
             <Page photo={current} className="shadow-2xl border border-cream-border" />
+            {/* Corner-peel hint: lifts the top-right edge on hover to tease the page turn */}
+            {!flipLeaf && !reduceMotion && (
+              <div
+                aria-hidden="true"
+                className="absolute top-0 right-0 w-16 h-16 pointer-events-none transition-transform duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:[transform:rotateY(-22deg)_rotateX(6deg)]"
+                style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)", transformOrigin: "100% 0%" }}
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: under1.type === "video" ? undefined : `url(${under1.src})`,
+                    backgroundSize: "400% 400%",
+                    backgroundPosition: "top right",
+                    boxShadow: "-4px 4px 10px rgba(0,0,0,0.3)"
+                  }}
+                />
+              </div>
+            )}
             <span className="absolute top-3 right-3 p-2 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
               <Maximize2 className="w-4 h-4" />
             </span>
