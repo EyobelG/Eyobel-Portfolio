@@ -86,7 +86,7 @@ export const EDUCATION_DATA: Education[] = [
     details: [
       "Admitted to an intensive, highly selective algorithmic problem-solving program focused on complex data structures, algorithms, and technical evaluation methods.",
       "Engineered optimized software solutions weekly, analyzing runtime complexity benchmarks (Big O, space-time trade-offs).",
-      "Completed the AI Engineering pathway (AI 201) with a 100% grade and extra credit; certificate pending (expected Dec 2026)."
+      "Completed the AI Engineering pathway (AI 201) with a 100% grade and extra credit; certificate conferred."
     ]
   },
   {
@@ -761,6 +761,12 @@ export const SKILLS_DATA = {
 };
 
 export const CERTIFICATIONS: Certification[] = [
+  {
+    name: "AI Engineering (AI 201) Certificate",
+    provider: "CodePath",
+    date: "Dec 2026",
+    link: "https://certificates.codepath.org/37d4e4fe-b1d7-4d17-a3b6-25ecee55d7c5.pdf"
+  },
   {
     name: "Go (Intermediate) Certificate",
     provider: "HackerRank",
