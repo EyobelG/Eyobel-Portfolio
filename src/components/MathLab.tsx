@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Play, Pause, RotateCcw, Network, Shuffle, Plus, Minus, Info, Zap, Sigma } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 interface Node {
   id: number;
@@ -22,16 +22,21 @@ interface GraphTemplate {
   defaultChips: number[];
 }
 
+const BOARD_W = 400;
+const BOARD_H = 350;
+const MAX_VISIBLE_CHIPS = 9;
+const CHIP_Z_STEP = 5.5;
+
 const TEMPLATES: GraphTemplate[] = [
   {
     name: "Cycle Graph (C₅)",
     description: "A symmetric ring of 5 vertices. Excellent for seeing circular flow.",
     nodes: [
-      { id: 0, label: "v₁", x: 200, y: 55 },
-      { id: 1, label: "v₂", x: 310, y: 135 },
-      { id: 2, label: "v₃", x: 270, y: 265 },
-      { id: 3, label: "v₄", x: 130, y: 265 },
-      { id: 4, label: "v₅", x: 90, y: 135 },
+      { id: 0, label: "v₁", x: 200, y: 65 },
+      { id: 1, label: "v₂", x: 312, y: 145 },
+      { id: 2, label: "v₃", x: 270, y: 268 },
+      { id: 3, label: "v₄", x: 130, y: 268 },
+      { id: 4, label: "v₅", x: 88, y: 145 },
     ],
     edges: [
       { source: 0, target: 1 },
@@ -46,11 +51,11 @@ const TEMPLATES: GraphTemplate[] = [
     name: "Star Graph (S₅)",
     description: "A central hub connected to 4 leaf nodes. Firing here sends chips outwards.",
     nodes: [
-      { id: 0, label: "Hub", x: 200, y: 165 },
-      { id: 1, label: "Leaf A", x: 200, y: 55 },
-      { id: 2, label: "Leaf B", x: 310, y: 165 },
-      { id: 3, label: "Leaf C", x: 200, y: 275 },
-      { id: 4, label: "Leaf D", x: 90, y: 165 },
+      { id: 0, label: "Hub", x: 200, y: 170 },
+      { id: 1, label: "Leaf A", x: 200, y: 62 },
+      { id: 2, label: "Leaf B", x: 312, y: 170 },
+      { id: 3, label: "Leaf C", x: 200, y: 278 },
+      { id: 4, label: "Leaf D", x: 88, y: 170 },
     ],
     edges: [
       { source: 0, target: 1 },
@@ -64,11 +69,11 @@ const TEMPLATES: GraphTemplate[] = [
     name: "House Graph",
     description: "A classical 5-vertex graph combining a triangle roof and square base.",
     nodes: [
-      { id: 0, label: "v₁ (Apex)", x: 200, y: 55 },
-      { id: 1, label: "v₂ (R-Roof)", x: 290, y: 135 },
-      { id: 2, label: "v₃ (R-Base)", x: 290, y: 255 },
-      { id: 3, label: "v₄ (L-Base)", x: 110, y: 255 },
-      { id: 4, label: "v₅ (L-Roof)", x: 110, y: 135 },
+      { id: 0, label: "v₁ (Apex)", x: 200, y: 62 },
+      { id: 1, label: "v₂ (R-Roof)", x: 292, y: 142 },
+      { id: 2, label: "v₃ (R-Base)", x: 292, y: 262 },
+      { id: 3, label: "v₄ (L-Base)", x: 108, y: 262 },
+      { id: 4, label: "v₅ (L-Roof)", x: 108, y: 142 },
     ],
     edges: [
       { source: 0, target: 1 },
@@ -84,10 +89,10 @@ const TEMPLATES: GraphTemplate[] = [
     name: "Complete Graph (K₄)",
     description: "Four vertices where every single node is connected to every other node.",
     nodes: [
-      { id: 0, label: "v₁", x: 120, y: 80 },
-      { id: 1, label: "v₂", x: 280, y: 80 },
-      { id: 2, label: "v₃", x: 280, y: 240 },
-      { id: 3, label: "v₄", x: 120, y: 240 },
+      { id: 0, label: "v₁", x: 120, y: 86 },
+      { id: 1, label: "v₂", x: 280, y: 86 },
+      { id: 2, label: "v₃", x: 280, y: 248 },
+      { id: 3, label: "v₄", x: 120, y: 248 },
     ],
     edges: [
       { source: 0, target: 1 },
@@ -101,13 +106,15 @@ const TEMPLATES: GraphTemplate[] = [
   },
 ];
 
-interface Particle {
+interface EnergyPacket {
   id: string;
-  nodeId: number;
+  sourceId: number;
+  targetId: number;
   fromX: number;
   fromY: number;
   toX: number;
   toY: number;
+  launchZ: number;
 }
 
 interface Impact {
@@ -120,7 +127,7 @@ interface Impact {
 function StatNumber({ value, className }: { value: number | string; className?: string }) {
   const reduce = useReducedMotion();
   return (
-    <span className="relative inline-grid overflow-hidden">
+    <span className="relative inline-grid overflow-hidden tabular-nums">
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={value}
@@ -137,6 +144,95 @@ function StatNumber({ value, className }: { value: number | string; className?: 
   );
 }
 
+/** Single 3D-styled metallic Liquid Gold poker chip token rising along the Z-axis. */
+function GoldPokerChip({
+  index,
+  isTop,
+  totalCount,
+  unstable,
+  reduceMotion,
+}: {
+  index: number;
+  isTop: boolean;
+  totalCount: number;
+  unstable: boolean;
+  reduceMotion: boolean | null;
+}) {
+  const zHeight = 5 + index * CHIP_Z_STEP;
+
+  return (
+    <motion.div
+      initial={
+        reduceMotion
+          ? { opacity: 1 }
+          : { opacity: 0, scale: 0.65, z: zHeight + 26 }
+      }
+      animate={{
+        opacity: 1,
+        scale: 1,
+        z: zHeight,
+      }}
+      exit={
+        reduceMotion
+          ? { opacity: 0 }
+          : { opacity: 0, scale: 0.72, z: zHeight + 18 }
+      }
+      transition={
+        reduceMotion
+          ? { duration: 0 }
+          : { type: "spring", stiffness: 420, damping: 24, mass: 0.65 }
+      }
+      style={{
+        position: "absolute",
+        inset: 0,
+        transformStyle: "preserve-3d",
+      }}
+      className="pointer-events-none flex items-center justify-center"
+    >
+      {/* Physical metallic poker-style chip disc */}
+      <div
+        className="w-10 h-10 rounded-full relative flex items-center justify-center"
+        style={{
+          background: isTop
+            ? unstable
+              ? "radial-gradient(circle at 32% 28%, #FEF9C3 0%, #FBBF24 38%, #F59E0B 72%, #B45309 100%)"
+              : "radial-gradient(circle at 32% 28%, #FDE68A 0%, #F59E0B 52%, #B45309 88%, #78350F 100%)"
+            : "linear-gradient(180deg, #F59E0B 0%, #B45309 65%, #78350F 100%)",
+          boxShadow: isTop
+            ? unstable
+              ? "inset 0 1.5px 2px rgba(255,255,255,0.75), inset 0 -2px 3px rgba(120,53,15,0.7), 0 2px 0 #92400E, 0 3.5px 0 #78350F, 0 6px 14px rgba(245,158,11,0.45)"
+              : "inset 0 1.5px 2px rgba(255,255,255,0.55), inset 0 -2px 3px rgba(120,53,15,0.75), 0 2px 0 #92400E, 0 3.5px 0 #78350F, 0 5px 10px rgba(0,0,0,0.65)"
+            : "0 2px 0 #92400E, 0 3.5px 0 #451A03, 0 4px 7px rgba(0,0,0,0.5)",
+          border: "1.5px solid rgba(254, 243, 199, 0.55)",
+        }}
+      >
+        {/* Classic notched poker-chip inner milled inlay ring */}
+        <div
+          className="w-[30px] h-[30px] rounded-full flex items-center justify-center"
+          style={{
+            border: "1.5px dashed rgba(120, 53, 15, 0.55)",
+            background: isTop
+              ? "radial-gradient(circle at 38% 35%, rgba(255,251,235,0.45), rgba(217,119,6,0.18) 70%)"
+              : "transparent",
+          }}
+        >
+          {isTop && (
+            <span
+              className="font-mono text-[13px] font-extrabold leading-none tabular-nums select-none"
+              style={{
+                color: "#1C1003",
+                textShadow: "0 1px 0 rgba(254, 243, 199, 0.65)",
+              }}
+            >
+              {totalCount}
+            </span>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function MathLab() {
   const reduceMotion = useReducedMotion();
   const [templateIdx, setTemplateIdx] = useState(0);
@@ -146,12 +242,32 @@ export default function MathLab() {
   const [fireVector, setFireVector] = useState<number[]>([]);
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [particles, setParticles] = useState<Particle[]>([]);
+  const [packets, setPackets] = useState<EnergyPacket[]>([]);
   const [impacts, setImpacts] = useState<Impact[]>([]);
   const [fireCount, setFireCount] = useState(0);
   const [justFired, setJustFired] = useState<{ id: number; key: number } | null>(null);
   const fireKeyRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Subtle interactive 2.5D board tilt on pointer move (keeps perspective(1000px) alive & tactile)
+  const boardContainerRef = useRef<HTMLDivElement>(null);
+  const pointerX = useMotionValue(0.5);
+  const pointerY = useMotionValue(0.5);
+  const boardTiltX = useSpring(useTransform(pointerY, [0, 1], [31, 21]), { stiffness: 200, damping: 26 });
+  const boardTiltY = useSpring(useTransform(pointerX, [0, 1], [-5, 5]), { stiffness: 200, damping: 26 });
+
+  const handleBoardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduceMotion) return;
+    const rect = boardContainerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    pointerX.set((e.clientX - rect.left) / rect.width);
+    pointerY.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const handleBoardMouseLeave = () => {
+    pointerX.set(0.5);
+    pointerY.set(0.5);
+  };
 
   // Initialize chips / firing vector for the selected topology
   useEffect(() => {
@@ -159,7 +275,7 @@ export default function MathLab() {
     setFireVector(new Array(currentTemplate.nodes.length).fill(0));
     setSelectedNode(null);
     setFireCount(0);
-    setParticles([]);
+    setPackets([]);
     setImpacts([]);
     if (isPlaying) {
       setIsPlaying(false);
@@ -210,20 +326,23 @@ export default function MathLab() {
     const neighbors = getNeighbors(nodeId);
     const sourceNode = currentTemplate.nodes.find((n) => n.id === nodeId)!;
     const stamp = Date.now();
+    const launchStackHeight = Math.min(chips[nodeId], MAX_VISIBLE_CHIPS) * CHIP_Z_STEP + 10;
 
-    const newParticles: Particle[] = neighbors.map((nId, idx) => {
+    const newPackets: EnergyPacket[] = neighbors.map((nId, idx) => {
       const targetNode = currentTemplate.nodes.find((n) => n.id === nId)!;
       return {
         id: `p-${nodeId}-${nId}-${stamp}-${idx}`,
-        nodeId: nId,
+        sourceId: nodeId,
+        targetId: nId,
         fromX: sourceNode.x,
         fromY: sourceNode.y,
         toX: targetNode.x,
         toY: targetNode.y,
+        launchZ: launchStackHeight,
       };
     });
 
-    setParticles((prev) => [...prev, ...newParticles]);
+    setPackets((prev) => [...prev, ...newPackets]);
     fireKeyRef.current += 1;
     setJustFired({ id: nodeId, key: fireKeyRef.current });
 
@@ -244,19 +363,19 @@ export default function MathLab() {
 
     setFireCount((prev) => prev + 1);
 
-    const travelMs = reduceMotion ? 0 : 550;
+    const travelMs = reduceMotion ? 0 : 540;
 
     setTimeout(() => {
-      setParticles((prev) => prev.filter((p) => !newParticles.some((np) => np.id === p.id)));
+      setPackets((prev) => prev.filter((p) => !newPackets.some((np) => np.id === p.id)));
       setImpacts((prev) => [
         ...prev,
-        ...newParticles.map((p) => ({ id: `impact-${p.id}`, x: p.toX, y: p.toY })),
+        ...newPackets.map((p) => ({ id: `impact-${p.id}`, x: p.toX, y: p.toY })),
       ]);
       setTimeout(() => {
         setImpacts((prev) =>
-          prev.filter((im) => !newParticles.some((np) => `impact-${np.id}` === im.id))
+          prev.filter((im) => !newPackets.some((np) => `impact-${np.id}` === im.id))
         );
-      }, 380);
+      }, 480);
     }, travelMs);
   };
 
@@ -276,7 +395,7 @@ export default function MathLab() {
         } else {
           setIsPlaying(false);
         }
-      }, 800);
+      }, 820);
     } else {
       if (timerRef.current) {
         clearInterval(timerRef.current);
@@ -413,7 +532,7 @@ export default function MathLab() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="px-2.5 py-1 rounded-full font-bold flex items-center gap-1.5"
-                  style={{ background: "rgba(251,191,36,0.12)", color: "var(--williams-gold)", border: "1px solid rgba(251,191,36,0.3)" }}
+                  style={{ background: "rgba(245,158,11,0.14)", color: "var(--williams-gold)", border: "1px solid rgba(245,158,11,0.35)" }}
                 >
                   <Zap className="w-3 h-3" />
                   Cascade Ready
@@ -424,7 +543,7 @@ export default function MathLab() {
 
           <div className="flex justify-between items-center text-xs font-mono">
             <span className="text-charcoal-light font-medium">Total Fires Executed:</span>
-            <span className="font-bold text-williams-gold bg-williams-purple/30 border border-williams-gold/20 px-2.5 py-1 rounded-lg min-w-[2.25rem] text-center">
+            <span className="font-bold text-williams-gold bg-williams-purple/30 border border-williams-gold/25 px-2.5 py-1 rounded-lg min-w-[2.25rem] text-center">
               <StatNumber value={fireCount} />
             </span>
           </div>
@@ -445,7 +564,7 @@ export default function MathLab() {
                 <span className="font-mono text-xs font-bold text-williams-gold">
                   Node {currentTemplate.nodes[selectedNode].label}
                 </span>
-                <span className="block text-[10px] text-charcoal-light">
+                <span className="block text-[10px] text-charcoal-light tabular-nums">
                   Degree: {getDegree(selectedNode)} | Chips: {chips[selectedNode]} | Fired: {fireVector[selectedNode] ?? 0}×
                 </span>
               </div>
@@ -501,7 +620,7 @@ export default function MathLab() {
                           transition={reduceMotion ? { duration: 0 } : { type: "spring", duration: 0.5, bounce: 0 }}
                         />
                       </div>
-                      <span className="w-4 text-right text-charcoal font-semibold">{count}</span>
+                      <span className="w-4 text-right text-charcoal font-semibold tabular-nums">{count}</span>
                     </div>
                   );
                 })}
@@ -519,10 +638,10 @@ export default function MathLab() {
               className="flex items-center justify-center space-x-2 py-2.5 px-3 rounded-xl font-mono text-xs font-semibold transition-colors duration-200"
               style={
                 isPlaying
-                  ? { background: "#b45309", color: "#fff", border: "1px solid rgba(251,191,36,0.4)" }
+                  ? { background: "#b45309", color: "#fff", border: "1px solid rgba(245,158,11,0.45)" }
                   : stable
                   ? { background: "var(--color-cream-border)", color: "var(--color-charcoal)", opacity: 0.35, border: "1px solid var(--color-cream-border)", cursor: "not-allowed" }
-                  : { background: "var(--williams-purple)", color: "#fff", border: "1px solid rgba(251,191,36,0.4)" }
+                  : { background: "var(--williams-purple)", color: "#fff", border: "1px solid rgba(245,158,11,0.45)" }
               }
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -590,221 +709,383 @@ export default function MathLab() {
         </div>
       </div>
 
-      {/* Right Canvas Column */}
+      {/* Right 2.5D Spatial Graph Board Column */}
       <div
-        className="lg:col-span-7 flex flex-col items-center justify-center rounded-3xl p-6 relative min-h-[350px] border overflow-hidden"
+        ref={boardContainerRef}
+        onMouseMove={handleBoardMouseMove}
+        onMouseLeave={handleBoardMouseLeave}
+        className="lg:col-span-7 flex flex-col items-center justify-between rounded-3xl p-6 relative min-h-[430px] border overflow-hidden"
         style={{
-          background: "var(--color-cream-card)",
+          background:
+            "radial-gradient(ellipse at 50% 25%, rgba(124, 58, 237, 0.14) 0%, var(--color-cream-card) 62%)",
           borderColor: "var(--color-cream-border)",
-          boxShadow: "0 0 0 1px var(--color-cream-border), 0 24px 48px -24px rgba(0,0,0,0.4)",
+          boxShadow:
+            "inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 1px var(--color-cream-border), 0 28px 56px -24px rgba(0,0,0,0.65)",
         }}
       >
-        {/* Ambient dot-grid backdrop for depth */}
+        {/* Top 1px specular glass edge */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-40"
+          className="pointer-events-none absolute top-0 inset-x-12 h-px"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.45), rgba(124, 58, 237, 0.5), transparent)",
+          }}
+        />
+
+        {/* Ambient dot-grid backdrop */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-35"
           style={{
             backgroundImage: "radial-gradient(var(--color-cream-border-strong) 1px, transparent 1px)",
             backgroundSize: "22px 22px",
           }}
         />
 
-        {/* Graph Render */}
-        <div className="relative w-full max-w-[400px] aspect-square">
-          <svg viewBox="0 0 400 350" className="w-full h-full select-none overflow-visible">
-            <defs>
-              <radialGradient id="nodeUnstable" cx="35%" cy="30%" r="75%">
-                <stop offset="0%" style={{ stopColor: "var(--williams-gold-light)" }} />
-                <stop offset="100%" style={{ stopColor: "var(--williams-gold)" }} />
-              </radialGradient>
-              <radialGradient id="nodeIdle" cx="35%" cy="30%" r="75%">
-                <stop offset="0%" style={{ stopColor: "var(--color-cream-card-sub)" }} />
-                <stop offset="100%" style={{ stopColor: "var(--williams-purple-dark)", stopOpacity: 0.5 }} />
-              </radialGradient>
-              <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
-                <feGaussianBlur stdDeviation="4.5" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              <filter id="particleGlow" x="-150%" y="-150%" width="400%" height="400%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+        {/* 2.5D Perspective Stage (CSS perspective(1000px)) */}
+        <div
+          className="relative w-full flex-1 flex items-center justify-center py-4"
+          style={{ perspective: "1000px" }}
+        >
+          <motion.div
+            style={{
+              rotateX: reduceMotion ? 24 : boardTiltX,
+              rotateY: reduceMotion ? 0 : boardTiltY,
+              transformStyle: "preserve-3d",
+            }}
+            className="relative w-full max-w-[430px] aspect-[400/350] rounded-2xl"
+          >
+            {/* Physical beveled 2.5D Obsidian game board slab */}
+            <div
+              className="absolute inset-0 rounded-2xl pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(155deg, rgba(22, 20, 38, 0.92) 0%, rgba(10, 10, 15, 0.96) 100%)",
+                border: "1px solid rgba(124, 58, 237, 0.32)",
+                boxShadow:
+                  "inset 0 1px 0 rgba(255,255,255,0.14), 0 10px 0 rgba(18, 15, 32, 0.95), 0 12px 0 rgba(124, 58, 237, 0.28), 0 32px 48px -12px rgba(0,0,0,0.85)",
+                transform: "translateZ(-4px)",
+              }}
+            >
+              {/* Engraved geometric board grid */}
+              <div
+                className="absolute inset-3 rounded-xl opacity-25"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(to right, rgba(167, 139, 250, 0.25) 1px, transparent 1px), linear-gradient(to bottom, rgba(167, 139, 250, 0.25) 1px, transparent 1px)",
+                  backgroundSize: "28px 28px",
+                }}
+              />
+            </div>
 
-            {/* Draw Links */}
-            <g>
+            {/* Layer 1: Flush SVG Graph Edges on the 2.5D Board Plane */}
+            <svg
+              viewBox={`0 0 ${BOARD_W} ${BOARD_H}`}
+              className="absolute inset-0 w-full h-full select-none overflow-visible pointer-events-none"
+              style={{ transform: "translateZ(1px)" }}
+            >
+              <defs>
+                <linearGradient id="edgeSurgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#7C3AED" />
+                  <stop offset="50%" stopColor="#F59E0B" />
+                  <stop offset="100%" stopColor="#FDE68A" />
+                </linearGradient>
+                <filter id="edgeGlow" x="-40%" y="-40%" width="180%" height="180%">
+                  <feGaussianBlur stdDeviation="3.5" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
               {currentTemplate.edges.map((e, idx) => {
                 const sNode = currentTemplate.nodes.find((n) => n.id === e.source)!;
                 const tNode = currentTemplate.nodes.find((n) => n.id === e.target)!;
-                const isActive = particles.some(
+                const isActive = packets.some(
                   (p) =>
-                    (p.fromX === sNode.x && p.fromY === sNode.y && p.toX === tNode.x && p.toY === tNode.y) ||
-                    (p.fromX === tNode.x && p.fromY === tNode.y && p.toX === sNode.x && p.toY === sNode.y)
+                    (p.sourceId === e.source && p.targetId === e.target) ||
+                    (p.sourceId === e.target && p.targetId === e.source)
                 );
                 return (
                   <g key={`edge-${idx}`}>
+                    {/* Recessed dark conduit track */}
                     <line
                       x1={sNode.x}
                       y1={sNode.y}
                       x2={tNode.x}
                       y2={tNode.y}
-                      stroke="var(--color-cream-border-strong)"
-                      strokeWidth="3.5"
+                      stroke="rgba(124, 58, 237, 0.38)"
+                      strokeWidth="5"
                       strokeLinecap="round"
                     />
+                    {/* Crisp inner Electric Violet wire */}
+                    <line
+                      x1={sNode.x}
+                      y1={sNode.y}
+                      x2={tNode.x}
+                      y2={tNode.y}
+                      stroke="rgba(167, 139, 250, 0.55)"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                    />
+                    {/* Illuminated Liquid Gold energy conduit while packets travel */}
                     {isActive && (
                       <motion.line
                         x1={sNode.x}
                         y1={sNode.y}
                         x2={tNode.x}
                         y2={tNode.y}
-                        stroke="var(--williams-gold)"
-                        strokeWidth="3.5"
+                        stroke="url(#edgeSurgeGrad)"
+                        strokeWidth="4.5"
                         strokeLinecap="round"
+                        filter="url(#edgeGlow)"
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.55 }}
+                        animate={{ opacity: 0.95 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.16 }}
                       />
                     )}
                   </g>
                 );
               })}
-            </g>
+            </svg>
 
-            {/* Fired Particles Animation */}
-            <AnimatePresence>
-              {particles.map((p) => (
-                <motion.circle
-                  key={p.id}
-                  cx={p.fromX}
-                  cy={p.fromY}
-                  r="6"
-                  fill="var(--williams-gold-light)"
-                  filter="url(#particleGlow)"
-                  initial={reduceMotion ? { cx: p.toX, cy: p.toY } : { cx: p.fromX, cy: p.fromY, opacity: 0.4, scale: 0.6 }}
-                  animate={{ cx: p.toX, cy: p.toY, opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.4 }}
-                  transition={reduceMotion ? { duration: 0 } : { duration: 0.55, ease: [0.32, 0, 0.2, 1] }}
-                />
-              ))}
-            </AnimatePresence>
-
-            {/* Impact ripples where a chip just landed */}
+            {/* Layer 2: Spring-Physics Landing Ripples on the 2.5D Plane */}
             <AnimatePresence>
               {impacts.map((im) => (
-                <motion.circle
+                <motion.div
                   key={im.id}
-                  cx={im.x}
-                  cy={im.y}
-                  fill="none"
-                  stroke="var(--williams-gold)"
-                  strokeWidth="2"
-                  initial={{ r: 10, opacity: 0.6 }}
-                  animate={{ r: 26, opacity: 0 }}
+                  style={{
+                    position: "absolute",
+                    left: `${(im.x / BOARD_W) * 100}%`,
+                    top: `${(im.y / BOARD_H) * 100}%`,
+                    transformStyle: "preserve-3d",
+                    z: 4,
+                  }}
+                  initial={reduceMotion ? { opacity: 0 } : { x: "-50%", y: "-50%", scale: 0.55, opacity: 0.95 }}
+                  animate={{ x: "-50%", y: "-50%", scale: 2.35, opacity: 0 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.38, ease: "easeOut" }}
+                  transition={{ type: "spring", stiffness: 120, damping: 16, mass: 0.8 }}
+                  className="pointer-events-none w-12 h-12 rounded-full border-2 border-[#F59E0B] shadow-[0_0_20px_rgba(245,158,11,0.7)]"
                 />
               ))}
             </AnimatePresence>
 
-            {/* Draw Nodes */}
-            <g>
-              {currentTemplate.nodes.map((node) => {
-                const numChips = chips[node.id] || 0;
-                const deg = getDegree(node.id);
-                const unstable = numChips >= deg && deg > 0;
-                const isSelected = selectedNode === node.id;
-                const fired = justFired?.id === node.id;
-
-                return (
-                  <g
-                    key={`node-group-${node.id}`}
-                    transform={`translate(${node.x}, ${node.y})`}
-                    className="cursor-pointer"
-                    onClick={() => setSelectedNode(node.id)}
+            {/* Layer 3: Glowing Energy Packets Traveling Along Edges with Framer Motion Spring Physics */}
+            <AnimatePresence>
+              {packets.map((p) => (
+                <motion.div
+                  key={p.id}
+                  initial={
+                    reduceMotion
+                      ? {
+                          left: `${(p.toX / BOARD_W) * 100}%`,
+                          top: `${(p.toY / BOARD_H) * 100}%`,
+                          z: 18,
+                          opacity: 1,
+                          scale: 1,
+                        }
+                      : {
+                          left: `${(p.fromX / BOARD_W) * 100}%`,
+                          top: `${(p.fromY / BOARD_H) * 100}%`,
+                          z: p.launchZ,
+                          opacity: 0.4,
+                          scale: 0.65,
+                        }
+                  }
+                  animate={{
+                    left: `${(p.toX / BOARD_W) * 100}%`,
+                    top: `${(p.toY / BOARD_H) * 100}%`,
+                    z: 22,
+                    opacity: 1,
+                    scale: 1.15,
+                  }}
+                  exit={{ opacity: 0, scale: 0.4 }}
+                  transition={
+                    reduceMotion
+                      ? { duration: 0 }
+                      : {
+                          type: "spring",
+                          stiffness: 165,
+                          damping: 18,
+                          mass: 0.8,
+                        }
+                  }
+                  style={{
+                    position: "absolute",
+                    x: "-50%",
+                    y: "-50%",
+                    transformStyle: "preserve-3d",
+                  }}
+                  className="pointer-events-none z-30"
+                >
+                  {/* Outer Electric Violet / Liquid Gold aura */}
+                  <div
+                    className="w-5 h-5 rounded-full flex items-center justify-center"
+                    style={{
+                      background:
+                        "radial-gradient(circle, #FEF3C7 0%, #F59E0B 45%, rgba(124,58,237,0.75) 75%, transparent 100%)",
+                      boxShadow:
+                        "0 0 14px 3px rgba(245, 158, 11, 0.85), 0 0 24px 6px rgba(124, 58, 237, 0.55)",
+                    }}
                   >
-                    {/* One-shot fire flash ring (not a continuous loop) */}
-                    <AnimatePresence>
-                      {fired && (
-                        <motion.circle
-                          key={justFired?.key}
-                          r="21"
-                          fill="none"
-                          stroke="var(--williams-gold)"
-                          strokeWidth="2.5"
-                          initial={{ scale: 1, opacity: 0.8 }}
-                          animate={{ scale: 1.7, opacity: 0 }}
-                          transition={{ duration: 0.45, ease: "easeOut" }}
-                          onAnimationComplete={() => setJustFired((prev) => (prev?.key === justFired?.key ? null : prev))}
+                    <div className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#fff]" />
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
+            {/* Layer 4: Interactive 3D Vertices with Rising Metallic Gold Stacked Poker Chips */}
+            {currentTemplate.nodes.map((node) => {
+              const numChips = chips[node.id] || 0;
+              const deg = getDegree(node.id);
+              const unstable = numChips >= deg && deg > 0;
+              const isSelected = selectedNode === node.id;
+              const fired = justFired?.id === node.id;
+              const visibleChips = Math.min(numChips, MAX_VISIBLE_CHIPS);
+              const stackTopZ = visibleChips > 0 ? 5 + (visibleChips - 1) * CHIP_Z_STEP : 5;
+
+              return (
+                <div
+                  key={`node-3d-${node.id}`}
+                  onClick={() => setSelectedNode(node.id)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedNode(node.id);
+                    }
+                  }}
+                  aria-label={`Vertex ${node.label}, degree ${deg}, ${numChips} chips`}
+                  style={{
+                    position: "absolute",
+                    left: `${(node.x / BOARD_W) * 100}%`,
+                    top: `${(node.y / BOARD_H) * 100}%`,
+                    transform: "translate(-50%, -50%)",
+                    transformStyle: "preserve-3d",
+                  }}
+                  className="w-12 h-12 cursor-pointer group focus:outline-none"
+                >
+                  {/* One-shot spring shockwave ring on fire */}
+                  <AnimatePresence>
+                    {fired && (
+                      <motion.div
+                        key={justFired?.key}
+                        initial={{ scale: 0.9, opacity: 0.95 }}
+                        animate={{ scale: 2.15, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 140, damping: 18 }}
+                        onAnimationComplete={() =>
+                          setJustFired((prev) => (prev?.key === justFired?.key ? null : prev))
+                        }
+                        style={{ transform: "translateZ(3px)" }}
+                        className="pointer-events-none absolute inset-0 rounded-full border-2 border-[#F59E0B] shadow-[0_0_18px_rgba(245,158,11,0.8)]"
+                      />
+                    )}
+                  </AnimatePresence>
+
+                  {/* Recessed Vertex Socket Pedestal on the 2.5D board */}
+                  <div
+                    className="absolute inset-0 rounded-full transition-all duration-200 flex items-center justify-center"
+                    style={{
+                      transform: "translateZ(2px)",
+                      background: unstable
+                        ? "radial-gradient(circle, rgba(245,158,11,0.32) 0%, rgba(124,58,237,0.28) 65%, rgba(10,10,15,0.92) 100%)"
+                        : "radial-gradient(circle, rgba(124,58,237,0.28) 0%, rgba(15,15,26,0.94) 72%)",
+                      border: isSelected
+                        ? "2px solid #F59E0B"
+                        : unstable
+                        ? "1.5px solid rgba(245,158,11,0.85)"
+                        : "1.5px solid rgba(167,139,250,0.45)",
+                      boxShadow: isSelected
+                        ? "0 0 0 4px rgba(245,158,11,0.22), 0 0 20px rgba(245,158,11,0.45)"
+                        : unstable
+                        ? "0 0 18px rgba(245,158,11,0.38)"
+                        : "inset 0 2px 6px rgba(0,0,0,0.7)",
+                    }}
+                  >
+                    {/* Show 0 count directly in socket when vertex has no chips */}
+                    {numChips === 0 && (
+                      <span className="font-mono text-xs font-bold text-slate-300/80 select-none tabular-nums">
+                        0
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Physical 3D-Styled Metallic Gold Stacked Poker Chips Rising Along +Z */}
+                  <div
+                    className="absolute inset-1 pointer-events-none"
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <AnimatePresence initial={false}>
+                      {Array.from({ length: visibleChips }).map((_, chipIdx) => (
+                        <GoldPokerChip
+                          key={`chip-${node.id}-${chipIdx}`}
+                          index={chipIdx}
+                          isTop={chipIdx === visibleChips - 1}
+                          totalCount={numChips}
+                          unstable={unstable}
+                          reduceMotion={reduceMotion}
                         />
-                      )}
+                      ))}
                     </AnimatePresence>
+                  </div>
 
-                    {/* Outer border for selection */}
-                    <circle
-                      r="25"
-                      fill={isSelected ? "var(--color-glass-bg)" : "transparent"}
-                      stroke={isSelected ? "var(--williams-gold)" : "transparent"}
-                      strokeWidth="2.5"
-                      style={{ transition: "stroke 0.2s ease" }}
-                    />
-
-                    {/* Core node body */}
-                    <motion.circle
-                      r="21"
-                      fill={unstable ? "url(#nodeUnstable)" : "url(#nodeIdle)"}
-                      stroke={unstable ? "var(--williams-gold)" : "var(--color-cream-border-strong)"}
-                      strokeWidth={unstable ? 1.5 : 1}
-                      filter={unstable ? "url(#glow)" : undefined}
-                      animate={fired && !reduceMotion ? { scale: [1, 1.15, 1] } : { scale: 1 }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                    />
-
-                    {/* Chip count badge */}
-                    <text
-                      textAnchor="middle"
-                      dy="4"
-                      className="font-mono text-sm font-bold select-none"
-                      fill={unstable ? "#1a1400" : "var(--color-charcoal)"}
+                  {/* Floating Fire ▶ Trigger Button on Unstable Vertices (elevated with the stack!) */}
+                  {unstable && (
+                    <motion.button
+                      type="button"
+                      id={`btn-fire-node-${node.id}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        fireNode(node.id);
+                      }}
+                      whileHover={reduceMotion ? undefined : { scale: 1.16 }}
+                      whileTap={reduceMotion ? undefined : { scale: 0.9 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 20 }}
+                      style={{
+                        position: "absolute",
+                        top: "-8px",
+                        right: "-8px",
+                        transform: `translateZ(${stackTopZ + 12}px)`,
+                        background: "linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%)",
+                        border: "1.5px solid #F59E0B",
+                        boxShadow: "0 4px 14px rgba(124,58,237,0.65), 0 0 10px rgba(245,158,11,0.5)",
+                      }}
+                      className="no-3d w-6 h-6 rounded-full flex items-center justify-center text-white cursor-pointer z-20"
+                      title={`Fire ${node.label} (sends 1 chip to each neighbor)`}
                     >
-                      {numChips}
-                    </text>
+                      <Play className="w-2.5 h-2.5 fill-current ml-0.5 text-[#FDE68A]" />
+                    </motion.button>
+                  )}
 
-                    {/* Node Label underneath */}
-                    <text
-                      textAnchor="middle"
-                      y="36"
-                      className="font-mono text-[10px] font-semibold uppercase tracking-wider"
-                      fill={isSelected ? "var(--color-tufts-blue)" : "var(--color-charcoal-light)"}
+                  {/* Crisp Vertex Label Underneath Pedestal */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "calc(100% + 6px)",
+                      transform: "translateX(-50%) translateZ(4px)",
+                    }}
+                    className="pointer-events-none whitespace-nowrap text-center"
+                  >
+                    <span
+                      className="font-mono text-[10px] font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#0A0A0F]/80 border border-white/10"
+                      style={{
+                        color: isSelected
+                          ? "#FCD34D"
+                          : unstable
+                          ? "#F59E0B"
+                          : "rgba(226, 232, 240, 0.85)",
+                      }}
                     >
                       {node.label} ({deg > 0 ? `d=${deg}` : "isolated"})
-                    </text>
-
-                    {/* Fast Firing Trigger overlay if unstable */}
-                    {unstable && (
-                      <g
-                        transform="translate(14, -14)"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          fireNode(node.id);
-                        }}
-                        className="cursor-pointer"
-                      >
-                        <circle r="9" fill="var(--color-tufts-blue)" stroke="var(--color-cream-card)" strokeWidth="1.5" />
-                        <polygon points="-2.5,-3 4,0 -2.5,3" fill="#ffffff" transform="translate(0.5, 0) scale(0.9)" />
-                      </g>
-                    )}
-                  </g>
-                );
-              })}
-            </g>
-          </svg>
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
         </div>
 
         {/* Small prompt overlay info */}
@@ -815,7 +1096,7 @@ export default function MathLab() {
           <Info className="w-3.5 h-3.5 text-tufts-blue flex-shrink-0 mt-0.5" />
           <span>
             <strong>Interactive:</strong> Click any vertex to adjust its chips or see details.
-            Click the <span className="bg-tufts-blue text-white px-1 rounded font-bold">▶</span> button on any golden node to manually fire it.
+            Click the <span className="bg-williams-purple text-[#FDE68A] border border-williams-gold/40 px-1 rounded font-bold">▶</span> button on any golden node to manually fire it.
           </span>
         </div>
       </div>

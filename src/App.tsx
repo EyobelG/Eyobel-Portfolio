@@ -36,11 +36,10 @@ import PublicationsSection from "./components/PublicationsSection";
 import ExperienceTimeline from "./components/ExperienceTimeline";
 import SkillsGrid from "./components/SkillsGrid";
 import InteractivePortrait from "./components/InteractivePortrait";
-import HeroWireframe from "./components/HeroWireframe";
 import FlowFieldBackground from "./components/FlowFieldBackground";
 import AccentPicker from "./components/AccentPicker";
 
-const HeroScene3D = React.lazy(() => import("./components/three/HeroScene3D"));
+const HeroPolyhedronMesh = React.lazy(() => import("./components/three/HeroPolyhedronMesh"));
 import PersonalChatbot from "./components/PersonalChatbot";
 import PhotoGallery from "./components/PhotoGallery";
 import ScrollProgressBar from "./components/ScrollProgressBar";
@@ -341,31 +340,27 @@ export default function App() {
       {/* RIGHT EDITORIAL CANVAS */}
       <main className="flex-1 overflow-x-hidden">
         {/* Banner Highlight Container */}
-        <div className="relative bg-gradient-to-r from-zinc-200/50 via-zinc-100/30 to-zinc-50/25 dark:from-zinc-900/30 dark:via-zinc-950/20 dark:to-zinc-950/10 border-b border-cream-border py-12 px-6 lg:px-12 xl:px-16 overflow-hidden">
-          {/* Flow-field particle drift beneath the WebGL geometry */}
-          <div className="absolute inset-0 pointer-events-none">
+        <div className="relative bg-gradient-to-br from-[#0A0A0F] via-[#0F0D1B] to-[#0A0A0F] [.light-theme_&]:from-zinc-200/50 [.light-theme_&]:via-zinc-100/30 [.light-theme_&]:to-zinc-50/25 border-b border-cream-border py-12 px-6 lg:px-10 xl:px-14 overflow-hidden">
+          {/* Flow-field particle drift beneath the Hero */}
+          <div className="absolute inset-0 pointer-events-none opacity-65">
             <FlowFieldBackground />
           </div>
-          {/* WebGL hero backdrop: floating 3D geometry reacting to the cursor */}
-          <div className="absolute inset-0 pointer-events-none">
-            <React.Suspense fallback={null}>
-              <HeroScene3D />
-            </React.Suspense>
-          </div>
+          {/* Subtle Obsidian / Electric Violet ambient light wash */}
+          <div
+            className="absolute -top-24 right-1/3 w-96 h-96 rounded-full pointer-events-none opacity-25 blur-3xl"
+            style={{ background: "radial-gradient(circle, rgba(124,58,237,0.45), transparent 70%)" }}
+          />
           {/* Micro Geometric Accents */}
           <div className="absolute -bottom-10 left-10 w-48 h-48 rounded-full border border-zinc-300/15 dark:border-white/5 pointer-events-none" />
-          <div className="hidden lg:block absolute top-1/2 left-[56%] xl:left-[58%] -translate-y-1/2 opacity-60">
-            <HeroWireframe size={72} />
-          </div>
 
-          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-            {/* Left Narrative Column */}
-            <div className="lg:col-span-7 space-y-4">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            {/* Left Narrative + Interactive 3D Polyhedron Lockup */}
+            <div className="lg:col-span-7 space-y-5">
               <motion.span
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="inline-flex items-center space-x-2 px-3.5 py-1 bg-williams-purple/10 dark:bg-williams-purple/25 text-williams-purple dark:text-williams-gold font-mono text-[10px] font-bold rounded-full uppercase tracking-widest border border-williams-purple/20 dark:border-williams-gold/30 shadow-sm"
+                className="inline-flex items-center space-x-2 px-3.5 py-1 bg-williams-purple/10 dark:bg-williams-purple/20 text-williams-purple dark:text-williams-gold font-mono text-[10px] font-bold rounded-full uppercase tracking-widest border border-williams-purple/25 dark:border-williams-gold/30 shadow-sm"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -374,37 +369,53 @@ export default function App() {
                 <ScrambleText text="Seeking Summer 2027 Internships, Co-ops & Full-Time Roles" trigger="mount" delay={450} speed={24} revealEvery={1} />
               </motion.span>
 
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-charcoal font-bold tracking-tight leading-tight">
-                <Typewriter
-                  lines={["Bridging Rigorous Mathematics ", "with High-Performance Systems"]}
-                  speed={38}
-                  startDelay={450}
-                  caretClassName="bg-williams-gold"
-                  onDone={() => setHeroTyped(true)}
-                />
-              </h2>
-              {heroTyped ? (
-                <BlurWords
-                  as="p"
-                  trigger="mount"
-                  stagger={0.022}
-                  text="Hi, I'm Eyobel. I design virtual machines, optimize low-level systems, and build full-stack solutions driven by advanced combinatorial graphs. Let's explore my artifacts below."
-                  className="text-sm sm:text-base text-charcoal-light max-w-xl leading-relaxed"
-                />
-              ) : (
-                <p aria-hidden className="text-sm sm:text-base text-charcoal-light max-w-xl leading-relaxed opacity-0 select-none">
-                  Hi, I'm Eyobel. I design virtual machines, optimize low-level systems, and build full-stack solutions driven by advanced combinatorial graphs. Let's explore my artifacts below.
-                </p>
-              )}
+              {/* Headline + Interactive 3D Polyhedron Mesh side-by-side */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 xl:gap-6">
+                <div className="flex-1 min-w-0 space-y-4">
+                  <h2 className="font-serif text-3xl sm:text-4xl xl:text-[2.75rem] text-charcoal font-bold tracking-tight leading-[1.12] text-balance">
+                    <Typewriter
+                      lines={["Bridging Rigorous Mathematics ", "with High-Performance Systems"]}
+                      speed={38}
+                      startDelay={450}
+                      caretClassName="bg-williams-gold"
+                      onDone={() => setHeroTyped(true)}
+                    />
+                  </h2>
+                  {heroTyped ? (
+                    <BlurWords
+                      as="p"
+                      trigger="mount"
+                      stagger={0.022}
+                      text="Hi, I'm Eyobel. I design virtual machines, optimize low-level systems, and build full-stack solutions driven by advanced combinatorial graphs. Let's explore my artifacts below."
+                      className="text-sm sm:text-base text-charcoal-light max-w-xl leading-relaxed"
+                    />
+                  ) : (
+                    <p aria-hidden className="text-sm sm:text-base text-charcoal-light max-w-xl leading-relaxed opacity-0 select-none">
+                      Hi, I'm Eyobel. I design virtual machines, optimize low-level systems, and build full-stack solutions driven by advanced combinatorial graphs. Let's explore my artifacts below.
+                    </p>
+                  )}
+                </div>
 
-              <div className="flex flex-wrap gap-3 pt-2">
+                {/* Interactive 60fps Three.js / R3F Wireframe Icosahedron Graph Mesh */}
+                <div className="self-center sm:self-center">
+                  <React.Suspense
+                    fallback={
+                      <div className="w-[200px] h-[200px] sm:w-[220px] sm:h-[220px] xl:w-[244px] xl:h-[244px] rounded-full bg-williams-purple/5 border border-williams-purple/15" />
+                    }
+                  >
+                    <HeroPolyhedronMesh />
+                  </React.Suspense>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-1">
                 <motion.button
                   id="btn-hero-connect"
                   onClick={() => scrollToSection("contact")}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-white/10 dark:hover:bg-white/20 text-white font-mono text-xs font-semibold rounded-lg shadow-sm border border-zinc-700/50 dark:border-white/15 transition-colors"
+                  className="px-5 py-2.5 bg-williams-purple hover:bg-williams-purple/90 text-white font-mono text-xs font-semibold rounded-lg shadow-sm border border-williams-gold/30 transition-colors"
                 >
                   Contact Me
                 </motion.button>
@@ -414,10 +425,10 @@ export default function App() {
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  className="group px-5 py-2.5 border border-cream-border bg-cream-card hover:bg-cream-card-sub text-charcoal font-mono text-xs transition-colors rounded-lg flex items-center space-x-1.5"
+                  className="group px-5 py-2.5 border border-cream-border bg-cream-card/90 hover:bg-cream-card-sub text-charcoal font-mono text-xs transition-colors rounded-lg flex items-center space-x-1.5"
                 >
                   <span>Play Chip-Firing Lab</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-williams-gold transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </motion.button>
               </div>
             </div>

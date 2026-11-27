@@ -1,25 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fira+Code:wght@400;500;600&display=swap');
 @import "tailwindcss";
+@custom-variant dark (&:where(:not(.light-theme), :not(.light-theme) *));
 
 :root {
-  /* Default: Dark mode values */
-  --bg-color: #050505;
-  --card-color: #141414;
-  --card-sub: #1e1e1e;
+  /* Default: Obsidian dark-mode palette (#0A0A0F) */
+  --bg-color: #0A0A0F;
+  --card-color: #11111A;
+  --card-sub: #181826;
   --border-color: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.15);
-  --text-color: #ffffff;
-  --text-light-color: rgba(255, 255, 255, 0.6);
-  --glass-bg: rgba(255, 255, 255, 0.04);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-color: #F8FAFC;
+  --text-light-color: rgba(248, 250, 252, 0.65);
+  --glass-bg: rgba(17, 17, 26, 0.62);
 
-  /* Williams Purple & Gold optimized for dark mode (glowing, visible, vibrant) */
-  --williams-purple: #8b5cf6;
-  --williams-purple-light: #a78bfa;
-  --williams-purple-dark: #4c1d95;
+  /* Electric Violet (#7C3AED) & Liquid Gold (#F59E0B) */
+  --williams-purple: #7C3AED;
+  --williams-purple-light: #A78BFA;
+  --williams-purple-dark: #4C1D95;
   
-  --williams-gold: #fbbf24;
-  --williams-gold-light: #fde047;
-  --williams-gold-dark: #d97706;
+  --williams-gold: #F59E0B;
+  --williams-gold-light: #FCD34D;
+  --williams-gold-dark: #B45309;
 }
 
 .light-theme {

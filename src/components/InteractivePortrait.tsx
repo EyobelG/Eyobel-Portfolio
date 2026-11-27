@@ -379,39 +379,49 @@ export default function InteractivePortrait() {
   const WeatherIcon = activeWeather.icon;
 
   return (
-    <div className="flex flex-col items-center space-y-4 w-full max-w-[360px]">
+    <div className="flex flex-col items-center space-y-3.5 w-full max-w-[440px]">
       
-      {/* 3D PARALLAX CARD WRAPPER */}
+      {/* 3D PARALLAX PORTRAIT FRAME (100% UNOBSTRUCTED PHOTO) */}
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onMouseEnter={() => setIsHovered(true)}
-        className="relative w-full aspect-[4/5] rounded-[32px] overflow-hidden shadow-2xl transition-all duration-300 bg-[#08070c] border-2 border-cream-border cursor-default"
+        className="relative w-full aspect-[4/5] rounded-[28px] overflow-hidden shadow-2xl transition-all duration-300 bg-[#0A0A0F] border border-white/15 [.light-theme_&]:border-black/15 cursor-default"
         style={{
-          transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${isHovered ? 1.02 : 1}, ${isHovered ? 1.02 : 1}, 1)`,
+          transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${isHovered ? 1.015 : 1}, ${isHovered ? 1.015 : 1}, 1)`,
           transformStyle: "preserve-3d",
-          boxShadow: isHovered 
-            ? "0 30px 60px -15px rgba(96, 34, 134, 0.4)" 
-            : "0 10px 30px -15px rgba(0,0,0,0.8)"
+          boxShadow: isHovered
+            ? "0 30px 60px -15px rgba(124, 58, 237, 0.38), 0 0 0 1px rgba(245, 158, 11, 0.35)"
+            : "0 18px 40px -16px rgba(0, 0, 0, 0.85)",
         }}
       >
-        {/* Dynamic Vector Particle Canvas Overlay */}
+        {/* Subtle 1px top specular highlight rim */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-0 inset-x-8 h-px z-30"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), rgba(245,158,11,0.5), transparent)",
+          }}
+        />
+
+        {/* Subtle Vector Particle Accent Overlay (kept light so portrait stays crystal clear) */}
         <canvas
           ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none z-20 mix-blend-screen opacity-90"
+          className="absolute inset-0 w-full h-full pointer-events-none z-20 mix-blend-screen opacity-45"
         />
+
         {/* PORTRAIT VIEWER (REAL PHOTO WITH FALLBACK TO PORTRAIT SVG) */}
-        <div 
+        <div
           className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
           style={{ transform: "translateZ(10px)" }}
         >
-          {/* We always render this image in the background, trying to resolve.
-              Once it loads successfully, it overlays the fallback SVG with a smooth fade-in. */}
-          <img 
-            src={IMAGE_CANDIDATES[candidateIndex]} 
-            alt="Eyobel Gebre" 
-            className="w-full h-full object-cover rounded-[30px] absolute inset-0 z-10 transition-opacity duration-500"
+          {/* Real headshot overlays fallback SVG once loaded */}
+          <img
+            src={IMAGE_CANDIDATES[candidateIndex]}
+            alt="Eyobel Gebre"
+            className="w-full h-full object-cover object-top rounded-[27px] absolute inset-0 z-10 transition-opacity duration-500"
             style={{ opacity: hasImage ? 1 : 0 }}
             onLoad={handleImageLoad}
             onError={handleImageError}
@@ -635,140 +645,138 @@ export default function InteractivePortrait() {
           </svg>
         </div>
 
-        {/* 3. LAYER: OVERLAYS AND CONTROLS (HUD) */}
-        <div className="absolute inset-0 z-20 flex flex-col justify-between p-4 pointer-events-auto">
-          
-          {/* Top HUD Row: Time and Weather widgets */}
-          <div className="flex justify-between items-start space-x-2">
-            
-            {/* TIME HUD WIDGET */}
-            <div 
+      </div>
+
+      {/* EXTERNAL TIME & WEATHER WIDGETS (Positioned cleanly outside & below the photo) */}
+      <div className="grid grid-cols-2 gap-3 w-full">
+        {/* TIME WIDGET */}
+        <div
+          onClick={() => setActiveTimeZone((prev) => (prev === "local" ? "addis" : "local"))}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setActiveTimeZone((prev) => (prev === "local" ? "addis" : "local"));
+            }
+          }}
+          className="relative rounded-2xl p-3 bg-[#11111A]/85 [.light-theme_&]:bg-white/95 backdrop-blur-xl border border-white/10 [.light-theme_&]:border-black/10 hover:border-williams-gold/45 transition-all cursor-pointer shadow-lg select-none"
+          title="Click to toggle Medford vs. Addis Ababa time"
+        >
+          <div className="flex items-center justify-between text-[10px] font-mono text-charcoal-light font-semibold mb-1.5">
+            <span className="flex items-center gap-1.5 truncate">
+              <Clock className="w-3 h-3 text-williams-purple-light shrink-0" />
+              <span className="truncate">{activeTimeZone === "local" ? "MEDFORD" : "ADDIS ABABA"}</span>
+            </span>
+            <span
               onClick={(e) => {
                 e.stopPropagation();
-                setActiveTimeZone(prev => prev === "local" ? "addis" : "local");
+                setIs24Hour((prev) => !prev);
               }}
-              className="bg-black/75 hover:bg-black/90 border border-white/10 hover:border-zinc-500/40 rounded-xl p-2.5 transition-all cursor-pointer shadow-md select-none w-[48%]"
-              style={{ transform: "translateZ(30px)" }}
-              title="Click to toggle Local vs. Addis Ababa time!"
+              className="text-[9px] text-charcoal-light hover:text-williams-gold px-1 rounded bg-white/5 [.light-theme_&]:bg-black/5 cursor-pointer"
+              title="Toggle 12h / 24h"
             >
-              <div className="flex items-center space-x-1.5 text-[8px] font-mono text-zinc-400 font-semibold mb-1">
-                <Clock className="w-3 h-3 text-zinc-400 animate-pulse" />
-                <span>{activeTimeZone === "local" ? "MEDFORD (LOCAL)" : "ADDIS ABABA"}</span>
-              </div>
-              <div className="font-mono text-xs font-bold text-white tracking-tight leading-none tabular-nums mb-1">
-                {getFormattedTime()}
-              </div>
-              <div className="flex justify-between items-center text-[7px] font-mono text-zinc-500">
-                <span>{time.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
-                <span className="text-[6px] text-zinc-300 bg-zinc-800/60 border border-zinc-700/50 px-1 rounded">
-                  {activeTimeZone === "local" ? "EDT" : "EAT"}
-                </span>
-              </div>
+              {is24Hour ? "24H" : "12H"}
+            </span>
+          </div>
+          <div className="font-mono text-sm font-bold text-charcoal tracking-tight leading-none tabular-nums mb-1.5">
+            {getFormattedTime()}
+          </div>
+          <div className="flex justify-between items-center text-[10px] font-mono text-charcoal-light">
+            <span>{time.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+            <span className="text-williams-gold font-semibold">
+              {activeTimeZone === "local" ? "EDT" : "EAT"}
+            </span>
+          </div>
+        </div>
+
+        {/* WEATHER WIDGET */}
+        <div
+          onClick={() => setWeatherIndex((prev) => (prev + 1) % STATIC_STATIONS.length)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setWeatherIndex((prev) => (prev + 1) % STATIC_STATIONS.length);
+            }
+          }}
+          className="relative rounded-2xl p-3 bg-[#11111A]/85 [.light-theme_&]:bg-white/95 backdrop-blur-xl border border-white/10 [.light-theme_&]:border-black/10 hover:border-williams-gold/45 transition-all cursor-pointer shadow-lg select-none overflow-hidden"
+          title="Click to switch weather stations"
+        >
+          <div className="flex items-center justify-between text-[10px] font-mono text-charcoal-light font-semibold mb-1.5">
+            <div className="flex items-center gap-1 min-w-0">
+              <MapPin className="w-3 h-3 text-williams-gold shrink-0" />
+              <span className="truncate uppercase">{activeWeather.city}</span>
             </div>
-
-            {/* WEATHER HUD WIDGET */}
-            <div 
-              onClick={(e) => {
-                e.stopPropagation();
-                // Cycle weather stations
-                setWeatherIndex(prev => (prev + 1) % STATIC_STATIONS.length);
-              }}
-              className="bg-black/75 hover:bg-black/90 border border-white/10 hover:border-[#00e5a3]/40 rounded-xl p-2.5 transition-all cursor-pointer shadow-md select-none w-[48%] relative overflow-hidden"
-              style={{ transform: "translateZ(30px)" }}
-              title="Click to switch weather stations!"
-            >
-              <div className="flex items-center justify-between text-[8px] font-mono text-zinc-400 font-semibold mb-1">
-                <div className="flex items-center space-x-1">
-                  <MapPin className="w-2.5 h-2.5 text-[#00e5a3]" />
-                  <span className="truncate max-w-[55px] uppercase">{activeWeather.city}</span>
-                </div>
-                {isWeatherLoading ? (
-                  <RefreshCw className="w-3 h-3 text-[#00e5a3] animate-spin" />
-                ) : (
-                  <WeatherIcon className="w-3.5 h-3.5 text-zinc-400" />
-                )}
-              </div>
-              
-              <div className="flex items-baseline justify-between">
-                <span className="font-mono text-xs font-bold text-white leading-none">
-                  {isFahrenheit ? `${activeWeather.tempF}°F` : `${activeWeather.tempC}°C`}
-                </span>
-                <span 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsFahrenheit(!isFahrenheit);
-                  }}
-                  className="text-[7px] font-mono font-bold text-zinc-400 hover:text-white px-1 py-0.25 bg-white/5 rounded cursor-pointer"
-                  title="Toggle F/C"
-                >
-                  {isFahrenheit ? "°C" : "°F"}
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center text-[6px] font-mono text-zinc-500 mt-1">
-                <span className="truncate max-w-[65px]">{activeWeather.condition}</span>
-                <span 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowWeatherDetails(!showWeatherDetails);
-                  }}
-                  className="text-[#00e5a3] underline cursor-pointer"
-                  >
-                  {showWeatherDetails ? "hide" : "details"}
-                </span>
-              </div>
-
-              {/* Collapsible Weather Details overlay inside widget */}
-              {showWeatherDetails && (
-                <div className="absolute inset-0 bg-black/95 flex flex-col justify-center p-2 text-[7px] font-mono text-zinc-300">
-                  <div className="font-bold text-[#00e5a3] border-b border-white/10 pb-0.5 mb-1 text-center truncate">
-                    {activeWeather.region}
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="flex items-center gap-0.5"><Droplets className="w-2.5 h-2.5 text-blue-400" /> Humid: {activeWeather.humidity}%</span>
-                    <span className="flex items-center gap-0.5"><Wind className="w-2.5 h-2.5 text-emerald-400" /> Wind: {activeWeather.windSpeed} mph</span>
-                  </div>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowWeatherDetails(false);
-                    }}
-                    className="mt-1 bg-[#00e5a3]/10 text-[#00e5a3] font-bold py-0.5 rounded text-center text-[6px]"
-                  >
-                    Close
-                  </button>
-                </div>
-              )}
-            </div>
-
+            {isWeatherLoading ? (
+              <RefreshCw className="w-3.5 h-3.5 text-williams-gold animate-spin shrink-0" />
+            ) : (
+              <WeatherIcon className="w-3.5 h-3.5 text-williams-purple-light shrink-0" />
+            )}
           </div>
 
-          {/* Spacer for artwork focus */}
-          <div className="flex-1 pointer-events-none" />
-
-          {/* Floating Tag at the bottom of portrait */}
-          <div
-            className="bg-black/80 border border-white/10 px-4 py-2 rounded-2xl flex justify-between items-center backdrop-blur-sm hover:border-[#00e5a3]/30 transition-all"
-            style={{ transform: "translateZ(40px)" }}
-          >
-            <div className="flex items-center space-x-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-pulse" />
-              <span className="font-mono text-[9px] font-bold text-white uppercase tracking-widest">
-                Eyobel Gebre
-              </span>
-            </div>
-            <span className="font-mono text-[8px] text-zinc-400 font-bold">
-              PORTFOLIO_CORE
+          <div className="flex items-baseline justify-between mb-1.5">
+            <span className="font-mono text-sm font-bold text-charcoal leading-none tabular-nums">
+              {isFahrenheit ? `${activeWeather.tempF}°F` : `${activeWeather.tempC}°C`}
+            </span>
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsFahrenheit(!isFahrenheit);
+              }}
+              className="text-[9px] font-mono font-bold text-charcoal-light hover:text-williams-gold px-1.5 py-0.5 bg-white/5 [.light-theme_&]:bg-black/5 rounded cursor-pointer"
+              title="Toggle °F / °C"
+            >
+              {isFahrenheit ? "°C" : "°F"}
             </span>
           </div>
 
-        </div>
+          <div className="flex justify-between items-center text-[10px] font-mono text-charcoal-light gap-1">
+            <span className="truncate">{activeWeather.condition}</span>
+            <span
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowWeatherDetails(!showWeatherDetails);
+              }}
+              className="text-williams-gold hover:underline cursor-pointer shrink-0"
+            >
+              {showWeatherDetails ? "hide" : "details"}
+            </span>
+          </div>
 
+          {/* Collapsible Weather Details overlay inside external weather tile */}
+          {showWeatherDetails && (
+            <div className="absolute inset-0 bg-[#0A0A0F]/95 [.light-theme_&]:bg-white/95 flex flex-col justify-center p-2.5 text-[10px] font-mono text-charcoal">
+              <div className="font-bold text-williams-gold border-b border-cream-border pb-1 mb-1.5 text-center truncate">
+                {activeWeather.region}
+              </div>
+              <div className="flex justify-between text-[9px] text-charcoal-light">
+                <span className="flex items-center gap-1">
+                  <Droplets className="w-3 h-3 text-tufts-blue-light" /> {activeWeather.humidity}%
+                </span>
+                <span className="flex items-center gap-1">
+                  <Wind className="w-3 h-3 text-williams-purple-light" /> {activeWeather.windSpeed} mph
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowWeatherDetails(false);
+                }}
+                className="no-3d mt-1.5 bg-williams-purple/20 text-williams-gold font-bold py-0.5 rounded text-center text-[9px] cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Photo upload helper hint (only shown when the fallback SVG is active) */}
       {!hasImage && (
-        <div className="bg-zinc-200/50 dark:bg-white/5 border border-zinc-300 dark:border-white/10 p-3 rounded-2xl text-center max-w-[340px]">
+        <div className="bg-zinc-200/50 dark:bg-white/5 border border-zinc-300 dark:border-white/10 p-3 rounded-2xl text-center w-full">
           <p className="text-[10px] font-mono text-zinc-600 dark:text-zinc-300 leading-relaxed">
             💡 <span className="font-semibold text-zinc-700 dark:text-zinc-200">Want your real photo here permanently?</span> Just upload your image (named <code className="bg-zinc-200 dark:bg-black/40 px-1.5 py-0.5 rounded text-zinc-800 dark:text-white font-bold">eyobel.jpg</code>) into the <code className="bg-zinc-200 dark:bg-black/40 px-1.5 py-0.5 rounded text-zinc-800 dark:text-white font-bold">public</code> folder. It will instantly replace this graphic!
           </p>
